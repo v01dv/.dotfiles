@@ -1,0 +1,24 @@
+! Rofi
+rofi.key-run:           SuperL+grave
+rofi.key-window:        SuperL+Tab
+rofi.modi:              window,run
+rofi.terminal:          urxvt
+rofi.run-shell-command: {terminal} -e "zsh -ic {cmd}"
+rofi.sidebar-mode:      true
+rofi.hide-scrollbar:    true
+rofi.lines:             12
+rofi.line-margin:       4
+rofi.fixed-num-lines:   true
+rofi.padding:           13
+rofi.bc:                base02
+rofi.bw:                4
+! Enable the extended coloring options
+rofi.color-enabled: true
+
+! Property Name     BG       Border   Separator
+rofi.color-window:  base01,  base01,  base00
+
+! Property Name     BG       FG       BG-alt   Head-BG  Head-FG
+rofi.color-normal:  base01,  base05,  base01,  base01,  base07
+rofi.color-active:  base01,  base0D,  base01,  base01,  base0D
+rofi.color-urgent:  base01,  base08,  base01,  base01,  base08

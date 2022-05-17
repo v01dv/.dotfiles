@@ -1,0 +1,37 @@
+!! compton must be installed for transparency
+URxvt.depth: 32   
+URxvt.background:	[85]base00
+
+URxvt.intensityStyles:	false
+!!URxvt.font: 			xft:monospace:size=14:antialias=true:hinting=true:hintstyle=hintfull:autohint=false
+URxvt.font: xft:Source Code Pro for Powerline:size=11:antialias=true:hinting=true:hintstyle=hintfull:autohint=false, xft:FontAwesome:size=11, xft:Dejavu Sans:size=11
+
+!URxvt.letterSpace:  +3  
+
+!!URxvt*font: xft:Source Code Pro for Powerline-11
+!!URxvt*boldFont: xft:Source Code Pro for Powerline-11:style=Bold
+!!URxvt*italicFont: xft:Source Code Pro for Powerline-11:syle=Italic
+!!URxvt*bolditalicFont: xft:Source Code Pro for Powerline-11:style=Bold Italic
+
+URxvt.scrollBar: 		false
+!URxvt.cursorColor: 	magenta
+
+!URxvt.transparent:      true
+!URxvt.shading:  40         
+
+!! Extentions
+URxvt.perl-ext-common:	    default,matcher,resize-font,url-select,keyboard-select
+URxvt.colorUL:			    base0A
+!! url-select
+URxvt.keysym.M-u:		    perl:url-select:select_next
+URxvt.url-select.launcher:	/usr/bin/xdg-open
+URxvt.url-select.underline:	true
+!! keyboard-select
+URxvt.keysym.M-Escape:		perl:keyboard-select:activate
+!! resize-font
+URxvt.resize-font.smaller:	C-j
+URxvt.resize-font.bigger:	C-k
+!! matcher
+URxvt.url-launcher:		    /usr/bin/xdg-open
+URxvt.matcher.button:		1
+

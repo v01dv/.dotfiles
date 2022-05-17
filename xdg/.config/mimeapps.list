@@ -1,0 +1,20 @@
+[Default Applications]
+x-scheme-handler/msteams=teams.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-LISFJ1.desktop
+
+[Added Associations]
+text/x-shellscript=text.desktop;
+x-scheme-handler/magnet=torrent.desktop;
+application/x-bittorrent=torrent.desktop;
+x-scheme-handler/mailto=mail.desktop;
+text/plain=text.desktop;
+application/postscript=pdf.desktop;
+application/pdf=pdf.desktop;
+image/png=img.desktop;
+image/jpeg=img.desktop;
+image/gif=img.desktop;
+video/x-matroska=video.desktop
+application/rss+xml=rss.desktop
+inode/directory=file.desktop
+text/markdown=nvim.desktop;firefox.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-LISFJ1.desktop;

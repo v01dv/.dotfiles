@@ -1,0 +1,27 @@
+! X11 Configuration
+
+!Xcursor.theme: Breeze
+!Xcursor.size: 16
+
+! Font Configuration
+Xft.antialias:  true
+Xft.autohint:   false
+!Note: 96 DPI is not a standard. You should use your monitor's actual DPI to get proper font rendering, especially when using subpixel rendering.
+!See archwiki for details: https://wiki.archlinux.org/index.php/font_configuration 
+Xft.dpi:        96
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+Xft.lcdfilter:  lcddefault
+Xft.rgba:       rgb
+
+!! Transparency (0-1):
+! The alpha value (for transparency) goes from 0 (transparent) to 1 (opaque).
+*.alpha: 0.8
+
+!! Set a default font and font size as below:
+*.font: monospace:size=10
+
+#include "xfiles/themes/nord"
+! #include "xfiles/urxvt"
+! #include "xfiles/rofi"
+

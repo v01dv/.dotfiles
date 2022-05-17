@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#fanspeed=$(sensors | grep -i fan) 
+#echo "$fanspeed" 
+
+sensors | grep -i fan | awk '{printf (" %4i RPM", $3)}'
+#sensors | awk '/Core 0/ {print "" $3}'
+

@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# xinitrc runs automatically when you run startx.
+
+# There are some small but important commands that need to be run when we start
+# the graphical environment. There is a link to this file in ~/.xprofile
+# because that file is run automatically if someone uses a display manager
+# (login screen) and so they are needed there. To prevent doubling up commands,
+# I source them here with the line below.
+
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
+	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
+else
+	. "$HOME/.xprofile"
+fi
+
+# export STATUSBAR="i3blocks" # Uncomment this line when using i3.
+
+# Comment/uncomment these lines depending on what wm you want to use. Also
+# check the i3blocks line above.
+
+#i3
+#exec dwm
+
+# Remember that lines following a command using exec would be ignored. 
+# Below dwm is started in the background and then started the dwm.
+
+dwmblocks &
+
+# DWM
+while true; do
+	ssh-agent dwm >/dev/null 2>&1
+done
+

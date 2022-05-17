@@ -1,0 +1,31 @@
+[user]
+	name = $GIT_NAME
+	email = $GIT_EMAIL
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+[merge]
+    tool = fugitive
+[difftool]
+    prompt = false
+[alias]
+#    log = log --graph --decorate --pretty=oneline --abbrev-commit
+    tree = log --all --decorate --oneline --graph
+[core]
+    editor = nvim
+    pager = less -FRX
+[pager]
+#   branch = false
