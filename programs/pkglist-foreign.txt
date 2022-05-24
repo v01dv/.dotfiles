@@ -1,6 +1,6 @@
 b43-firmware
-eslint_d
 google-chrome
+ivpn
 lf
 libcurl-openssl-1.0
 libxft-bgra
@@ -12,8 +12,9 @@ nerd-fonts-jetbrains-mono
 nvidia-390xx-dkms
 nvidia-390xx-settings
 nvidia-390xx-utils
+nvm
 paru
-teams
+task-spooler
 ttf-font-awesome-4
 ttf-iosevka
 unclutter-patched
