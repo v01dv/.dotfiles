@@ -75,6 +75,9 @@ export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
 # Golang
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 
+export DOTFILES="$HOME/.dotfiles"
+export STOW_FOLDERS="x11,shell"
+
 # This is the list for lf icons:
 export LF_ICONS="di=📁:\
 fi=📃:\
