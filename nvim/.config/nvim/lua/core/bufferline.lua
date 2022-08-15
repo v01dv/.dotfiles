@@ -76,8 +76,8 @@ bufferline.setup {
   },
   highlights = {
     indicator_selected = {
-      guifg = { attribute = "fg", highlight = "LspDiagnosticsDefaultHint" },
-      guibg = { attribute = "bg", highlight = "Normal" },
+      fg = { attribute = "fg", highlight = "LspDiagnosticsDefaultHint" },
+      bg = { attribute = "bg", highlight = "Normal" },
     }
   }
 }
