@@ -2,3 +2,5 @@ neovim/.config/nvim/plugin/packer_compiled.lua
 neovim/.config/nvim/lua/extra*
 tmux/.config/tmux/plugins/
 mpv/.config/mpv/watch_later/
+vifm/.config/vifm/vifminfo.json*
+

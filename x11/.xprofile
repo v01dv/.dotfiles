@@ -21,7 +21,7 @@ lxsession &
 tput smkx &  
 
 # Wallpaper
-xwallpaper --zoom .config/wallpapers/forest.jpg
+xwallpaper --zoom .config/wallpapers/forest.jpg &
 
 #xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources &		# Uncomment to use Xresources colors/settings on startup
 
