@@ -20,6 +20,7 @@ export CODEEDITOR="vscodium"
 export COLORTERM="truecolor"
 export STATUSBAR="dwmblocks"
 
+# ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -31,9 +32,16 @@ export IGNORE_CC_MISMATCH=1
 # Details: https://wiki.archlinux.org/index.php/XDG_Base_Directory
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" 
 
+# save all the histories
+export HISTFILESIZE=1000000
+export HISTSIZE=1000000
 # No duplicate entries
-export HISTCONTROL=ignoredups:erasedups		
+# export HISTCONTROL=ignoredups:erasedups		
+export HISTCONTROL=ignoreboth		
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+
+# Set history format to include timestamps
+# HISTTIMEFORMAT="%Y-%m-%d %T "
 
 # less/man colors
 export PAGER="less"
@@ -67,10 +75,15 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"  # create password-store manually
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export N_PREFIX=$XDG_DATA_HOME/n
+
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 
 # Golang
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
@@ -153,4 +166,8 @@ ex=🎯:\
 
 # Start graphical server on tty1 if not already running.
 #[ "$(tty)" = "/dev/tty1" ] && ! pidof Xorg >/dev/null 2>&1  && exec startx
-[ "$(tty)" = "/dev/tty1" ] && ! pidof Xorg >/dev/null 2>&1  && exec startx "$XDG_CONFIG_HOME/x11/xinitrc"
+
+# Add prime-switch here based on 
+# https://github.com/Askannz/optimus-manager/issues/205#issuecomment-627364593
+# https://bbs.archlinux.org/viewtopic.php?id=255752  (Post #8)
+[ "$(tty)" = "/dev/tty1" ] && ! pidof Xorg >/dev/null 2>&1  && sudo /usr/bin/prime-switch && exec startx "$XDG_CONFIG_HOME/x11/xinitrc"

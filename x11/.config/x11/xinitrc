@@ -23,12 +23,15 @@ fi
 #exec dwm
 
 # Remember that lines following a command using exec would be ignored. 
-# Below dwm is started in the background and then started the dwm.
+# Below dwmblocks is started in the background and then started the dwm.
 
 dwmblocks &
 
 # DWM
-while true; do
+# Removed while loop based on:
+# https://github.com/Askannz/optimus-manager/issues/205#issuecomment-627364593
+
+# while true; do
 	ssh-agent dwm >/dev/null 2>&1
-done
+# done
 

@@ -5,6 +5,6 @@ fi
 if [ "$gputemp" -gt 0 ]; then
     echo " $gputemp°C"
 else
-    echo "$no nvidia driver installed"
+    echo "No nvidia driver"
 fi
 
