@@ -3,7 +3,7 @@ local utils = require('utils')
 utils.create_augroups({
     _general_settings = {
         -- highlight yanked text for 200ms
-        {'TextYankPost', '*', 'lua require(\'vim.highlight\').on_yank({higroup = \'Search\', timeout = 200})'},
+        --[[ {'TextYankPost', '*', 'lua require(\'vim.highlight\').on_yank({higroup = \'Search\', timeout = 200})'}, ]]
         {
             'BufWinEnter', '*',
             'setlocal formatoptions-=c formatoptions-=r formatoptions-=o '
@@ -92,3 +92,12 @@ function goto_last_pos()
     vim.api.nvim_win_set_cursor(0, {last_pos, 0})
   end
 end
+
+
+
+-- highlight yanked text for 200ms
+vim.api.nvim_create_autocmd({"TextYankPost"}, {
+  -- pattern = {"*.c", "*.h"},
+  callback = function() vim.highlight.on_yank({higroup = 'Visual', timeout = 200}) end,
+})
+

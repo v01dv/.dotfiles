@@ -46,14 +46,13 @@ local kind_icons = {
   TypeParameter = "",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
-
 cmp.setup {
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     -- These mappings are useless. I already use C-n  and C-p correctly.
     -- This simple overrides them and makes them do bad things in other buffers.
     -- ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -84,7 +83,7 @@ cmp.setup {
     },
     ["<Tab>"] = cmp.config.disable,
     ["<S-Tab>"] = cmp.config.disable,
-  },
+  }),
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
