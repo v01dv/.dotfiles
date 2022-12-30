@@ -95,7 +95,7 @@ function __prompt_command()
     # PS1+="${BGre}\u${RCol}${BGre}@\h${RCol}: ${BBlu}\w${RCol}"  → ➜ ⟶ 
     # PS1+="${Pur}[${RCol}${Pur}\u${RCol}${Pur}@${RCol}${Pur}\h${RCol}${Pur}]${RCol}${Whi} → ${RCol}${BIBlu}\W${RCol}"
     # PS1+="${Whi}[${RCol}${Whi}\u${RCol}${Whi}@${RCol}${Whi}\h${RCol}${Whi}]${RCol}${Whi} → ${RCol}${BIBlu}\W${RCol}"
-    PS1+="${Gre}[${RCol}${Gre}\u${RCol}${Gre}@${RCol}${Gre}\h${RCol}${Gre}]${RCol}${Whi} → ${RCol}${BIBlu}\W${RCol}"
+    PS1+="${Gre}[${RCol}${Gre}\u${RCol}${Gre}@${RCol}${Gre}\h${RCol}${Gre}]${RCol}${Whi}  ${RCol}${BIBlu}\W${RCol}"
   fi
   # PS1=$PS1"${Pur}$(parse_git_branch)${RCol}"
 
