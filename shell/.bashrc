@@ -242,6 +242,6 @@ function __prompt_command()
 [[ -f ~/.config/shell/bash_aliases ]] && . ~/.config/shell/bash_aliases
 
 
-alias luamake=/home/voldv/.config/nvim/language-servers/lua-language-server/3rd/luamake/luamake
+# alias luamake=/home/voldv/.config/nvim/language-servers/lua-language-server/3rd/luamake/luamake
 
 export N_PREFIX="$HOME/.local/share/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
