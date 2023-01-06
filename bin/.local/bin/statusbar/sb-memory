@@ -9,4 +9,8 @@ case $BUTTON in
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-free --mebi | sed -n '2{p;q}' | awk '{printf (" %2.2fGiB/%2.2fGiB\n", ( $3 / 1024), ($2 / 1024))}'
+# Display memory in binary system: base 2 (binary) measurements
+# free --mebi | sed -n '2{p;q}' | awk '{printf (" %2.2fGiB/%2.2fGiB\n", ( $3 / 1024), ($2 / 1024))}'
+
+# Display memory in decimal system: base 10 (decimal) measurements
+free --mebi | sed -n '2{p;q}' | awk '{printf (" %.1f/%.fGB\n", ( $3 / 1000), ($2 / 1000))}'
