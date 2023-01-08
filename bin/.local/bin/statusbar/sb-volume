@@ -13,18 +13,19 @@ case $BUTTON in
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-[ $(pamixer --get-mute) = true ] && echo 🔇 && exit
+[ $(pamixer --get-mute) = true ] && echo "ﱝ" && exit
 
 vol="$(pamixer --get-volume)"
 
 if [ "$vol" -gt "70" ]; then
-	icon="🔊"
+	icon="墳"
 elif [ "$vol" -gt "30" ]; then
-	icon="🔉"
+	icon="奔"
 elif [ "$vol" -gt "0" ]; then
-	icon="🔈"
+	icon="奄"
 else
-  echo 🔇 && exit
+  echo "ﱝ" && exit
 fi
 
-echo "$icon$vol%"
+# printf "$icon$vol"
+echo "$icon $vol%"
