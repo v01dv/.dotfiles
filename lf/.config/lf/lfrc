@@ -1,0 +1,255 @@
+# Luke's lf settings
+
+
+# Note on Image Previews
+# For those wanting image previews, like this system, there are four steps to
+# set it up. These are done automatically for LARBS users, but I will state
+# them here for others doing it manually.
+#
+# 1. ueberzug must be installed.
+# 2. The scope file (~/.config/lf/scope for me), must have a command similar to
+#    mine to generate ueberzug images.
+# 3. A `set cleaner` line as below is a cleaner script.
+# 4. lf should be started through a wrapper script (~/.local/bin/lfub for me)
+#    that creates the environment for ueberzug. This command can be be aliased
+#    in your shellrc (`alias lf="lfub") or if set to a binding, should be
+#    called directly instead of normal lf.
+
+# Basic vars
+
+# set '-eu' options for shell commands
+# These options are used to have safer shell commands. Option '-e' is used to
+# exit on error and option '-u' is used to give error for unset variables.
+# Option '-f' disables pathname expansion which can be useful when $f, $fs, and
+# $fx variables contain names with '*' or '?' characters. However, this option
+# is used selectively within individual commands as it can be limiting at
+# times.
+set shellopts '-eu'
+
+# set internal field separator (IFS) to "\n" for shell commands
+# This is useful to automatically split file names in $fs and $fx properly
+# since default file separator used in these variables (i.e. 'filesep' option)
+# is newline. You need to consider the values of these options and create your
+# commands accordingly.
+set ifs "\n"
+
+# leave some space at the top and the bottom of the screen
+set scrolloff 10
+set icons
+set period 1
+set hidden true
+# set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+set cleaner '~/.config/lf/cleaner'
+set previewer '~/.config/lf/scope'
+set autoquit on
+set ignorecase true
+# set drawbox true
+
+# cmds/functions
+
+# define a custom 'open' command
+# This command is called when current file is not a directory. You may want to
+# use either file extensions and/or mime types here.
+cmd open ${{
+  case $(file --mime-type "$(readlink -f $f)" -b) in
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
+    image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
+    text/*|application/json|inode/x-empty) $EDITOR $fx;;
+    image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
+    image/svg+xml) display -- $f ;;
+    image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
+      setsid -f sxiv -aio 2>/dev/null | while read -r file; do
+        [ -z "$file" ] && continue
+        lf -remote "send select \"$file\""
+        lf -remote "send toggle"
+      done &
+      ;;
+    audio/*) mpv --audio-display=no $f ;;
+    video/*|application/vnd.rn-realmedia) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+    application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+    application/pgp-encrypted) $EDITOR $fx ;;
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
+    application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
+    application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
+    application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
+    *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+  esac
+}}
+
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
+# cmd unarchive ${{
+#   case "$f" in
+#       *.zip) unzip "$f" ;;
+#       *.tar.gz) tar -xzvf "$f" ;;
+#       *.tar.bz2) tar -xjvf "$f" ;;
+#       *.tar) tar -xvf "$f" ;;
+#       *) echo "Unsupported format" ;;
+#   esac
+# }}
+
+cmd extract ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "extract?[y/N]"
+	read ans
+	[ $ans = "y" ] && aunpack $fx
+}}
+
+# TODO: Remrite using apack tool from the atool pack
+cmd zip %zip -r "$f" "$f"
+cmd tar %tar cvf "$f.tar" "$f"
+cmd targz %tar cvzf "$f.tar.gz" "$f"
+cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
+
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "delete?[y/N]"
+	read ans
+	[ $ans = "y" ] && rm -rf -- $fx
+}}
+
+# Trash bindings
+# cmd trash ${{
+#   files=$(printf "$fx" | tr '\n' ';')
+#   while [ "$files" ]; do
+#     file=${files%%;*}
+#
+#     trash-put "$(basename "$file")"
+#     if [ "$files" = "$file" ]; then
+#       files=''
+#     else
+#       files="${files#*;}"
+#     fi
+#   done
+# }}
+
+cmd trash ${{
+  trash-put "$f"
+}}
+
+cmd clear_trash %trash-empty
+
+cmd moveto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Move to where?"
+	dest="$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|')" &&
+	for x in $fx; do
+		eval mv -iv \"$x\" \"$dest\"
+	done &&
+	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
+}}
+
+cmd copyto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Copy to where?"
+	dest="$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|')" &&
+	for x in $fx; do
+		eval cp -ivr \"$x\" \"$dest\"
+	done &&
+	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+}}
+
+cmd setbg "$1"
+cmd bulkrename $vidir
+
+# Bindings
+# Remove some defaults
+# map m
+# map o
+# map n
+# map "'"
+# map '"'
+map d
+map c
+# map g
+
+# Bindings
+map <c-f> $lf -remote "send $id select \"$(fzf)\""
+map J $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
+map gh
+# map g top
+map D delete
+map E extract
+map C copyto
+map M moveto
+map <c-n> push :mkdir<space>
+map <c-r> reload
+map <c-s> set hidden!
+# map . set hidden!
+
+# use enter for shell commands
+map <enter> shell
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
+
+# dedicated keys for file opener actions
+map o &mimeopen "$f"
+map O $mimeopen --ask "$f"
+
+map A rename # at the very end
+map cc push A<c-u> # new rename
+map I push A<c-a> # at the very beginning
+map i push A<a-b><a-b><a-f> # before extension
+map a push A<a-b> # after extension
+map B bulkrename
+
+map b $setbg $f
+
+# map <c-e> down
+# map <c-y> up
+map V push :!nvim<space>
+
+map W $setsid -f $TERMINAL >/dev/null 2>&1
+
+map Y $printf "%s" "$fx" | xclip -selection clipboard
+
+# Trash Mappings
+map dd trash
+map dr $trash-restore
+# map dr restore_trash
+# map tc clear_trash
+
+# Movement
+map gd cd ~/Documents
+map gD cd ~/Downloads
+
+map ge cd ~/Desktop
+
+map gp. cd ~/Pictures
+map gps cd ~/Pictures/screenshots
+# map gpw cd ~/Pictures/wallpapers
+
+map gv. cd ~/Videos
+map gvr cd ~/Videos/recordings
+map gvp cd ~/Videos/podcast
+map gvy cd ~/Videos/youtube
+
+map gm. cd ~/Music
+
+map gr. cd ~/repos
+map grs cd ~/repos/soft4sport/core
+map grw cd ~/repos/website
+
+map gc cd ~/.config
+
+map gl. cd ~/.local
+map gls cd ~/.local/bin
+map glh cd ~/.local/share
+map glr cd ~/.local/src
+map glt cd ~/.local/share/Trash/files
+ 
+map gM. cd /mnt
+map gMv cd /mnt/nas/video
+
+# Source Bookmarks
+# source "~/.config/lf/shortcutrc"
