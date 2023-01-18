@@ -15,7 +15,9 @@
 #    in your shellrc (`alias lf="lfub") or if set to a binding, should be
 #    called directly instead of normal lf.
 
-# Basic vars
+#--------------------------------------------------------------------------
+# Settings
+#--------------------------------------------------------------------------
 
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
@@ -43,9 +45,60 @@ set cleaner '~/.config/lf/cleaner'
 set previewer '~/.config/lf/scope'
 set autoquit on
 set ignorecase true
+set info size:time
+set errorfmt "\033[7;31;47m%s\033[0m"     #(default "\033[7;31;47m%s\033[0m")
 # set drawbox true
 
-# cmds/functions
+#--------------------------------------------------------------------------
+# Commands
+#--------------------------------------------------------------------------
+# $fs selection, $f one, $fx to be safe : https://pkg.go.dev/github.com/gokcehan/lf#hdr-Shell_Commands
+# way 1 of creating commands
+cmd touch %touch "$@"
+# cmd mkdir %mkdir "$@"
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
+# TODO: Need to improve
+cmd create %{{
+  # $ x="test.com/"
+  # $ [[ "$x" == */ ]] && echo "yes"
+  # yes
+  printf " File name: "
+  read ans
+  echo $ans
+  echo "${ans: -1}"
+  if [[ "$ans" == */ ]]; then 
+    # echo "yes"
+    mkdir -p "$(echo $ans | tr ' ' '\ ')"
+  else
+    touch $ans
+    # echo "no"
+  fi
+
+  # [ $ans == "*/" ] && echo "yes"
+  }}
+
+# way 2 of creating commands, runs it in a separate terminal
+# cmd mkfile ${{
+#   printf "File Name: "
+#   read ans
+#   #$EDITOR $ans
+#   touch $ans
+# }}
+
+# Commands
+# :delete -> modal asking y/N
+# $ => running shell commands
+
+# Defaults
+# d (cut), p (paste), y (copy), c (clear all copy and cut commands), use c after pasting or if you want ot cancel
+# space (multi select), u (unselect)
+# e (open in default editor)
+# s (sort)
+# r (rename)
+# /, ? (search)
+# f (find)
+
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
@@ -78,14 +131,6 @@ cmd open ${{
   esac
 }}
 
-cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
-
-cmd mkfile ${{
-  printf "File Name: "
-  read ans
-  $EDITOR $ans
-}}
-
 cmd chmod ${{
   printf "Mode Bits: "
   read ans
@@ -95,7 +140,7 @@ cmd chmod ${{
     chmod $ans $file
   done
 
-  lf -remote 'send reload'
+  lf -remote "send $id reload"
 }}
 
 # cmd unarchive ${{
@@ -123,14 +168,14 @@ cmd tar %tar cvf "$f.tar" "$f"
 cmd targz %tar cvzf "$f.tar.gz" "$f"
 cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
 
-cmd delete ${{
-	clear; tput cup $(($(tput lines)/3)); tput bold
-	set -f
-	printf "%s\n\t" "$fx"
-	printf "delete?[y/N]"
-	read ans
-	[ $ans = "y" ] && rm -rf -- $fx
-}}
+# cmd delete ${{
+# 	clear; tput cup $(($(tput lines)/3)); tput bold
+# 	set -f
+# 	printf "%s\n\t" "$fx"
+# 	printf "delete?[y/N]"
+# 	read ans
+# 	[ $ans = "y" ] && rm -rf -- $fx
+# }}
 
 # Trash bindings
 # cmd trash ${{
@@ -178,7 +223,37 @@ cmd copyto ${{
 cmd setbg "$1"
 cmd bulkrename $vidir
 
-# Bindings
+# Tips from lf wiki: https://github.com/gokcehan/lf/wiki/Tips
+#
+# New folder with selected item(s)
+# A function similar to macOS Finder.app
+# If you use zsh, make sure you set shellopts '-euy' as described above for proper $fx split.
+map <a-n> newfold
+
+cmd newfold ${{
+    set -f
+    printf "Directory name: "
+    read newd
+    mkdir -- "$newd"
+    mv -- $fx "$newd"
+}}
+
+cmd fzf_jump ${{
+    res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ] ; then
+        cmd="cd"
+    elif [ -f "$res" ] ; then
+        cmd="select"
+    else
+        exit 0
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+
+#--------------------------------------------------------------------------
+# Key Mappings
+#--------------------------------------------------------------------------
+
 # Remove some defaults
 # map m
 # map o
@@ -190,16 +265,27 @@ map c
 # map g
 
 # Bindings
+
+map p paste
+map x cut
+map y copy
+map D delete
+map <c-r> reload
+
+map C clear # (clear all copy and cut commands), use c after pasting or if you want ot cancel
+
 map <c-f> $lf -remote "send $id select \"$(fzf)\""
 map J $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
-map gh
+# map gh
 # map g top
-map D delete
+# map D delete
 map E extract
 map C copyto
 map M moveto
+map <c-t> push :touch<space>
 map <c-n> push :mkdir<space>
-map <c-r> reload
+# map <c-t> push :touch<space>
+# map <c-n> push :mkdir<space>
 map <c-s> set hidden!
 # map . set hidden!
 
@@ -207,29 +293,34 @@ map <c-s> set hidden!
 map <enter> shell
 
 # execute current file (must be executable)
-map x $$f
+# map x $$f
 map X !$f
 
 # dedicated keys for file opener actions
 map o &mimeopen "$f"
 map O $mimeopen --ask "$f"
 
-map A rename # at the very end
-map cc push A<c-u> # new rename
-map I push A<c-a> # at the very beginning
-map i push A<a-b><a-b><a-f> # before extension
-map a push A<a-b> # after extension
+map A rename # at the very end -> cw
+map cc push A<c-u> # new rename -> cw<c-u>
+map I push A<c-a> # at the very beginning -> cw<c-a>
+ 
+# map i push A<a-b><a-b><a-f> # before extension
+# map a push A<a-b> # after extension
 map B bulkrename
 
 map b $setbg $f
 
 # map <c-e> down
 # map <c-y> up
-map V push :!nvim<space>
+# map V push :!nvim<space>
 
+# Open terminal in current directory
 map W $setsid -f $TERMINAL >/dev/null 2>&1
 
+# Yank current file/directory path into into primary and selection clipboards
 map Y $printf "%s" "$fx" | xclip -selection clipboard
+
+map <c-g> $lazygit
 
 # Trash Mappings
 map dd trash
@@ -237,7 +328,9 @@ map dr $trash-restore
 # map dr restore_trash
 # map tc clear_trash
 
+#--------------------------------------------------------------------------
 # Movement
+#--------------------------------------------------------------------------
 map gd cd ~/Documents
 map gD cd ~/Downloads
 
@@ -268,6 +361,9 @@ map glt cd ~/.local/share/Trash/files
  
 map gM. cd /mnt
 map gMv cd /mnt/nas/video
+
+#
+map Ecfl $$EDITOR "~/.config/lf/lfrc" 
 
 # Source Bookmarks
 # source "~/.config/lf/shortcutrc"
