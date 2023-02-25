@@ -33,7 +33,7 @@ tput smkx &
 # Wallpaper
 xwallpaper --zoom .config/wallpapers/forest.jpg &
 
-autostart="picom dunst lxsession unclutter redshift"
+autostart="mpd picom dunst lxsession unclutter redshift"
 
 for program in $autostart; do
 	pidof -s "$program" || "$program" &
