@@ -4,28 +4,36 @@
 
 case $BUTTON in
 	1) setsid -f "$TERMINAL" -e pulsemixer ;;
-	2) pamixer -t ;;
-	4) pamixer --allow-boost -i 1 ;;
-	5) pamixer --allow-boost -d 1 ;;
-	3) notify-send "📢 Volume module" "\- Shows volume 🔊, 🔇if muted.
+	2) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
+	4) wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+ ;;
+	5) wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%- ;;
+	3) notify-send "📢 Volume module" "\- Shows volume 🔊, 🔇 if muted.
 - Middle click to mute.
 - Scroll to change." ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-[ $(pamixer --get-mute) = true ] && echo "ﱝ" && exit
+vol="$(wpctl get-volume @DEFAULT_AUDIO_SINK@)"
 
-vol="$(pamixer --get-volume)"
+# If muted, print 🔇 and exit.
+[ "$vol" != "${vol%\[MUTED\]}" ] && echo "ﱝ" && exit
 
-if [ "$vol" -gt "70" ]; then
-	icon="墳"
-elif [ "$vol" -gt "30" ]; then
-	icon="奔"
-elif [ "$vol" -gt "0" ]; then
-	icon="奄"
-else
-  echo "ﱝ" && exit
-fi
+vol="${vol#Volume: }"
 
-# printf "$icon$vol"
+split() {
+	# For ommiting the . without calling and external program.
+	IFS=$2
+	set -- $1
+	printf '%s' "$@"
+}
+
+vol="$(printf "%.0f" "$(split "$vol" ".")")"
+
+case 1 in
+	$((vol >= 70)) ) icon="墳" ;;
+	$((vol >= 30)) ) icon="奔" ;;
+	$((vol >= 1)) ) icon="奄" ;;
+	* ) echo "ﱝ" && exit ;;
+esac
+
 echo "$icon $vol%"
