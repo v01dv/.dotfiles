@@ -14,7 +14,17 @@ image/png=img.desktop;
 image/jpeg=img.desktop;
 image/gif=img.desktop;
 video/x-matroska=video.desktop
+video/mp4=video.desktop
 application/rss+xml=rss.desktop
 inode/directory=file.desktop
 text/markdown=nvim.desktop;firefox.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-LISFJ1.desktop;
+x-scheme-handler/http=librewolf.desktop
+x-scheme-handler/https=librewolf.desktop
+
+# text/html=librewolf.desktop
+# text/xml=librewolf.desktop
+# application/xhtml_xml=librewolf.desktop
+# image/webp=librewolf.desktop
+# x-scheme-handler/ftp=librewolf.desktop
+
