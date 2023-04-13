@@ -1,0 +1,98 @@
+# Sets user-defined palette
+palette = "catppuccin_frappe"
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+format = """
+[🞔  ](green)\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$jobs\
+$cmd_duration\
+"""
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+disabled = true
+
+[username]
+format = '[$user]($style)@'
+style_user = 'green'
+# show_always = true
+
+[hostname]
+ssh_symbol = ''
+trim_at =	''
+format = '[$ssh_symbol$hostname]($style): '
+style = 'green'
+# ssh_only = false
+
+[directory]
+truncation_length = 1
+read_only = " "
+style = "bold blue"
+
+[git_branch]
+format = "[git:$branch]($style)"
+style = "overlay0"
+symbol = " "
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "overlay0"
+
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed )]($style)"
+style = "cyan"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+
+[jobs]
+# symbol = '✦'
+style = 'red'
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
+
+# palette tables should be last in the config 
+[palettes.catppuccin_frappe]
+rosewater = "#f2d5cf"
+flamingo = "#eebebe"
+pink = "#f4b8e4"
+mauve = "#ca9ee6"
+red = "#e78284"
+maroon = "#ea999c"
+peach = "#ef9f76"
+yellow = "#e5c890"
+green = "#a6d189"
+teal = "#81c8be"
+sky = "#99d1db"
+sapphire = "#85c1dc"
+blue = "#8caaee"
+lavender = "#babbf1"
+text = "#c6d0f5"
+subtext1 = "#b5bfe2"
+subtext0 = "#a5adce"
+overlay2 = "#949cbb"
+overlay1 = "#838ba7"
+overlay0 = "#737994"
+surface2 = "#626880"
+surface1 = "#51576d"
+surface0 = "#414559"
+base = "#303446"
+mantle = "#292c3c"
+crust = "#232634"
+#
