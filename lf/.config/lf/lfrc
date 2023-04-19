@@ -264,6 +264,16 @@ cmd fzf_jump ${{
     lf -remote "send $id $cmd \"$res\""
 }}
 
+cmd z %{{
+	result="$(zoxide query --exclude $PWD $@)"
+	lf -remote "send $id cd $result"
+}}
+
+cmd zi ${{
+	result="$(zoxide query -i)"
+	lf -remote "send $id cd $result"
+}}
+
 #--------------------------------------------------------------------------
 # Key Mappings
 #--------------------------------------------------------------------------
