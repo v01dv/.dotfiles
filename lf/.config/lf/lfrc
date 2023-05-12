@@ -46,7 +46,7 @@ set hidden true
 # set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
 set cleaner '~/.config/lf/cleaner'
 set previewer '~/.config/lf/scope'
-set autoquit on
+set autoquit true
 set ignorecase true
 set info size:time
 set errorfmt "\033[7;31;47m%s\033[0m"     #(default "\033[7;31;47m%s\033[0m")
