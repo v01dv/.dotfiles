@@ -26,6 +26,8 @@ zsh_add_plugin "zdharma-continuum/fast-syntax-highlighting"
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE="$XDG_DATA_HOME"/zsh/history
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -96,7 +98,7 @@ bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 bindkey '^ ' autosuggest-accept
-# bindkey '^n' autosuggest-accept
+bindkey '^n' autosuggest-accept
 
 #--------------------------------------------------------------------------
 # Miscellaneous
@@ -122,3 +124,5 @@ export N_PREFIX="$HOME/.local/share/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || 
 # Alt+c fuzzy change directory
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+
+eval "$(starship init zsh)"

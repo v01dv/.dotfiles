@@ -9,31 +9,20 @@
 prime-offload &
 
 # Display resolution
-xrandr --output DP-0 --auto --output DP-1 --auto --right-of DP-0 --auto --output LVDS-1-1 --primary --left-of DP-0 --auto &
+xrandr --output DP-0 --auto --output DP-1 --auto --right-of DP-0 --auto --output LVDS-1-1 --primary --left-of DP-0 --auto 
 # xrandr --output DP-0 --auto --output DP-1 --auto --right-of DP-0 &
 # xrandr --output LVDS-1-2 --auto --left-of DP-0 &
 # xrandr --output LVDS-1-2 --auto  &
 
-# Keyboard layout
-setxkbmap -layout "us,ua" -option 'grp:sclk_toggle,compose:ralt,grp_led:scroll' &
 #xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources & xrdbpid=$!	# Uncomment to use Xresources colors/settings on startup
 #xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources &		# Uncomment to use Xresources colors/settings on startup
-remaps &		# run the remaps script, switching caps/esc and more; check it for more info
-
-# Speedy keys
-# That remove the delay when holding j or k
-xset r rate 210 40
 
 # picom -f &      # Compositor
+picom -b --experimental-backend &
 
-# To have Del key behaviour in terminal as expected
-# https://git.suckless.org/st/file/FAQ.html (Why doesn't the Del key work in some programs?)
-tput smkx &  
+setbg &
 
-# Wallpaper
-xwallpaper --zoom .config/wallpapers/forest.jpg &
-
-autostart="mpd picom dunst lxsession unclutter redshift"
+autostart="mpd dunst lxsession unclutter redshift clipmenud remapd"
 
 for program in $autostart; do
 	pidof -s "$program" || "$program" &

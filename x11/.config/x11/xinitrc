@@ -31,7 +31,7 @@ dwmblocks &
 # Removed while loop based on:
 # https://github.com/Askannz/optimus-manager/issues/205#issuecomment-627364593
 
-# while true; do
+while true; do
 	ssh-agent dwm >/dev/null 2>&1
-# done
+done
 
