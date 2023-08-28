@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "~/.gtkrc-2.0.mine"
-gtk-theme-name="Catppuccin-Frappe-Standard-Pink-Dark"
+gtk-theme-name="Catppuccin-Frappe-Standard-Blue-dark"
 gtk-icon-theme-name="Papirus-Dark"
 gtk-font-name="Sans 10"
 #gtk-cursor-theme-name="Adwaita"
