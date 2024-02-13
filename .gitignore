@@ -4,3 +4,4 @@ tmux/.config/tmux/plugins/
 mpv/.config/mpv/watch_later/
 vifm/.config/vifm/vifminfo.json*
 
+zsh/.config/zsh/plugins

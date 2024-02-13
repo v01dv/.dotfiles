@@ -25,10 +25,13 @@ vim.keymap.set("i", "<left>", "<NOP>", opts)
 vim.keymap.set("i", "<right>", "<NOP>", opts)
 
 -- Better window navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
-vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
-vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
-vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
+-- NOTE: Commented because use christoomey/vim-tmux-navigator plugin
+-- which allow to have Ctrl-hjkl navigation in tmux and nvim simultaneously
+-- vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
+-- vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
+-- vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
+-- vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
+
 -- vim.keymap.set("n", "<Leader>q", ":q", opts) -- Quit current window
 -- vim.keymap.set("n", "<Leader>w", ":wincmd w<cr>", opts) -- Switch beetwen windows
 

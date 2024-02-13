@@ -58,8 +58,15 @@ renamed = "​"
 deleted = "​"
 stashed = "≡"
 
+# https://github.com/fitrh/dotfiles/blob/main/.config/starship/starship.toml
+#
+# ahead = '[﯁ ](bright-blue)[$count](bright-white bold) '
+# behind = '[﮾ ](white)[$count](bright-white bold) '
+# diverged = '[ ](purple)|[ ﯁ ](bright-blue)[$ahead_count](bright-white bold)[ ﮾ ](white)[$behind_count](bright-white) '
+
+
 [jobs]
-# symbol = '✦'
+# symbol = ''
 style = 'red'
 
 [cmd_duration]

@@ -148,12 +148,30 @@ return {
     end
   },
   {
-    "andymass/vim-matchup",
-    event = { "BufReadPost" },
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end,
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
   },
+  -- FIXME: Temporary disable becausr of conflict with nvim-treesitter
+  -- {
+  --   "andymass/vim-matchup",
+  --   event = { "BufReadPost" },
+  --   config = function()
+  --     vim.g.matchup_matchparen_offscreen = { method = "popup" }
+  --   end,
+  -- },
 
 
 }

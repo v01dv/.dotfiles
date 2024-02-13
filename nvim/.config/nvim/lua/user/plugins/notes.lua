@@ -1,0 +1,30 @@
+return {
+ -- {
+ --    "iamcco/markdown-preview.nvim",
+ --    ft = { "markdown" },
+ --    build = "cd app && npm install",
+ --    init = function()
+ --      vim.g.mkdp_filetypes = { "markdown" }
+ --    end,
+ --  },
+ --  {
+ --    "renerocksai/telekasten.nvim",
+ --    dependencies = { "nvim-telescope/telescope.nvim" },
+ --    opts = {
+ --      home = vim.env.HOME .. "/zettelkasten",
+ --    },
+ --    enabled = false,
+ --    ft = { "markdown" },
+ --  },
+ --  {
+ --    "epwalsh/obsidian.nvim",
+ --    opts = {
+ --      dir = vim.env.HOME .. "/obsidian",
+ --      completion = {
+ --        nvim_cmp = true,
+ --      },
+ --    },
+ --    enabled = false,
+ --    ft = { "markdown" },
+ --  },
+}

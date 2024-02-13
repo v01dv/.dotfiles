@@ -1,5 +1,6 @@
 !! Load it by : xrdb -merge <path to xresources file>
 
+Xcursor.theme: Catppuccin-Frappe-Blue-Cursors
 
 !! Transparency (0-1):
 ! The alpha value (for transparency) goes from 0 (transparent) to 1 (opaque).

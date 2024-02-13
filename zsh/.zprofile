@@ -12,8 +12,8 @@ export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
 # Default programs
 export EDITOR="nvim" 	# $EDITOR use nvim in terminal
 export VISUAL="nvim"   	# $VISUAL use nvim in GUI mode
-export TERMINAL="kitty"
-export BROWSER="firefox"
+export TERMINAL="st"
+export BROWSER="librewolf"
 export READER="zathura"
 export FILE="vifm"
 export CODEEDITOR="vscodium"
@@ -26,7 +26,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export IGNORE_CC_MISMATCH=1 
 
-export HISTFILE="$XDG_DATA_HOME/history" # FIX: Do we realy need it here if we already configured it in .zshrc 
+# export HISTFILE="$XDG_DATA_HOME/history" # FIX: Do we realy need it here if we already configured it in .zshrc 
 
 # This line will break some DMs.
 # LightDM does not allow you to change this variable. 

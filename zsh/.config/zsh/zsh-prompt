@@ -31,29 +31,6 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
     fi
 }
 
-### git: Show +N/-N when your local branch is ahead-of or behind remote HEAD.
-# Make sure you have added misc to your 'formats':  %m
-zstyle ':vcs_info:git*+set-message:*' hooks git-st
-function +vi-git-st() {
-    local ahead behind
-    local -a gitstatus
-
-    # Exit early in case the worktree is on a detached HEAD
-    git rev-parse ${hook_com[branch]}@{upstream} >/dev/null 2>&1 || return 0
-
-    local -a ahead_and_behind=(
-        $(git rev-list --left-right --count HEAD...${hook_com[branch]}@{upstream} 2>/dev/null)
-    )
-
-    ahead=${ahead_and_behind[1]}
-    behind=${ahead_and_behind[2]}
-
-    (( $ahead )) && gitstatus+=( "+${ahead}" )
-    (( $behind )) && gitstatus+=( "-${behind}" )
-
-    hook_com[misc]+=${(j:/:)gitstatus}
-}
-
 # Enable checking for (un)staged changes, enabling use of %u and %c
 zstyle ':vcs_info:*' check-for-changes true
 
@@ -72,13 +49,17 @@ zstyle ':vcs_info:*' check-for-changes true
 #
 # Set custom strings for an unstaged vcs repo changes (*) and staged changes (+)
 zstyle ':vcs_info:*' stagedstr ' +'    # '%F{green}●'
-zstyle ':vcs_info:*' unstagedstr ' *'  # '%F{yellow}●'
+zstyle ':vcs_info:*' unstagedstr '*'  # '%F{yellow}●'
 
 zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
 zstyle ':vcs_info:git:*' formats " %{$fg[blue]%}git:(%{$fg[blue]%}%b%{$fg[blue]%}%{$fg[yellow]%}%u%c%m%{$fg[blue]%})%{$reset_color%}"
 
+  # https://unicode-table.com/en/1F794/
+  # U+1F794 = 🞔  (Name: White Square Containing Black Very Small Square; Block: Geometric Shapes Extended)
+
 # PROMPT="%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%} :%{$fg_bold[red]%} )%{$fg[cyan]%}%c%{$reset_color%}"
 PROMPT="%B%(!:%{$fg[red]%}🞕  :%{$fg[green]%}🞔  )%{$fg[cyan]%}%c%{$reset_color%}"
+# PROMPT="%B%(!:%{$fg[red]%}🞕  :%{$fg[green]%}  )%{$fg[cyan]%}%c%{$reset_color%}"
 PROMPT+="\$vcs_info_msg_0_ "
 
 # TODO: How to configure PS2 prompt?

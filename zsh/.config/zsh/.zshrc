@@ -6,13 +6,13 @@
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
-zle_highlight=('paste:none') # This gets rid of a paste highlight  
+zle_highlight=('paste:none') # This gets rid of a paste highlight
 
 # Load aliases and shortcuts if existent.
-# [ -f "${ZDOTDIR}/zsh-vim-mode" ] && source "${ZDOTDIR}/zsh-vim-mode" 
-[ -f "${ZDOTDIR}/zsh-functions" ] && source "${ZDOTDIR}/zsh-functions" 
-[ -f "${ZDOTDIR}/zsh-prompt" ] && source "${ZDOTDIR}/zsh-prompt" 
-[ -f "${ZDOTDIR}/zsh-aliases" ] && source "${ZDOTDIR}/zsh-aliases" 
+# [ -f "${ZDOTDIR}/zsh-vim-mode" ] && source "${ZDOTDIR}/zsh-vim-mode"
+[ -f "${ZDOTDIR}/zsh-functions" ] && source "${ZDOTDIR}/zsh-functions"
+[ -f "${ZDOTDIR}/zsh-prompt" ] && source "${ZDOTDIR}/zsh-prompt"
+[ -f "${ZDOTDIR}/zsh-aliases" ] && source "${ZDOTDIR}/zsh-aliases"
 
 # Note that your must source it before loading the zsh-syntax-highlighting plugin.
 # source "${ZDOTDIR}/catppuccin_frappe-zsh-syntax-highlighting.zsh"
@@ -112,7 +112,7 @@ bindkey '^n' autosuggest-accept
 # TODO: Rewrite this as script
 echo -e "\033[0;32m$(cat ${ZDOTDIR}/banner0.txt) \n"
 
-# For completions to work, the above line must be added after compinit is called. 
+# For completions to work, the above line must be added after compinit is called.
 # You may have to rebuild your cache by running rm ~/.zcompdump*; compinit.
 eval "$(zoxide init zsh)"
 
@@ -126,3 +126,11 @@ export N_PREFIX="$HOME/.local/share/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || 
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 
 eval "$(starship init zsh)"
+
+# Based on:
+#   https://github.com/preaction/dot-files/blob/master/bin/tmx
+# Start TMUX session each time a terminal is open. A new session is created with a new window.
+# All sessions share the same set of windows. Detaching the session will kill it.
+# if [[ -x `which tmux` ]]; then
+#     tmx login
+# fi
