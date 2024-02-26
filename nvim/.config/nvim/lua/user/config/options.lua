@@ -3,8 +3,7 @@ vim.opt.backup = false                          -- creates a backup file
 -- vim.opt.clipboard = "unnamedplus"               -- allows neovim to access the system clipboard. Now you can copy the line in vim with yy and paste it system-wide.
 vim.opt.cmdheight = 1                           -- more space in the neovim command line for displaying messages
 vim.opt.colorcolumn = "99999"                   -- fixes indentline for now
--- vim.opt.completeopt = { "menuone", "noinsert", "noselect" } -- mostly just for cmp
-vim.opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }  -- mostly just for cmp
 vim.opt.conceallevel = 0                        -- so that `` is visible in markdown files
 vim.opt.fileencoding = "utf-8"                  -- the encoding written to a file
 vim.opt.foldmethod = "manual"                   -- folding, set to "expr" for treesitter based foloding
@@ -47,6 +46,9 @@ vim.opt.sidescrolloff = 8                       -- Show next 8 columns while sid
 -- vim.opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
 --o.guifont = "JetBrainsMono Nerd Font"
 vim.opt.fillchars.eob=" "                       -- remove the ~ from end of buffer
+
+vim.opt.list = true -- Show invisible characters
+vim.opt.listchars:append("eol:¬") -- Show a special character at the end of each line
 -- vim.opt.listchars = { tab = '▸ ', trail = '·' }
 
 -- Buffer becomes hidden when abandoned.
