@@ -11,9 +11,16 @@ function M.lsp_keymaps(bufnr)
   -- vim.keymap.set('n', '<space>ws', vim.lsp.buf.workspace_symbol, { desc = 'LSP: [w]orkspace [s]ymbols' })
 
   vim.keymap.set({ "n",  "v"}, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", { buffer = bufnr, desc = 'LSP: Format current buffer' })
+
+  -- Rename the cariable under the cursor.
   vim.keymap.set('n', '<leader>rn', M.rename, { expr = true, buffer = bufnr, desc = 'LSP: [r]e[n]ame' })
+
+  -- Execute a code code action, usually your cursor needs to be on top of an error
+  -- or suggestion from your LSP for this to acrivate.
   vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'LSP: [c]ode [a]ction'})
 
+  -- Jump to the definition of the word under the cursor.
+  --  To jump back, press <C-t>. To jump next, press <C-i>.
   -- reuse_win (boolean) Jump to existing window if buffer is already open.
   vim.keymap.set('n', 'gd', function() require('telescope.builtin').lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = 'LSP: [g]oto [d]efinition' })
 
@@ -36,11 +43,14 @@ function M.lsp_keymaps(bufnr)
 
   -- See `:help K` for why this keymap
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = 'LSP: Hover Documentation' })
+
+  -- Show the signature of the function you're currently completing.
   vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'LSP: Signature Help' })
 
   vim.keymap.set("n", "lh", function() vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled()) end, { buffer = bufnr, desc = 'LSP: Toggle inlay hints' })
 
   -- Lesser used LSP functionality
+  -- NOTE: For example, in C this would take you to the header
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'LSP: [g]oto [D]eclaration' })
 end
 

@@ -22,7 +22,11 @@ function M.common_capabilities()
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
-  -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+
+  -- LSP servers and clients are able to communicate to each other what features they support.
+  --  By default, Neovim doesn't support everything that is in the LSP Sepecification.
+  --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
+  --  So, we create new capabilities with nvim-cmp, and then broadcast that to the servers.
   return require("cmp_nvim_lsp").default_capabilities(capabilities)
 end
 

@@ -1,4 +1,4 @@
--- For details use :help options
+-- For details use :help option-list
 vim.opt.backup = false                          -- creates a backup file
 -- vim.opt.clipboard = "unnamedplus"               -- allows neovim to access the system clipboard. Now you can copy the line in vim with yy and paste it system-wide.
 vim.opt.cmdheight = 1                           -- more space in the neovim command line for displaying messages
@@ -41,7 +41,7 @@ vim.opt.numberwidth = 4                         -- set number column width to 2 
 vim.opt.signcolumn = "yes"   -- "auto"          -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false                            -- display lines as one long line
 vim.opt.spell = false
-vim.opt.spelllang = "en_us"
+vim.opt.spelllang = { "en_us" }
 vim.opt.scrolloff = 8             --999         -- is one of my fav. Show next 8 lines while scrolling
 vim.opt.sidescrolloff = 8                       -- Show next 8 columns while side-scrolling
 -- vim.opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
@@ -67,11 +67,12 @@ vim.opt.iskeyword:append("-")                    -- treat dash separated words a
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
 vim.g.netrw_banner = 0
 vim.g.netrw_mouse = 2
 vim.g.netrw_browse_split = 0
 vim.g.netrw_winsize = 25
-
+-- vim.g.netrw_liststyle =3  -- make netrw use the tree view by default
 
 -- Undercurl
 -- vim.cmd([[let &t_Cs = "\e[4:3m"]])

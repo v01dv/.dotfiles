@@ -43,6 +43,12 @@ return {
             NullLsInfoTitle = { fg = colors.blue },
             NullLsInfoBorder = { fg = colors.blue },
             NullLsInfoSources = { fg = colors.yellow },
+            -- https://www.reddit.com/r/vim/comments/12v898n/comment/jha0epq/
+            netrwTreeBar = { fg = colors.surface0 },
+
+            -- NeoTreeWinSeparator = { fg = colors.mantle },
+            NeoTreeWinSeparator = { fg = colors.mantle, bg = colors.mantle },
+
           }
         end,
         integrations = {
@@ -53,6 +59,7 @@ return {
             -- style = "nvchad"
           },
           nvimtree = true,
+          neotree = true,
           treesitter_context = true,
           treesitter = true,
           harpoon = true,

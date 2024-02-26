@@ -11,8 +11,10 @@ return {
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
       end
 
+      -- default mappings
       api.config.mappings.default_on_attach(bufnr)
 
+      -- custom mappings
       vim.keymap.set("n", "l", api.node.open.edit, opts "Open")
       vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
       vim.keymap.set("n", "v", api.node.open.vertical, opts "Open: Vertical Split")
@@ -26,7 +28,7 @@ return {
       on_attach = my_on_attach,
       disable_netrw = false,
       hijack_netrw = true,
-      sync_root_with_cwd = true,
+      -- sync_root_with_cwd = true,
       modified = {
         enable = true,
       },
@@ -92,13 +94,12 @@ return {
         special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
         symlink_destination = true,
       },
-      update_focused_file = {
-        enable = true,
-        debounce_delay = 15,
-        update_root = true,
-        ignore_list = {},
-      },
-
+      -- update_focused_file = {
+      --   enable = true,
+      --   debounce_delay = 15,
+      --   update_root = true,
+      --   ignore_list = {},
+      -- },
       diagnostics = {
         enable = false,
         show_on_dirs = false,
@@ -124,6 +125,21 @@ return {
       },
     }
 
+    local function toggle_in_place()
+      local api = require("nvim-tree.api")
+      if api.tree.is_visible() then
+        api.tree.close()
+      else
+        api.tree.open({
+          path = nil,
+          current_window = true,
+          find_file = false,
+          update_root = false,
+        })
+      end
+    end
+
+    vim.keymap.set("n", "-", toggle_in_place, { desc = "[-] NvimTree netrw style" })
     vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<cr>", { desc = "[n]vimTree file explorer" })
   end
 }

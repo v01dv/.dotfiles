@@ -198,7 +198,7 @@ return {
       -- sort_lastused — Sort the current and last buffer to the top and select the last used.
       -- sort_mru — Sort all buffers after the most recently used. Not just the current and last one.
       -- ignore_current_buffer — if true, don’t show the current buffer in the list.
-      vim.keymap.set("n", "<leader>b", function() require("telescope.builtin").buffers { sort_mru=true } end, { desc = "Find open [b]uffers" })
+      vim.keymap.set("n", "<leader>b", function() require("telescope.builtin").buffers { sort_mru = true } end, { desc = "Find open [b]uffers" })
       vim.keymap.set("n", "<leader>sf", find_files, { desc = "[s]earch [f]iles in the current directory" })
       vim.keymap.set("n", "<leader>sF", find_files_from_project_git_root, { desc = "[s]earch [F]iles on Git Root" })
       vim.keymap.set("n", "<leader>fp", function() require("telescope").extensions.project.project { display_type = "minimal" } end, { desc = "Find [p]roject" })

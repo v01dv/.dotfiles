@@ -57,6 +57,7 @@ return {
       },
       indent = { enable = true },
       -- incremental_selection = { enable = false },
+      -- Incremental selection: Included with nvim-treesitter, see :help nvim-treesitter-incremental-selection-mod
       incremental_selection = {
         enable = true,
         keymaps = {

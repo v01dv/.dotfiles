@@ -22,6 +22,7 @@ return {
             "dap-repl",  -- Without this icons in nvim-dap-ui plugin will will not shown
             "help",
             "lazy",
+            "neo-tree",
           },
         },
         ignore_focus = { "NvimTree" },
@@ -60,7 +61,7 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
-      extensions = { "quickfix", "man", "fugitive", "trouble", "lazy", "mason", "nvim-dap-ui", "nvim-tree", "toggleterm" },
+      extensions = { "quickfix", "man", "fugitive", "trouble", "lazy", "mason", "nvim-dap-ui", "neo-tree", "nvim-tree", "toggleterm" },
     }
   end,
 }
