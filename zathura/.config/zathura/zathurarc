@@ -9,7 +9,6 @@ set selection-clipboard   clipboard #Enable copy to clipboard
 # ---------------
 set statusbar-h-padding 0
 set statusbar-v-padding 0
-set show-scrollbars     false
 set page-padding 1
 
 

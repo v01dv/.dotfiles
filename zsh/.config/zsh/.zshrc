@@ -114,7 +114,7 @@ echo -e "\033[0;32m$(cat ${ZDOTDIR}/banner0.txt) \n"
 
 # For completions to work, the above line must be added after compinit is called.
 # You may have to rebuild your cache by running rm ~/.zcompdump*; compinit.
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
 export N_PREFIX="$HOME/.local/share/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 

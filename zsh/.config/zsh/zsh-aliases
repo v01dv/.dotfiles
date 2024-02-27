@@ -6,9 +6,6 @@
 # Use $XINITRC variable if file exists.
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
-# alias ls='ls --color=auto'
-alias j='z'
-alias f='zi'
 alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
 alias nvimrc='nvim ~/.config/nvim/'
 
@@ -24,19 +21,19 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 # Verbosity and settings that you pretty much just always are going to want.
-alias	cp="cp -iv" 
+alias	cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -vI"
 alias bc="bc -ql"
 alias mkd="mkdir -pv"
 alias yt="yt-dlp --embed-metadata -i"
-alias yta="yt -x -f bestaudio/best" 
+alias yta="yt -x -f bestaudio/best"
 alias ffmpeg="ffmpeg -hide_banner"
 
 # Colorize commands when possible.
-alias ls="ls -hN --color=auto --group-directories-first" 
-alias grep="grep --color=auto" 
-alias diff="diff --color=auto" 
+alias ls="ls -hN --color=auto --group-directories-first"
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
 alias ccat="highlight --out-format=ansi"
 alias ip="ip -color=auto"
 
@@ -58,18 +55,17 @@ alias lrt='ls -1Fcrt'
 # alias tree='ll --tree --level=2'
 
 # These common commands are just too long! Abbreviate them.
-alias	ka="killall" 
-alias g="lazygit" 
-alias trem="transmission-remote" 
-alias YT="youtube-viewer" 
-alias sdn="shutdown -h now" 
-alias e="$EDITOR" 
+alias	ka="killall"
+alias g="lazygit"
+alias trem="transmission-remote"
+alias YT="youtube-viewer"
+alias sdn="shutdown -h now"
+alias e="$EDITOR"
 alias v="$EDITOR"
 alias p="pacman"
-# alias xi="sudo xbps-install" 
-# alias xr="sudo xbps-remove -R" 
-# alias xq="xbps-query" 
-alias z="zathura"
+# alias xi="sudo xbps-install"
+# alias xr="sudo xbps-remove -R"
+# alias xq="xbps-query"
 
 alias lf="lfub"
 
@@ -170,6 +166,6 @@ ex ()
   fi
 }
 
-# TODO: Add some aliases from 
+# TODO: Add some aliases from
 # https://gitlab.com/dwt1/dotfiles/-/blob/master/.bashrc
 # https://github.com/ChrisTitusTech/zsh/blob/master/aliasrc

@@ -70,7 +70,7 @@ cmd create %{{
   read ans
   echo $ans
   echo "${ans: -1}"
-  if [[ "$ans" == */ ]]; then 
+  if [[ "$ans" == */ ]]; then
     # echo "yes"
     mkdir -p "$(echo $ans | tr ' ' '\ ')"
   else
@@ -120,16 +120,17 @@ cmd open ${{
         lf -remote "send toggle"
       done &
       ;;
-    audio/*) mpv --audio-display=no $f ;;
-    video/*|application/vnd.rn-realmedia) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+    audio/*|video/x-ms-asf) mpv --audio-display=no $f ;;
+	  video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
     application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
     application/pgp-encrypted) $EDITOR $fx ;;
-    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
-    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
-    application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
-    application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
-    application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
-    application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template|application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template|application/vnd.oasis.opendocument.formula|application/vnd.oasis.opendocument.database) setsid -f libreoffice $fx >/dev/null 2>&1 ;;
+    # application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
+    # application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
+    # application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
+    # application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
+    # application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
+    # application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
     *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
   esac
 }}
@@ -327,7 +328,7 @@ map O $mimeopen --ask "$f"
 map A rename # at the very end -> cw
 map cc push A<c-u> # new rename -> cw<c-u>
 map I push A<c-a> # at the very beginning -> cw<c-a>
- 
+
 # map i push A<a-b><a-b><a-f> # before extension
 # map a push A<a-b> # after extension
 map B bulkrename
@@ -382,12 +383,12 @@ map gls cd ~/.local/bin
 map glh cd ~/.local/share
 map glr cd ~/.local/src
 map glt cd ~/.local/share/Trash/files
- 
+
 map gM. cd /mnt
 map gMv cd /mnt/nas/video
 
 #
-map Ecfl $$EDITOR "~/.config/lf/lfrc" 
+map Ecfl $$EDITOR "~/.config/lf/lfrc"
 
 # Source Bookmarks
 # source "~/.config/lf/shortcutrc"
