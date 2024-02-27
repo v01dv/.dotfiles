@@ -1,6 +1,6 @@
 gui:
   theme: # https://github.com/catppuccin/lazygit/blob/main/themes/frappe.yml
-    lightTheme: false 
+    lightTheme: false
     activeBorderColor:
       - "#a6d189" # Green
       - bold
@@ -29,4 +29,4 @@ gui:
 disableStartupPopups: true
 notARepository: 'skip' # one of: 'prompt' | 'create' | 'skip'
 os:
-  editCommand: 'nvim' 
+  editPreset: 'nvim'
