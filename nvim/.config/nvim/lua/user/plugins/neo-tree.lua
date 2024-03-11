@@ -15,7 +15,6 @@ return {
       enable_git_status = false,
       enable_diagnostics = false,
       enable_modified_markers = false,
-      enable_normal_mode_for_inputs = true,
       use_popups_for_input = false, -- not floats for input
       default_component_configs = {
         indent = {
@@ -97,6 +96,14 @@ return {
           handler = function(file_path)
             require("neo-tree.command").execute({ action = "close" })
           end
+        },
+        {
+          event = "neo_tree_popup_input_ready",
+          ---@param input NuiInput
+          handler = function(input)
+            -- enter input popup with normal mode by default.
+            vim.cmd("stopinsert")
+          end,
         },
       },
     }
