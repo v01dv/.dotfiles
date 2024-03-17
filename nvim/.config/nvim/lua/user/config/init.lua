@@ -6,6 +6,7 @@ return {
   pde = {
     ai = true,
     angular = false,
+    bash = true,
     cpp = false,
     csharp = false,
     docker = false,
