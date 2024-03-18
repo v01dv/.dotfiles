@@ -22,6 +22,16 @@ return {
         -- bashls
         bashls = {
           filetypes = { "sh", "zsh" },
+          -- FIX: explainshell doesn't work because of issue https://github.com/bash-lsp/bash-language-server/issues/1107
+          -- explainshellEndpoint = "https://explainshell.com",
+          -- settings = {
+          --   bashIde = {
+          --     includeAllWorkspaceSymbols = true,
+          --     shellcheckArguments = {
+          --       string.format("--source-path=%s", vim.loop.cwd()),
+          --     },
+          --   },
+          -- },
         },
       },
     },
@@ -31,7 +41,6 @@ return {
     opts = function(_, opts)
       local nls = require "null-ls"
       table.insert(opts.sources, nls.builtins.formatting.shfmt)
-      -- table.insert(opts.sources, nls.builtins.diagnostics.shellcheck)
     end,
   },
   {
@@ -39,21 +48,14 @@ return {
     opts = {
       setup = {
         bash_debug_adapter = function()
-          local function get_bash_debug()
-            local install_path = require("mason-registry").get_package("bash-debug-adapter"):get_install_path()
-            return install_path .. "/bash-debug-adapter/extension/bashdb_dir"
-          end
+          local dap = require "dap"
 
           local install_path = require("mason-registry").get_package("bash-debug-adapter"):get_install_path()
           local install_lib = install_path .. "/extension/bashdb_dir"
 
-          local dap = require "dap"
-
-
           dap.adapters.bashdb = {
             type = 'executable';
-            -- command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
-            command = install_path;
+            command = install_path .. "/bash-debug-adapter";
             name = 'bashdb';
           }
 
@@ -61,11 +63,9 @@ return {
             {
               type = 'bashdb';
               request = 'launch';
-              name = "Launch Bash debugger";
+              name = "Launch bash debugger";
               showDebugOutput = true;
-              -- pathBashdb = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb';
               pathBashdb = install_lib .. "/bashdb";
-              -- pathBashdbLib = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir';
               pathBashdbLib = install_lib;
               trace = true;
               file = "${file}";
@@ -79,6 +79,7 @@ return {
               args = {};
               env = {};
               terminalKind = "integrated";
+              -- repl_lang = "bash"
             }
           }
         end,

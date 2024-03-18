@@ -18,7 +18,7 @@ return {
         "luap",
         "markdown",
         "markdown_inline",
-        "bash",
+        -- "bash",
         "python",
         "css",
         "yaml",
