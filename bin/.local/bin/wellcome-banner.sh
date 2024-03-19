@@ -43,7 +43,7 @@ uptime="$(uptime -p | awk '{gsub(/up /,""); {gsub(/ days?,?/,"d")}; {gsub(/ hour
 
 # Users who are currently logged in
 # logins=$(w -s | head -n 1 |  cut --delimiter=',' --fields=3 | sed 's/^[[:space:]]*//')
-logins="$(w -s | awk -F ',' 'NR==1 {sub(/^[ ]+/,"",$3); print $3}')"
+logins="$(w -s | awk 'NR==1 {match($0,/[0-1] users?/,a); print a[0]}')"
 
 # Calculate processes
 psa="$(ps -A h | wc -l)"
