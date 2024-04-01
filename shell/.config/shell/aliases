@@ -1,0 +1,225 @@
+#!/bin/sh
+# Based on https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/general.zsh
+
+command_exists () {
+  hash "$1" 2> /dev/null
+}
+
+alias_not_used () {
+  ! alias "$1" >/dev/null && ! hash "$1" 2> /dev/null
+}
+
+# Use neovim for vim if present.
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+# Use $XINITRC variable if file exists.
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# Single-letter aliases, for frequently used basics, only if not already set
+if alias_not_used a; then alias a='alias'; fi
+# if alias_not_used c; then; alias c='clear'; fi
+if alias_not_used d; then alias d='date'; fi   # alias date.stamp='date +%d-%m-%Y'
+if alias_not_used e; then alias e="$EDITOR"; fi
+if alias_not_used f; then alias f='fd'; fi
+if alias_not_used g; then alias g='lazygit'; fi
+if alias_not_used h; then alias h='history'; fi
+if alias_not_used i; then alias i='id'; fi
+if alias_not_used j; then alias j='jobs'; fi
+if alias_not_used l; then alias l='ls'; fi
+if alias_not_used m; then alias m='man'; fi
+if alias_not_used p; then alias p='paru'; fi
+if alias_not_used q; then alias q='exit'; fi
+if alias_not_used s; then alias s='sudo'; fi
+if alias_not_used t; then alias t='tldr'; fi
+if alias_not_used v; then alias v="$EDITOR"; fi
+
+# A quick Zsh oneliner to test 16-color theme:
+# print -P '%F{'{1..16}'}XX'
+# print -P '%F{'{1..16}'}●'
+
+# Source: https://github.com/javier-lopez/shundle-plugins/blob/master/aliazator/aliases/default/general.aliases#L21
+alias hr='_hr() { for c in "${@:--}"; do cols="$(tput cols)"; [ "${cols}" -le "0" ] && cols="80"; printf "%*s" "${cols}" "" | tr " " "$(printf "%c" "${c}")"; done }; _hr'
+
+alias lf="lfub"
+alias tf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
+alias magit="nvim -c MagitOnly"
+
+# Verbosity and settings that you pretty much just always are going to want.
+alias	cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -vI"
+alias bc="bc -ql"
+alias rsync="rsync -vrPlu"
+alias mkd="mkdir -pv"
+
+# Colorize commands when possible.
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias rg='rg --color=auto'
+alias ip="ip -color=auto"
+alias diff="diff --color=auto"
+
+# Copy output of last command
+alias C='"$(history | tail -2 | sed "s/  [0-9]*  //;2d")" > /tmp/cmdoutput && cat /tmp/cmdoutput | xsel -b && notify-send "Terminal" "Ouput Copied"'
+
+alias ff='find . -type f -name' # Find a file by name within current directory
+(( $+commands[fd] )) || alias fdd='find . -type d -name' # Find direcroy by name
+
+# get error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+
+# Check Key Press
+alias whichkey="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
+
+# List all background processes
+#   https://unix.stackexchange.com/questions/701938/how-do-i-list-all-background-processes
+alias bp="ps -eo pid,pgid,tpgid,args | awk 'NR == 1 || (\$3 != -1 && \$2 != \$3)'"
+
+# File listing options
+# alias lr='ls -R' # List files in sub-directories, recursivley
+# alias lf='ls -A | rg' # Use grep to find files
+
+# alias ls='eza --icons -a --group-directories-first'
+# alias ls="ls -hN --color=auto --group-directories-first"
+
+# If exa installed, then use exa for some ls commands
+if command_exists exa ; then
+  alias l='eza -aF --icons --group-directories-first' # Quick ls
+  # alias la='eza -aF --icons' # List all
+
+  # alias ld='eza -lD' # List directories only
+  # alias lf='eza -lF --color=always | grep -v /' # lists only files (no directories)
+  # alias lh='eza -dl .* --group-directories-first' # lists only hidden files (no directories)
+  alias ll='eza -al --group-directories-first'  # lists everything with directories first
+  alias ls='eza -alF --color=always --sort=size | grep -v /'  # lists only files sorted by size
+  alias lt='eza -al --sort=modified'  # lists everything sorted by time updated
+
+  # alias ll='eza -laF --icons' # Show details
+  # alias lm='eza -lahr --color-scale --icons -s=modified' # Recent
+  alias lb='eza -lahr --color-scale --icons -s=size' # Largest / size
+else
+  alias la='ls -A' # List all files/ includes hidden
+  alias ld='ls -l | rg "^d"' # List directories only
+  alias ll='ls -lAFh' # List all files, with full details
+  alias lb='ls -lhSA' # List all files sorted by biggest
+  alias lm='ls -tA -1' # List files sorted by last modified
+fi
+
+# System Monitoring
+alias meminfo='free -m -l -t' # Show free and used memory
+alias memhog='ps -eo pid,ppid,cmd,%mem --sort=-%mem | head' # Processes consuming most mem
+alias cpuhog='ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head' # Processes consuming most cpu
+
+# In computer networking a port is a logical entity which acts as a endpoint of communication to identify a given application or process on an Linux operating system. It is a 16-bit number (0 to 65535) which differentiates one application from another on end systems.
+#
+# Below are the different categories of ports:
+#   0 - 1023 – the Well Known Ports, also referred to as System Ports.
+#   1024 - 49151 – the Registered Ports, also known as User Ports.
+#   49152 - 65535 – the Dynamic Ports, also referred to as the Private Ports.
+#
+# You can view a list of different applications and port/protocol combination in /etc/services file in Ubuntu/Arch Linux using cat command:
+#   cat /etc/services
+# ss is a new equivalent of netstat: https://inai.de/2008/02/19
+alias ports='ss -lntu' # Show open ports
+# alias port="ss -tulpn | rg"
+
+# Image Actions
+alias topng="mogrify -quality 0 -format png"
+alias tojpg="mogrify -quality 0 -format jpeg"
+
+alias zsh-update-plugins="fd "$ZDOTDIR/plugins" --type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
+
+# yt-dlp
+alias yta-aac="yt-dlp --extract-audio --audio-format aac "
+alias yta-best="yt-dlp --extract-audio --audio-format best "
+alias yta-flac="yt-dlp --extract-audio --audio-format flac "
+alias yta-m4a="yt-dlp --extract-audio --audio-format m4a "
+alias yta-mp3="yt-dlp --extract-audio --audio-format mp3 "
+alias yta-opus="yt-dlp --extract-audio --audio-format opus "
+alias yta-vorbis="yt-dlp --extract-audio --audio-format vorbis "
+alias yta-wav="yt-dlp --extract-audio --audio-format wav "
+alias ytv-best="yt-dlp -f bestvideo+bestaudio "
+# alias yt="yt-dlp --embed-metadata -i"
+# alias yta="yt -x -f bestaudio/best"
+
+# External Services
+alias myip='curl icanhazip.com'
+alias weather='curl wttr.in'
+alias weather-short='curl "wttr.in?format=3"'
+alias cheat='curl cheat.sh/'
+alias hackernews='curl hkkr.in'
+alias worldinternet='curl https://status.plaintext.sh/t'
+
+if [[ $TERM == "xterm-kitty" ]]; then
+  alias ssh="kitty +kitten ssh"
+fi
+
+
+# se() {
+#   choice="$(find ~/.local/bin -mindepth 1 -printf '%P\n' | fzf)"
+#   [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
+# }
+
+#
+# # ex - archive extractor
+# # usage: ex <file>
+ex () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.tar.xz)    tar xJf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# alias zz='exit'
+# alias rd='rmdir'
+# alias mkcd='_mkcd() { mkdir "${1}" && cd "${1}"; }; _mkcd'
+
+# Make directory, and cd into it
+mkcd() {
+  local dir="$*";
+  mkdir -p "$dir" && cd "$dir";
+}
+
+# Make dir and copy
+mkcp() {
+  local dir="$2"
+  local tmp="$2"; tmp="${tmp: -1}"
+  [ "$tmp" != "/" ] && dir="$(dirname "$2")"
+  [ -d "$dir" ] ||
+    mkdir -p "$dir" &&
+    cp -r "$@"
+}
+
+# Move dir and move into it
+mkmv() {
+  local dir="$2"
+  local tmp="$2"; tmp="${tmp: -1}"
+  [ "$tmp" != "/" ] && dir="$(dirname "$2")"
+  [ -d "$dir" ] ||
+      mkdir -p "$dir" &&
+      mv "$@"
+}
+
+# Alias for install script
+# alias dotfiles="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}/install.sh"
+# alias dots="dotfiles"
+
+# TODO: Add some aliases from
+# https://gitlab.com/dwt1/dotfiles/-/blob/master/.bashrc
+# https://github.com/ChrisTitusTech/zsh/blob/master/aliasrc

@@ -73,7 +73,7 @@ style = 'red'
 format = "[$duration]($style) "
 style = "yellow"
 
-# palette tables should be last in the config 
+# palette tables should be last in the config
 [palettes.catppuccin_frappe]
 rosewater = "#f2d5cf"
 flamingo = "#eebebe"
