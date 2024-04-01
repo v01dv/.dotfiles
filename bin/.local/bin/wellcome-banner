@@ -1,10 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # ¯\_(ツ)_/¯
 # Based on:
-#   https://gitlab.com/jschx/ufetch
-#   https://github.com/linuxdabbler/debinfo/blob/master/debinfo
 #   https://gitlab.com/jschx/ufetch/-/blob/main/ufetch-arch?ref_type=heads
+#   https://github.com/linuxdabbler/debinfo/blob/master/debinfo
 #   https://github.com/KittyKatt/screenFetch/blob/master/screenfetch-dev
 
 # Requires: awk
@@ -18,7 +17,23 @@
 # host="$(read -r hostname < /etc/hostname)"
 # distro=$(lsb_release -sd)
 # packages="$(pacman -Q | wc -l)"
-# shell="$(basename "${SHELL}")"
+
+# Determine shell in script during runtime
+# To check how many shells are installed:
+#   cat /etc/shells
+# Print the shell for the current user but not necessarily the shell that
+# is running at the movement:
+#   echo $SHELL
+# To get the current shell interpreter name reliably:
+#   echo $0
+#   ps -p $$
+# NOTE: The problem that commands above returns information which shell is running
+# only if they are executed manually in the terminal. But from script file they returns
+# the _name of that script_ as it should. So I have use next command instead:
+#   readlink /proc/$$/exe
+# shell="$(readlink /proc/$$/exe | awk -F '/' '{print $NF}')"
+# shell="$(realpath /proc/$PPID/exe| awk -F '/' '{print $NF}')"
+shell=$(realpath /proc/$PPID/exe | awk -F'/' '{print $NF}')
 
 # Print local weather
 # timeout=0.5
@@ -44,6 +59,15 @@ uptime="$(uptime -p | awk '{gsub(/up /,""); {gsub(/ days?,?/,"d")}; {gsub(/ hour
 # Users who are currently logged in
 # logins=$(w -s | head -n 1 |  cut --delimiter=',' --fields=3 | sed 's/^[[:space:]]*//')
 logins="$(w -s | awk 'NR==1 {match($0,/[0-1] users?/,a); print a[0]}')"
+
+# TODO: Looks like we can't implement this becayse of recursion
+# https://stackoverflow.com/questions/27119765/parse-time-cmdline-output-using-awk-cmdline
+# time command's output comes after completion of your command and it is written on stderr.
+# You can use it like this:
+#   ( time -p some_bin --some-args=args ) |& awk '/real/{print $2}'
+#       or
+#   ( time -p some_bin --some-args=args ) 2>&1 |  awk '/real/{print $2}'
+# shell_startup_time="$( (time ${shell} -i -c exit) 2>&1 | awk '/real/ {print $2}' )"
 
 # Calculate processes
 psa="$(ps -A h | wc -l)"
@@ -193,5 +217,5 @@ ${c0}     /\_/\  /       ${lc}swap...........: ${ic}${swap_usage_in_persent:-?} 
 ${c0} \  (=${c1}^${reset}･${c1}^${c0}=)         ${lc}local ip.......: ${ic}${ip_address:-?} (${ip_interface:-?})${reset}
 ${c0}  |  >   <          ${lc}logins.........: ${ic}currently ${logins:-?} logged in${reset}
 ${c0}  \_(_(m)(m)        ${lc}system logs....: ${ic}emerg ${log_emergency_count:-?} alert ${log_alert_count:-?} crit ${log_critical_count:-?} err ${log_error_count:-?} ${reset}
-
+${c0}                    ${lc}shell..........: ${ic}${shell:-?}${reset}
 EOF
