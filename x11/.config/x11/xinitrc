@@ -14,24 +14,13 @@ else
 	. "$HOME/.xprofile"
 fi
 
-# export STATUSBAR="i3blocks" # Uncomment this line when using i3.
-
-# Comment/uncomment these lines depending on what wm you want to use. Also
-# check the i3blocks line above.
-
-#i3
-#exec dwm
-
-# Remember that lines following a command using exec would be ignored. 
-# Below dwmblocks is started in the background and then started the dwm.
-
-dwmblocks &
-
-# DWM
 # Removed while loop based on:
 # https://github.com/Askannz/optimus-manager/issues/205#issuecomment-627364593
 
-while true; do
-	ssh-agent dwm >/dev/null 2>&1
-done
+# while true; do
+# 	ssh-agent dwm >/dev/null 2>&1
+# done
 
+# Activate dbus variables
+dbus-update-activation-environment --all
+dbus-launch ssh-agent dwm
