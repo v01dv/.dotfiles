@@ -48,18 +48,33 @@ _comp_options+=(globdots) # Complete dotfiles.
 #       https://zsh.sourceforge.io/Doc/Release/Expansion.html#Filename-Generation
 #   - For conditional expressions
 #       http://zsh.sourceforge.net/Doc/Release/Conditional-Expressions.html
-# if [[ -s "${ZSH_COMPDUMP}"(#qN.mh+1) && (! -s "$ZSH_COMPDUMP.zwc" || "$ZSH_COMPDUMP" -nt "$ZSH_COMPDUMP.zwc") ]]; then
-if [[ -n ${ZSH_COMPDUMP}(#qN.mh+24) ]]; then
+
+# TODO: For some reason globbind described above doesn't work for me.
+# setopt LOCAL_OPTIONS EXTENDED_GLOB
+# if [[ -n ${zcompdump}(#qN.mh+24) ]]; then
+
+zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump"
+
+# -mtime +1 to catch a file more than 1 day old
+if [ "$(find "${zcompdump}" -mtime +1)" ] ; then
   # The file is old and needs to be regenerated
-  compinit -i -d "${ZSH_COMPDUMP}"
-  # zcompile "${ZSH_COMPDUMP}"
-  # notify-send "Recompiled ${ZSH_COMPDUMP}"
-  echo "Coplition Initialized ${ZSH_COMPDUMP}"
+  compinit -i -d "${zcompdump}"
+  echo "Initializing completions on ${zcompdump}"
 else
-  compinit -C -d "${ZSH_COMPDUMP}"
+  compinit -C -d "${zcompdump}"
 fi
 
-# ([[ "$ZSH_COMPDUMP.zwc" -nt "$ZSH_COMPDUMP" ]] || zcompile "$ZSH_COMPDUMP") &!
+# Inside parentheses is a subshell.
+# These subshells let the script do parallel processing, in effect executing
+# multiple subtasks simultaneously.
+(
+  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    # Compile the completion dump to increase startup speed.
+    zcompile "$zcompdump"
+    echo "Recompiled ${zcompdump}"
+  fi
+# Execute code in the background to not affect the current session
+) &!
 
 # +---------+
 # | Options |
