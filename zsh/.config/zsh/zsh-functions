@@ -36,3 +36,12 @@ function zsh_add_completion() {
 	if [ "$2" = true ] && compinit "${completion_file:1}"
 }
 
+
+# Source: https://arkadiuszchmura.com/posts/accessing-cheatsheets-from-the-command-line/
+function c() {
+  # Install command line client for cht.sh as described:
+  #   https://github.com/chubin/cheat.sh?tab=readme-ov-file#installation
+  # The "$@" part refers to arguments passed to the function)
+  # FIX: Update to the proper path
+  $HOME/.local/bin/extra/cht.sh "$@" | less
+}
