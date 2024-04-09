@@ -49,7 +49,7 @@ return {
             -- NeoTreeWinSeparator = { fg = colors.mantle },
             NeoTreeWinSeparator = { fg = colors.mantle, bg = colors.mantle },
 
-            CodeiumSuggestion = { fg = colors.peach },
+            CodeiumSuggestion = { fg = colors.mauve },
           }
         end,
         integrations = {

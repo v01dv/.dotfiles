@@ -46,8 +46,12 @@ local function lsp_init()
         --     end
         --   end
       },
+      -- NOTE: With the default settings, you will not see updated diagnostics until you leave insert mode.
+      -- Set update_in_insert = true if you want diagnostics to update while in insert mode.
       update_in_insert = false,
-      underline = false,
+      -- To displays wavy (undercurl, squiggly underline) line below the diagnostic text
+      -- Your terminal needs to support such type of line.
+      underline = true,
       severity_sort = true,
       float = {
         focusable = true,

@@ -22,6 +22,7 @@ return {
         -- bashls
         bashls = {
           filetypes = { "sh", "zsh" },
+          -- NOTE: Feature described here: https://github.com/bash-lsp/bash-language-server/pull/45
           -- FIX: explainshell doesn't work because of issue https://github.com/bash-lsp/bash-language-server/issues/1107
           -- explainshellEndpoint = "https://explainshell.com",
           -- settings = {

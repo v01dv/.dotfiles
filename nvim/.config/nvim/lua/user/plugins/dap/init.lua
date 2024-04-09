@@ -7,6 +7,7 @@ return {
       { "theHamsta/nvim-dap-virtual-text" },
       { "nvim-telescope/telescope-dap.nvim" },
       { "jay-babu/mason-nvim-dap.nvim" },
+      { "nvim-neotest/nvim-nio" },
       { "LiadOz/nvim-dap-repl-highlights", opts = {} },
       -- "mfussenegger/nvim-dap-python",
       -- 'leoluz/nvim-dap-go',

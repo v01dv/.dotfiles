@@ -77,6 +77,7 @@ vim.g.netrw_winsize = 25
 -- vim.g.netrw_liststyle =3  -- make netrw use the tree view by default
 
 -- Undercurl
+-- https://github.com/craftzdog/dotfiles-public/blob/master/.config/nvim/lua/config/options.lua
 -- vim.cmd([[let &t_Cs = "\e[4:3m"]])
 -- vim.cmd([[let &t_Ce = "\e[4:0m"]])
 

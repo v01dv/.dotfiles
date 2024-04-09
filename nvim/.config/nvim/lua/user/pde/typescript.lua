@@ -8,13 +8,16 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "javascript", "typescript", "tsx" })
+      vim.list_extend(opts.ensure_installed, { "javascript", "typescript", "tsx", "jsdoc" })
     end,
   },
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "typescript-language-server", "js-debug-adapter" })
+      -- NOTE: Removed typescript-language-server because I have got duplicate results into reporting
+      -- diagnostics from tsserver and typescript. I didn't find the reason, but removed that helped.
+      -- vim.list_extend(opts.ensure_installed, { "typescript-language-server", "js-debug-adapter" })
+      vim.list_extend(opts.ensure_installed, { "js-debug-adapter" })
     end,
   },
   {
