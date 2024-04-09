@@ -21,6 +21,7 @@ return {
       local cmp = require "cmp"
       local icons = require "user.config.icons"
       local luasnip = require "luasnip"
+      local neogen = require "neogen"
 
       return {
         completion = {
@@ -71,14 +72,18 @@ return {
           --
           -- <c-l> will move you to the right of each of the expension locations.
           -- <c-h> is similar, except movving you backwards.
-          ["<c-l"] = cmp.mapping(function(fallback)
+          ["<c-l>"] = cmp.mapping(function(fallback)
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
+            elseif neogen.jumpable() then
+              neogen.jump_next()
             end
           end, { "i", "s" }),
           ["<c-h>"] = cmp.mapping(function(fallback)
             if luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
+            elseif neogen.jumpable(true) then
+              neogen.jump_prev()
             end
           end, { "i", "s" }),
           ["<Tab>"] = cmp.config.disable,
