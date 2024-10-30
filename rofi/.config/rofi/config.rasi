@@ -1,0 +1,79 @@
+// [(3) How to Setup and Configure Rofi (The Best App Launcher) - YouTube](https://www.youtube.com/watch?v=TutfIwxSE_s)
+// Based on:
+//  https://github.com/hiimsergey/rofi-catppuccin
+//  https://github.com/typecraft-dev/dotfiles/blob/master/rofi/.config/rofi/config.rasi
+//
+// NA:
+// [ ] Look at https://randomgeekery.org/config/linux/rofi/
+// [ ] https://codeberg.org/anhsirk0/rofi-config
+// [ ] https://git.sr.ht/~amolith/yadr/tree/master/item/dot_config/rofi
+
+configuration {
+    display-ssh: " SSH:";
+    display-run: "󱓞 run:";
+    display-drun: "  Apps:";
+    display-window: "󱂬 window:";
+    display-combi: "󰕘 combi:";
+    // display-filebrowser: "󰉋 filebrowser:";
+
+    // display-combi: "   All ";
+    // display-combi: " 󰤺  All ";
+    // display-drun: "󰣆 ";
+    // display-drun: "   Apps ";
+    // display-drun: "";
+    // display-run: "   Run";
+    // display-run: " Run ﲵ  ";
+    // display-run: "   Run ";
+    // display-window: "   Window ";
+    // display-window: "  Window";
+    // display-window: " ";
+    // display-window: " 󰕰  Window";
+    // display-Network: "   Network ";
+    // display-Network: " 󰤨  Network ";
+    // display-filebrowser: "";
+    // display-filebrowser: " ";
+    // display-calc: " ";
+    // display-emoji: " ";
+    show-icons: true;
+    terminal: "st";
+    run-shell-command: "{terminal} -e zsh -ic '{cmd} && read'";
+
+    location: 0;
+    sort: true;
+    sorting-method: "fzf";
+    disable-history: false;
+    hide-scrollbar: true;
+    sidebar-mode: true;
+    // Only application launcher
+    modi: [drun];
+    // modi: [drun, window, run, ssh, combi];
+    // combi-modes: [window, drun,ssh];
+    icon-theme: "Papirus-Dark";
+    drun-display-format: "{icon} {name}";
+
+    // https://github.com/w8ste/dotfiles/blob/main/rofi/config.rasi
+    //adding vim keybindings
+    kb-row-up: "Up,Control+k";
+    kb-row-down: "Down,Ctrl+j";
+    // kb-row-left: "Left,Control+h";
+    // kb-row-right: "Right,Control+l";
+
+    kb-accept-entry: "Control+y,Return,KP_Enter";
+
+    kb-mode-next: "Control+Tab,Control+l";
+    kb-mode-previous: "Control+Shift+Tab,Control+h";
+
+    //fixing up
+    kb-remove-to-eol: "";
+    kb-move-char-back: "Control+b";
+    kb-remove-char-back: "BackSpace";
+    kb-move-char-forward: "Control+f";
+    kb-mode-complete: "";
+}
+
+// @theme "/dev/null"
+
+// Official Catppucin theme
+// @theme "catppuccin-frappe"
+
+@theme "catppuccin-frappe-my"
