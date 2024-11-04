@@ -1,0 +1,19 @@
+#!/bin/sh
+# Based on https://www.youtube.com/watch?v=fPTSkTG1iE4
+#
+# Simple script to set my webcam settings
+# Key Light 35
+# Hair Light 30
+device=$(v4l2-ctl --list-devices | grep "Anker PowerConf C200" -A 1 | grep "/dev/video." -o)
+
+v4l2-ctl -d $device --set-ctrl=focus_automatic_continuous=0
+v4l2-ctl -d $device --set-ctrl=auto_exposure=1
+v4l2-ctl -d $device --set-ctrl=white_balance_automatic=0
+v4l2-ctl -d $device --set-ctrl=focus_absolute=500
+v4l2-ctl -d $device --set-ctrl=exposure_time_absolute=500
+v4l2-ctl -d $device --set-ctrl=saturation=50
+v4l2-ctl -d $device --set-ctrl=contrast=50
+v4l2-ctl -d $device --set-ctrl=sharpness=70
+v4l2-ctl -d $device --set-ctrl=white_balance_temperature=4500
+v4l2-ctl -d $device --set-ctrl=zoom_absolute=0
+v4l2-ctl -d $device --set-ctrl=brightness=50
