@@ -8,6 +8,7 @@ Based on the [catppuccin/zen-browser: 🧘‍♂️ Soothing pastel for Zen Brow
 1. Add wallpaper to the new tab page.
 2. Removed Zen logo.
 3. Centered search box.
+4. Changed border color.
 
 ## How to install
 
