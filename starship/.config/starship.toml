@@ -4,8 +4,28 @@ palette = "catppuccin_frappe"
 # Inserts a blank line between shell prompts
 add_newline = false
 
+# One-line prompt
+# [line_break]
+# disabled = false
+
+# format = '''
+# [┌─── ](bold green)$directory$rust$package
+# [└─🞔 ](bold green) '''
+
+# format = """
+# [░▒▓](#89b4fa)\
+# [  ](bg:#89b4fa fg:#1e1e2e)\
+# [](bg:#b4befe fg:#89b4fa)\
+# $directory\
+# [](fg:#b4befe bg:#313244)\
+# $git_branch\
+# $git_status\
+# [](fg:#313244)\
+# \n$character
+# """
+
+# [🞔  ](green)\
 format = """
-[🞔  ](green)\
 $username\
 $hostname\
 $directory\
@@ -13,13 +33,23 @@ $git_branch\
 $git_state\
 $git_status\
 $jobs\
+$character\
 """
 
 [character]
-success_symbol = "[❯](green)"
-error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
-disabled = true
+# https://symbl.cc/en/276D/
+success_symbol = "[❭](green)"
+error_symbol = "[❭](red)"
+vimcmd_symbol = "[❬](orange)"
+
+# success_symbol = "[❯](green)"
+# error_symbol = "[❯](red)"
+# vimcmd_symbol = "[❮](green)"
+
+# success_symbol = "[🞔 ](green)"
+# error_symbol = "[🞔 ](red)"
+# vimcmd_symbol = "[🞕 ](orange)"
+disabled = false
 
 [username]
 format = '[$user]($style)@'

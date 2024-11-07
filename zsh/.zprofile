@@ -7,7 +7,11 @@
 
 # Adds `~/.local/bin` to $PATH
 export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
+# export PATH="$PATH:/opt/cuda/bin"
+# export LD_LIBRARY_PATH=/opt/cuda/lib64\
+#                         ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 #export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+# export CUDA_HOME="/opt/cuda"
 
 # Default programs
 export EDITOR="nvim" 	# $EDITOR use nvim in terminal
@@ -82,7 +86,7 @@ export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump"
+# export ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump"
 
 # fzf
 # Details:
@@ -141,7 +145,7 @@ export FZF_DEFAULT_OPTS="--height 60% \
 --border rounded \
 --layout reverse \
 --color '$FZF_COLORS' \
---prompt='$>' \
+--prompt='>' \
 --pointer ▶ \
 --marker ⇒"
 

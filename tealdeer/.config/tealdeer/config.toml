@@ -23,7 +23,7 @@ bold = false
 italic = false
 
 [style.example_variable]
-foreground = "white"
+foreground = "red"
 underline = false
 bold = false
 italic = false
