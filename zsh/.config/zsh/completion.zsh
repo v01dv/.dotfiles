@@ -62,7 +62,8 @@ zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump"
 if [ "$(find "${zcompdump}" -mtime +1)" ] ; then
   # The file is old and needs to be regenerated
   compinit -i -d "${zcompdump}"
-  echo "Initializing completions on ${zcompdump}"
+  # FIXME: Temporary comment this out because observe annoying message in terminal: Initializing completions on /home/**/.cache/zsh/zcompdump
+  # echo "Initializing completions on ${zcompdump}"
 else
   compinit -C -d "${zcompdump}"
 fi
@@ -70,14 +71,15 @@ fi
 # Inside parentheses is a subshell.
 # These subshells let the script do parallel processing, in effect executing
 # multiple subtasks simultaneously.
-(
-  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
-    # Compile the completion dump to increase startup speed.
-    zcompile "$zcompdump"
-    echo "Recompiled ${zcompdump}"
-  fi
-# Execute code in the background to not affect the current session
-) &!
+# FIXME: Temporary comment this out for speed up terminal running
+# (
+#   if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+#     # Compile the completion dump to increase startup speed.
+#     zcompile "$zcompdump"
+#     echo "Recompiled ${zcompdump}"
+#   fi
+# # Execute code in the background to not affect the current session
+# ) &!
 
 # +---------+
 # | Options |

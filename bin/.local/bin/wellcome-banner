@@ -57,6 +57,8 @@ EOF
 uptime="$(uptime -p | awk '{gsub(/up /,""); {gsub(/ days?,?/,"d")}; {gsub(/ hours?,?/,"h")}; {gsub(/ minutes?,?/,"m")}; print}')"
 
 # Users who are currently logged in
+# FIXME: Need to be updated according to the:
+# https://unix.stackexchange.com/questions/617652/how-can-i-list-all-currently-logged-in-users
 # logins=$(w -s | head -n 1 |  cut --delimiter=',' --fields=3 | sed 's/^[[:space:]]*//')
 logins="$(w -s | awk 'NR==1 {match($0,/[0-1] users?/,a); print a[0]}')"
 

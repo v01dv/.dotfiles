@@ -11,7 +11,8 @@ fpath=("${ZDOTDIR}/plugins" $fpath)
 # echo -e "\033[0;32m$(cat ${ZDOTDIR}/banner0.txt) \n"
 
 # source "${HOME}/.local/bin/wellcome-banner.sh"
-wellcome-banner
+# wellcome-banner
+fastfetch
 
 # TODO: Do I need this?
 # If not running interactively, don't do anything

@@ -1,0 +1,121 @@
+// Based on https://gitlab.com/prolinux410/owl_dots/-/tree/main/hyprland/hypr_catppuccin/.config/fastfetch?ref_type=heads
+//
+// ~/.config/fastfetch/config.jsonc
+// See https://github.com/fastfetch-cli/fastfetch/wiki/Configuration for more details
+// See *.jsonc in https://github.com/fastfetch-cli/fastfetch/tree/dev/presets/examples for more examples
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "source": "~/.config/fastfetch/cat.txt",
+    "color": {
+      "1": "blue",
+      "2": "red"
+    },
+    "type": "auto",
+    "padding": {
+      "top": 0
+    }
+  },
+  "display": {
+    // "stat": true,
+    "showErrors": true,
+    "separator": "",
+    "color": {
+      "separator": "blue",
+      "output": "white",
+      "keys": "blue"
+    },
+    // "key": {
+    //   "width": 20,
+    //   "paddingLeft": 4
+    // },
+    "size": {
+      "binaryPrefix": "jedec"
+    },
+    "percent": {
+      // "type": 6
+    }
+  },
+  "modules": [
+    {
+      "type": "kernel",
+      "key": "kernel.........: ",
+      // "keyColor": "blue",
+      // For details use command: fastfetch -h kernel-format
+      "format": "{release}"
+    },
+    // {
+    //   "type": "command",
+    //   "key": "os age.........: ",
+    //   "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+    // },
+    {
+      "type": "uptime",
+      // "key": "   ",
+      // "key": "   Uptime",
+      // "key": "   Uptime",
+      "key": "uptime.........: ",
+      // "format": "{?days}{days} Days + {?}{hours}:{minutes}:{seconds}"
+      "format": "{?days}{days}d {?}{hours}h {minutes}m {seconds}s"
+    },
+    {
+      "type": "command",
+      "key": "processes......: ",
+      "text": "psa=$(ps -A h | wc -l); psu=$(ps --user $USER h | wc -l); verb='are'; if [ $psu -lt 2 ]; then if [ $psu -eq 0 ]; then psu='none'; else verb='is'; fi; fi; echo $psa total and ${psu} ${verb} yours"
+    },
+    {
+      "type": "btrfs",
+      "key": "disk...........: ",
+      "format": "{used-percentage} ({used} / {total})"
+    },
+    {
+      "type": "swap",
+      "key": "swap...........: ",
+      "format": "{percentage} ({used} / {total})"
+    },
+    {
+      "type": "localip",
+      "key": "local ip.......: ",
+      "format": "{ipv4} ({ifname})",
+      "showPrefixLen": false
+    },
+    {
+      // https://github.com/fastfetch-cli/fastfetch/blob/dev/presets/examples/24.jsonc
+      "type": "memory",
+      "key": "memory.........: ",
+      // "format": "[{3}] {1} / {2}"
+      // "format": "{$2}{$3}{used} / {total} ({percentage}{$2})"
+      "format": "{percentage} ({used} / {total})"
+    },
+    // {
+    //   "type": "users",
+    //   "key": "logins.........: ",
+    //   "format": "{1}@{host-name}{/host-name}localhost{/}{?client-ip}  {#2}[ip:{client-ip}]{?}  {#2}[Login time: {login-time}]",
+    //   "myselfOnly": false
+    // },
+    {
+      "type": "shell",
+      "key": "shell..........: "
+    },
+    {
+      "type": "terminal",
+      "key": "terminal.......: ",
+      "format": "{pretty-name} {version}"
+    }
+    // {
+    //   "type": "command",
+    //   // "shell": "/bin/zsh",
+    //   "text": "~/.dotfiles/fastfetch/.config/fastfetch/test",
+    //   "key": "Test...........: ",
+    // }
+    // {
+    //   "type": "colors",
+    //   // "paddingLeft": 34,
+    //   "symbol": "circle"
+    // }
+    // {
+    //   "type": "custom",
+    //   "format": "     \u001b[90m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m  \u001b[37m "
+    // }
+  ]
+}
