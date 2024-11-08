@@ -8,7 +8,7 @@
         --zen-colors-secondary: #414559 !important;
         --zen-colors-tertiary: #292c3c !important;
         /* --zen-colors-border: #8caaee !important; */
-        --zen-colors-border: #303446 !important;
+        --zen-colors-border: #414559 !important; 
         --toolbarbutton-icon-fill: #8caaee !important;
         --lwt-text-color: #c6d0f5 !important;
         --toolbar-field-color: #c6d0f5 !important;
@@ -28,7 +28,7 @@
     }
 
     #permissions-granted-icon{
-      color: #292c3c !important;
+      color: #EEBEBE !important;
     }
 
     .sidebar-placesTree {
@@ -41,6 +41,7 @@
 
     #TabsToolbar {
         background-color: #292c3c !important;
+     
     }
 
     #urlbar-background {
@@ -66,5 +67,12 @@
                 fill: #232634;
             }
         }
+    }
+
+   .tab-background[selected=''] {
+      background-color: #414559 !important; 
+       
+
+
     }
 }
