@@ -82,6 +82,11 @@
       "showPrefixLen": false
     },
     {
+      "type": "dns",
+      "key": "dns............: ",
+      "showType": "ipv4"
+    },
+    {
       // https://github.com/fastfetch-cli/fastfetch/blob/dev/presets/examples/24.jsonc
       "type": "memory",
       "key": "memory.........: ",
