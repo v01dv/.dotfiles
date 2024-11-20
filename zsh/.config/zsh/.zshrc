@@ -12,7 +12,11 @@ fpath=("${ZDOTDIR}/plugins" $fpath)
 
 # source "${HOME}/.local/bin/wellcome-banner.sh"
 # wellcome-banner
-fastfetch
+
+# Prevent fastfetch from being printing in Nvim terminal
+if [ "$TERM" != "xterm-256color" ]; then
+    fastfetch
+fi
 
 # TODO: Do I need this?
 # If not running interactively, don't do anything
