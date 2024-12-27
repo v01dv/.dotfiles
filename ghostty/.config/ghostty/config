@@ -1,0 +1,21 @@
+theme = catppuccin-frappe
+font-family = "Cascadia Code"
+font-size = 10
+
+# stylistic alternates (italic only)
+font-feature = ss01
+
+# alternate not equal
+font-feature = ss02
+
+# slashed zero
+font-feature = ss19
+
+# graphical control characters
+font-feature = ss20
+
+# background-blur-radius = 20
+mouse-hide-while-typing = true
+window-decoration = false
+
+shell-integration-features = no-cursor, no-sudo, title
