@@ -37,6 +37,9 @@ if alias_not_used v; then alias v="$EDITOR"; fi
 # print -P '%F{'{1..16}'}XX'
 # print -P '%F{'{1..16}'}●'
 
+alias ..='cd ..'
+alias ...='cd ../..'
+
 # Source: https://github.com/javier-lopez/shundle-plugins/blob/master/aliazator/aliases/default/general.aliases#L21
 alias hr='_hr() { for c in "${@:--}"; do cols="$(tput cols)"; [ "${cols}" -le "0" ] && cols="80"; printf "%*s" "${cols}" "" | tr " " "$(printf "%c" "${c}")"; done }; _hr'
 
