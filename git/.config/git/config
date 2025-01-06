@@ -1,6 +1,6 @@
 [user]
 	name = voldv
-	email =gt.en72v@simplelogin.co 
+	email =gt.en72v@simplelogin.co
 [color]
 	ui = true
 [color "diff-highlight"]
@@ -43,6 +43,14 @@
   # log = log --graph --decorate --pretty=oneline --abbrev-commit
 [core]
     editor = nvim
-    pager = less -FRX
+    ; pager = less -FRX
+    pager = delta
 [pager]
 #   branch = false
+[include]
+	path = ./local/delta/themes/frappe.gitconfig
+[delta]
+	features = line-numbers decorations
+	line-numbers = true
+  navigate = true    # use n and N to move between diff sections
+  features = catppuccin-frappe
