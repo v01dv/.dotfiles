@@ -69,7 +69,7 @@ scrolling:
 # Font configuration
 font:
   normal:
-    family: JetBrainsMonoNL Nerd Font Mono 
+    family: Cascadia Code
     style: Regular
   #bold:
     #family: JetBrains Mono
