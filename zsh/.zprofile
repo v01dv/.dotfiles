@@ -145,7 +145,7 @@ export FZF_DEFAULT_OPTS="--height 60% \
 --border rounded \
 --layout reverse \
 --color '$FZF_COLORS' \
---prompt='>' \
+--prompt='> ' \
 --pointer ▶ \
 --marker ⇒"
 

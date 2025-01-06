@@ -15,7 +15,8 @@ fpath=("${ZDOTDIR}/plugins" $fpath)
 
 # Prevent fastfetch from being printing in Nvim terminal
 if [ "$TERM" != "xterm-256color" ]; then
-    fastfetch
+    # fastfetch
+    # fortune my-quotes
 fi
 
 # TODO: Do I need this?

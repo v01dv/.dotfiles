@@ -10,6 +10,8 @@ prime-offload &
 
 # Display resolution
 xrandr --output DP-0 --auto --output DP-1 --auto --right-of DP-0 --auto --output LVDS-1-1 --primary --left-of DP-0 --auto
+# xrandr --output VGA-1-1 --auto --output DP-1 --auto --right-of VGA-1-1 --auto --output LVDS-1-1 --primary --left-of VGA-1-1 --auto
+
 # xrandr --output DP-0 --auto --output DP-1 --auto --right-of DP-0 &
 # xrandr --output LVDS-1-2 --auto --left-of DP-0 &
 # xrandr --output LVDS-1-2 --auto  &
@@ -18,7 +20,7 @@ xrandr --output DP-0 --auto --output DP-1 --auto --right-of DP-0 --auto --output
 #xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources &		# Uncomment to use Xresources colors/settings on startup
 
 # picom -f &      # Compositor
-picom -b --experimental-backend &
+picom -b &
 
 setbg &
 
