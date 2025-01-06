@@ -1,5 +1,9 @@
-theme = catppuccin-frappe
+#################################
+#            Font               #
+#################################
 font-family = "Cascadia Code"
+font-family = "Symbols Nerd Font Mono"
+font-family = "NotoColorEmoji"
 font-size = 10
 
 # stylistic alternates (italic only)
@@ -14,8 +18,53 @@ font-feature = ss19
 # graphical control characters
 font-feature = ss20
 
-# background-blur-radius = 20
-mouse-hide-while-typing = true
-window-decoration = false
+# Disable ligature
+# font-feature = -liga
 
-shell-integration-features = no-cursor, no-sudo, title
+bold-is-bright = false
+
+#################################
+#            Theme              #
+#################################
+theme = catppuccin-frappe
+window-padding-y = 0
+
+# cursor-style = bar
+adjust-cursor-thickness = 1
+
+
+# https://github.com/ghostty-org/ghostty/issues/2023
+window-decoration = false
+window-save-state = never
+
+resize-overlay = never
+mouse-hide-while-typing = true
+confirm-close-surface = false
+desktop-notifications = false
+quit-after-last-window-closed = false
+
+# shell-integration-features = no-cursor, no-sudo, title
+shell-integration-features = no-cursor
+
+# Space between lines
+# adjust-cell-height = 35%
+
+gtk-titlebar = false
+gtk-adwaita = false
+gtk-single-instance = true
+
+#################################
+#            Keybinds           #
+#################################
+# Default value:
+# keybind = ctrl+shift+c=copy_to_clipboard
+# keybind = ctrl+shift+v=paste_from_clipboard
+# keybind = shift+insert=paste_from_selection
+
+keybind = alt+c=copy_to_clipboard
+keybind = shift+insert=paste_from_clipboard
+
+# keybind = alt+v=paste_from_clipboard
+# keybind = alt+v=paste_from_selection
+# keybind = shift+insert=paste_from_selection
+
