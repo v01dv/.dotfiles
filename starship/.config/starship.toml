@@ -24,7 +24,8 @@ add_newline = false
 # \n$character
 # """
 
-# [🞔  ](green)\
+# [➜ ](green)\
+# [|-🞔 ](red)\  ⎯
 format = """
 $username\
 $hostname\
@@ -33,18 +34,26 @@ $git_branch\
 $git_state\
 $git_status\
 $jobs\
-$character\
+[|-🞔  ](bold mauve)
 """
+# $character\
 
 [character]
 # https://symbl.cc/en/276D/
-success_symbol = "[❭](green)"
-error_symbol = "[❭](red)"
-vimcmd_symbol = "[❬](orange)"
+# success_symbol = "[❭](green)"
+# error_symbol = "[❭](red)"
+# vimcmd_symbol = "[❬](orange)"
 
 # success_symbol = "[❯](green)"
 # error_symbol = "[❯](red)"
 # vimcmd_symbol = "[❮](green)"
+
+# success_symbol = "[❯](green)"
+# error_symbol = "[❯](red)"
+# vimcmd_symbol = "[❮](green)"
+# success_symbol = "[-|](green)"
+# error_symbol = "[✕](red)"
+# error_symbol = "[✘](red)"
 
 # success_symbol = "[🞔 ](green)"
 # error_symbol = "[🞔 ](red)"
@@ -66,7 +75,8 @@ style = 'green'
 [directory]
 truncation_length = 1
 read_only = " "
-style = "bold blue"
+style = "bold sapphire"
+# style = "bold blue"
 
 [git_branch]
 format = "[git:$branch]($style)"
@@ -78,7 +88,8 @@ format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "overlay0"
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed )]($style)"
+# format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed )]($style)"
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](overlay0) ($ahead_behind$stashed )]($style)"
 style = "cyan"
 conflicted = "​"
 untracked = "​"
@@ -97,6 +108,7 @@ stashed = "≡"
 
 [jobs]
 # symbol = ''
+symbol = '✦ '
 style = 'red'
 
 [cmd_duration]
