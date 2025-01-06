@@ -291,7 +291,10 @@ map c
 
 # Bindings
 
-map p paste
+# https://github.com/gokcehan/lf/wiki/Tips#clear-selected-files-after-copying-and-pasting
+# map p paste
+map p :paste; clear
+
 map x cut
 map y copy
 map D delete
@@ -341,6 +344,10 @@ map b $setbg $f
 
 # Open terminal in current directory
 map W $setsid -f $TERMINAL >/dev/null 2>&1
+
+# https://github.com/gokcehan/lf/wiki/Tips#yank-paths-into-your-clipboard
+cmd yank-dirname $dirname -- "$f" | head -c-1 | xclip -i -selection clipboard
+cmd yank-basename $basename -a -- $fx | head -c-1 | xclip -i -selection clipboard
 
 # Yank current file/directory path into into primary and selection clipboards
 map Y $printf "%s" "$fx" | xclip -selection clipboard
