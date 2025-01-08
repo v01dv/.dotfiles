@@ -1,0 +1,48 @@
+neo_color_version 1
+
+# Default background
+-1
+
+# Based on cava catppucin color theme:
+#   https://github.com/catppuccin/cava/blob/main/themes/frappe.cava
+#
+# gradient_color_1 = '#81c8be' => rgb (129, 200, 190)
+# gradient_color_2 = '#99d1db' => rgb (153, 209, 219)
+# gradient_color_3 = '#85c1dc' => rgb (133, 193, 220)
+# gradient_color_4 = '#8caaee' => rgb (140, 170, 238)
+# gradient_color_5 = '#ca9ee6' => rgb (202, 158, 230)
+# gradient_color_6 = '#f4b8e4' => rgb (244, 184, 228)
+# gradient_color_7 = '#ea999c' => rgb (234, 153, 156)
+# gradient_color_8 = '#e78284' => rgb (231, 130, 132)
+
+# To convert from RGB (range 0-255) to ncurses style (range 0-1000) use formula:
+#
+#   red = red * 1000 / 255
+#
+#      or
+#
+#   red = red / 0.255
+#
+# For example:
+#
+#   #81c8be = rgb (129, 200, 190)
+#
+#   red   = 129 * 1000 / 256 = 503
+#   green = 200 * 1000 / 256 = 781
+#   blue  = 190 * 1000 / 256 = 742
+#
+# Sources:
+#   https://stackoverflow.com/questions/43710131/how-does-ncurses-init-color-function-translate-to-traditional-rbg-colors
+#   https://www.youtube.com/watch?v=YyyhQ0B3huo
+#   https://stackoverflow.com/questions/28401332/ncurses-why-is-the-rgb-color-value-range-from-0-1000
+#   https://github.com/st3w/neo/tree/main/examples
+
+30, 506, 784, 745
+31, 600, 820, 859
+32, 522, 757, 863
+33, 549, 667, 933
+34, 792, 620, 902
+35, 957, 722, 894
+36, 918, 600, 612
+37, 906, 510, 518
+
