@@ -37,6 +37,8 @@ if alias_not_used v; then alias v="$EDITOR"; fi
 # print -P '%F{'{1..16}'}XX'
 # print -P '%F{'{1..16}'}●'
 
+alias peaclock="peaclock --config-dir ~/.config/peaclock"
+
 alias ..='cd ..'
 alias ...='cd ../..'
 
