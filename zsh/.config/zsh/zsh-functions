@@ -45,3 +45,21 @@ function c() {
   # FIX: Update to the proper path
   $HOME/.local/bin/extra/cht.sh "$@" | less
 }
+
+# Shell wrapper that provides the ability to change the current working directory
+# when exiting Yazi.
+function y() {
+  # When I'm in a Yazi subshell and press y, it exits the subshell and returns
+  # to the original Yazi instance instead of opening a new one. This ensures
+  # there's always just one instance of Yazi running:
+  # https://github.com/sxyazi/yazi/issues/2161
+  if [ -n "$YAZI_LEVEL" ]; then
+    exit
+  fi
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
