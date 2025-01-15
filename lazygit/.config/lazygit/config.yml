@@ -1,23 +1,28 @@
 gui:
-  theme: # https://github.com/catppuccin/lazygit/blob/main/themes/frappe.yml
+  theme: # https://github.com/catppuccin/lazygit/blob/main/themes/frappe/blue.yml
     lightTheme: false
     activeBorderColor:
-      - "#a6d189" # Green
+      - '#8caaee'
       - bold
     inactiveBorderColor:
-      - "#c6d0f5" # Text
+      - '#a5adce'
     optionsTextColor:
-      - "#8caaee" # Blue
+      - '#8caaee'
     selectedLineBgColor:
-      - "#414559" # Surface0
-    selectedRangeBgColor:
-      - "#414559" # Surface0
+      - '#8caaee'
     cherryPickedCommitBgColor:
-      - "#81c8be" # Teal
+      - '#51576d'
     cherryPickedCommitFgColor:
-      - "#8caaee" # Blue
+      - '#8caaee'
     unstagedChangesColor:
-      - red       # Red
+      - '#e78284'
+    defaultFgColor:
+      - '#c6d0f5'
+    searchingActiveBorderColor:
+      - '#e5c890'
+
+  authorColors:
+    '*': '#babbf1'
 
   showFileTree: true # for rendering changes files in a tree format
   showListFooter: false # for seeing the '5 of 20' message in list panels
