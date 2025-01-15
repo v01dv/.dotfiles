@@ -2,8 +2,8 @@
 #            Font               #
 #################################
 font-family = "Cascadia Code"
-font-family = "Symbols Nerd Font Mono"
-font-family = "NotoColorEmoji"
+# font-family = "Symbols Nerd Font Mono"
+# font-family = "NotoColorEmoji"
 font-size = 10
 
 # stylistic alternates (italic only)
@@ -29,13 +29,13 @@ bold-is-bright = false
 theme = catppuccin-frappe
 window-padding-y = 0
 
-# cursor-style = bar
+cursor-style = block
+cursor-style-blink = false
 adjust-cursor-thickness = 1
 
 
 # https://github.com/ghostty-org/ghostty/issues/2023
 window-decoration = false
-window-save-state = never
 
 resize-overlay = never
 mouse-hide-while-typing = true
@@ -44,7 +44,7 @@ desktop-notifications = false
 quit-after-last-window-closed = false
 
 # shell-integration-features = no-cursor, no-sudo, title
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor, title
 
 # Space between lines
 # adjust-cell-height = 35%
