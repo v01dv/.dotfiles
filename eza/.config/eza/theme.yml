@@ -1,3 +1,7 @@
+# Details:
+#   https://github.com/eza-community/eza/blob/main/man/eza_colors.5.md
+# Not use but interesting:
+#   https://github.com/trapd00r/LS_COLORS
 
 colourful: true
 
@@ -11,6 +15,7 @@ filekinds:
   socket: {foreground: "#626880"}
   special: {foreground: "#ca9ee6"}
   executable: {foreground: "#a6d189", is_bold: true}
+  # mp : a mount point
   mount_point: {foreground: "#85c1dc"}
 
 perms:
@@ -79,25 +84,49 @@ security_context:
 file_type:
   image: {foreground: "#f4b8e4"}
   video: {foreground: "#f4b8e4"}
+  # A regular file that is lossy music
   music: {foreground: "#81c8be"}
+  # A regular file that is lossless music
   lossless: {foreground: "#81c8be"}
+  # A regular file that is related to cryptography (ex: key or certificate)
   crypto: {foreground: "#626880"}
+  # A regular file that is a document (ex: office suite document or PDF)
   document: {foreground: "#a6d189"}
   compressed: {foreground: "#e5c890"}
+  # A regular file that is temporary (ex: a text editor's backup file)
   temp: {foreground: "#ea999c"}
+  # A regular file that is a compilation artifact (ex: Java class file, C object file)
   compiled: {foreground: "#838ba7"}
-  build: {foreground: "#626880"}
+  # A regular file that is used to build a project (ex: Makefile)
+  build: {foreground: "#626880", is_underline: false}
+  # A regular file that is source code
   source: {foreground: "#c6d0f5"}
 
+# xx: “punctuation”, including many background UI elements
 punctuation: {foreground: "#838ba7"}
+# da : a file’s date
 date: {foreground: "#8caaee"}
+# in : a file’s inode number
 inode: {foreground: "#a5adce"}
+# bl : a file’s number of blocks
 blocks: {foreground: "#949cbb"}
+# the header row of a table
 header: {foreground: "#c6d0f5"}
 octal: {foreground: "#81c8be"}
 flags: {foreground: "#ca9ee6"}
 
+# The path of a symlink
 symlink_path: {foreground: "#99d1db"}
+# An escaped character in a filename
 control_char: {foreground: "#85c1dc"}
+# The overlay style for broken symlink paths
 broken_symlink: {foreground: "#e78284"}
+# Special (not file, dir, mount, exec, pipe, socket, block device, char device, or link)
 broken_path_overlay: {foreground: "#626880"}
+
+extensions:
+  # Change the filename color and icon
+  # NOTE: not all unicode glyphs support color changes
+  md: {filename: {foreground: "#626880"}}
+  # Change the icon glyph and color
+  # nix: {icon: {glyph: ❄, style: {foreground: White}}}
