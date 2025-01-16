@@ -2,7 +2,7 @@
 # ----------------
 set window-title-basename true
 set statusbar-home-tilde  true
-set recolor               true
+set recolor               false
 set selection-clipboard   clipboard #Enable copy to clipboard
 
 # LAYOUT SETTINGS
