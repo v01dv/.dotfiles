@@ -220,13 +220,7 @@ prepend_keymap = [
 append_keymap = [
 	{ on = "o",         run = "open",                        desc = "Open selected files" },
 	{ on = "O",         run = "open --interactive",          desc = "Open selected files interactively" },
-
-
 ]
-
-
-
-
 
 [tasks]
 
