@@ -26,6 +26,10 @@ prepend_keymap = [
     "c",
     "m",
   ], run = "plugin chmod", desc = "chmod on selected files" },
+  { on = [
+    "C",
+    # The --args=zip part tells the plugin that default format is zip. You can change that to whatever format you want.
+  ], run = "plugin ouch --args=zip", desc = "Compress with ouch" },
 
 # map gd cd ~/Documents
 # map gD cd ~/Downloads

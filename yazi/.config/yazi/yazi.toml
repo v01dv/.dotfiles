@@ -1,3 +1,7 @@
+# Default yazi config: https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/yazi-default.toml
+# Also use this config as reference:
+#   https://github.com/maotseantonio/home/blob/main/.config/yazi/yazi.toml
+#
 # A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
@@ -31,49 +35,87 @@ ueberzug_offset = [ 0, 0, 0, 0 ]
 
 [opener]
 edit = [
-	{ run = '${EDITOR:-nvim} "$@"', desc = "$EDITOR", block = true, for = "unix" },
-	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
-	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
+  { run = '${EDITOR:-nvim} "$@"', desc = "$EDITOR", block = true, for = "linux" },
+  { run = 'codium %@', orphan = true, desc = "vscodium", for = "linux" },
 ]
+
 open = [
-	{ run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
-	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
+	{ run = 'xdg-open "$1"', orphan = true, desc = "Open", for = "linux" },
 	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+  { run = 'termux-open "$1"',             desc = "Open", for = "android" },
 ]
+
 reveal = [
 	{ run = 'xdg-open "$(dirname "$1")"',           desc = "Reveal", for = "linux" },
-	{ run = 'open -R "$1"',                         desc = "Reveal", for = "macos" },
 	{ run = 'explorer /select,"%1"', orphan = true, desc = "Reveal", for = "windows" },
+  { run = 'termux-open "$(dirname "$1")"',        desc = "Reveal", for = "android" },
 	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
+
+# extract = [
+# 	{ run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
+# 	{ run = 'ya pub extract --list %*',   desc = "Extract here", for = "windows" },
+# ]
+
 extract = [
-	{ run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
-	{ run = 'ya pub extract --list %*',   desc = "Extract here", for = "windows" },
+  { run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
+	{ run = 'ouch d -y "%*"', desc = "Extract here with ouch", for = "windows" },
 ]
+
+folder = [
+  { run = '''zsh -c "nvim "$1""''', block = true, desc = "neovim", for = "linux" },
+  { run = 'ghostty -e nvim "$@"', orphan = true, desc = "neovim (detached)", for = "linux" },
+  { run = 'codium  "$@"', orphan = true, desc = "vscodium", for = "linux" },
+  { run = 'xdg-open "$@"', orphan = true, desc = "xdg-open", for = "linux" },
+]
+
+document = [
+  # { run = 'xdg-open "$@"', orphan = true, desc = "xdg-open", for = "linux" },
+  { run = 'setsid -f zathura "$@"', desc = "zathura", for = "linux" },
+  { run = 'libreoffice "$@"', orphan = true, desc = "libreoffice", for = "linux" },
+]
+
+image = [
+  { run = 'setsid -f nsxiv "$1"', desc = "nsxiv", for = "linux" },
+  # https://github.com/sxyazi/yazi/discussions/2220
+  # { run = 'nsxiv "$1"', desc = "nsxiv", for = "linux" , setsid = true},
+  { run = 'qimgv "$@"', orphan = true, desc = "qimgv", for = "linux" },
+  { run = 'krita "$@"', orphan = true, desc = "krita", for = "linux" },
+  { run = 'satty --filename "$@"', orphan = true, desc = "satty", for = "linux" },
+]
+
 play = [
-	{ run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
-	{ run = 'mpv --force-window %*', orphan = true, for = "windows" },
+  { run = 'setsid -f mpv --force-window "$@"', orphan = true, for = "unix" },
+	{ run = 'setsid - fmpv --force-window %*', orphan = true, for = "windows" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 
+# MIME types:
+#   https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
 [open]
 rules = [
 	# Folder
 	{ name = "*/", use = [ "edit", "open", "reveal" ] },
 	# Text
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
+  { mime = "image/djvu", use = "document" },
 	# Image
-	{ mime = "image/*", use = [ "open", "reveal" ] },
+	{ mime = "image/*", use = [ "image", "reveal" ] },
 	# Media
 	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
 	# Archive
-	{ mime = "application/{,g}zip", use = [ "extract", "reveal" ] },
-	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = [ "extract", "reveal" ] },
+  # Only Decompress and Unarchive. Do not open
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = [ "ouch", "reveal" ] },
 	# JSON
-	{ mime = "application/{json,x-ndjson}", use = [ "edit", "reveal" ] },
+	{ mime = "application/{json,ndjson,subrip,pgp-encrypted}", use = [ "edit", "reveal" ] },
 	{ mime = "*/javascript", use = [ "edit", "reveal" ] },
 	# Empty file
-	# { mime = "inode/x-empty", use = [ "edit", "reveal" ] },
+	{ mime = "inode/empty", use = [ "edit", "reveal" ] },
+
+  { mime = "application/{pdf,postscript,octet-stream}", use = "document" },
+  { mime = "application/epub*", use = "document" },
+  { mime = "application/mobipocket-ebook", use = "document" },
+
 	# Fallback
   # Find here https://github.com/sxyazi/yazi/discussions/1920
 	{ name = "*", use = [ "edit", "reveal" ] },
@@ -107,31 +149,49 @@ preloaders = [
 	{ mime = "font/*", run = "font" },
 	{ mime = "application/vnd.ms-opentype", run = "font" },
 ]
-previewers = [
-	{ name = "*/", run = "folder", sync = true },
-	# Code
-	{ mime = "text/*", run = "code" },
-	{ mime = "*/{xml,javascript,x-wine-extension-ini}", run = "code" },
-	# JSON
-	{ mime = "application/{json,x-ndjson}", run = "json" },
-	# Image
-	{ mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
-	{ mime = "image/*", run = "image" },
-	# Video
-	{ mime = "video/*", run = "video" },
-	# PDF
-	{ mime = "application/pdf", run = "pdf" },
-	# Archive
-	{ mime = "application/{,g}zip", run = "archive" },
-	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar,iso9660-image}", run = "archive" },
-	# Font
-	{ mime = "font/*", run = "font" },
-	{ mime = "application/vnd.ms-opentype", run = "font" },
-	# Empty file
-	{ mime = "inode/x-empty", run = "empty" },
-	# Fallback
-	{ name = "*", run = "file" },
+
+prepend_previewers = [
+	# Archive previewer
+	{ mime = "application/*zip",            run = "ouch" },
+	{ mime = "application/x-tar",           run = "ouch" },
+	{ mime = "application/x-bzip2",         run = "ouch" },
+	{ mime = "application/x-7z-compressed", run = "ouch" },
+	{ mime = "application/x-rar",           run = "ouch" },
+	{ mime = "application/x-xz",            run = "ouch" },
 ]
+
+# This is default settings
+# previewers = [
+# 	{ name = "*/", run = "folder", sync = true },
+# 	# Code
+# 	{ mime = "text/*", run = "code" },
+# 	{ mime = "application/{mbox,javascript,wine-extension-ini}", run = "code" },
+# 	# JSON
+# 	{ mime = "application/{json,ndjson}", run = "json" },
+# 	# Image
+# 	{ mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+# 	{ mime = "image/*", run = "image" },
+# 	# Video
+# 	{ mime = "video/*", run = "video" },
+# 	# PDF
+# 	{ mime = "application/pdf", run = "pdf" },
+# 	# Archive
+# 	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", run = "archive" },
+# 	{ mime = "application/{debian*-package,redhat-package-manager,rpm,android.package-archive}", run = "archive" },
+# 	{ name = "*.{AppImage,appimage}", run = "archive" },
+# 	# Virtual Disk / Disk Image
+# 	{ mime = "application/{iso9660-image,qemu-disk,ms-wim,apple-diskimage}", run = "archive" },
+# 	{ mime = "application/virtualbox-{vhd,vhdx}", run = "archive" },
+# 	{ name = "*.{img,fat,ext,ext2,ext3,ext4,squashfs,ntfs,hfs,hfsx}", run = "archive" },
+# 	# Font
+# 	{ mime = "font/*", run = "font" },
+# 	{ mime = "application/ms-opentype", run = "font" },
+# 	# Empty file
+# 	{ mime = "inode/empty", run = "empty" },
+# 	# Fallback
+# 	{ name = "*", run = "file" },
+# ]
+
 
 [input]
 cursor_blink = false

@@ -1,5 +1,5 @@
 [plugin]
-deps = [{ use = "yazi-rs/plugins:smart-enter", rev = "600614a" }, { use = "lpnh/fg", rev = "9bba743" }, { use = "yazi-rs/plugins:mime-ext", rev = "600614a" }, { use = "yazi-rs/plugins:chmod", rev = "600614a" },]
+deps = [{ use = "yazi-rs/plugins:smart-enter", rev = "600614a" }, { use = "lpnh/fg", rev = "9bba743" }, { use = "yazi-rs/plugins:mime-ext", rev = "600614a" }, { use = "yazi-rs/plugins:chmod", rev = "600614a" }, { use = "ndtoan96/ouch", rev = "083d564" },]
 
 [flavor]
 deps = [{ use = "yazi-rs/flavors:catppuccin-frappe", rev = "fc8eeaa" }]
