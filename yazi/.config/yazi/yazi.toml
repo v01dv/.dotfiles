@@ -76,9 +76,8 @@ document = [
 ]
 
 image = [
-  { run = 'setsid -f nsxiv "$1"', desc = "nsxiv", for = "linux" },
   # https://github.com/sxyazi/yazi/discussions/2220
-  # { run = 'nsxiv "$1"', desc = "nsxiv", for = "linux" , setsid = true},
+  { run = 'setsid -f nsxiv "$1"', desc = "nsxiv", for = "linux" },
   { run = 'qimgv "$@"', orphan = true, desc = "qimgv", for = "linux" },
   { run = 'krita "$@"', orphan = true, desc = "krita", for = "linux" },
   { run = 'satty --filename "$@"', orphan = true, desc = "satty", for = "linux" },
