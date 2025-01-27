@@ -7,45 +7,71 @@ local icons = require "user.config.icons"
 
 local function lsp_init()
 
+  -- local signs = {
+  --   active = true,
+  --   -- values = {
+  --     { name = "DiagnosticSignError", text = icons.diagnostics.BoldError },
+  --     { name = "DiagnosticSignWarn", text = icons.diagnostics.BoldWarning },
+  --     { name = "DiagnosticSignHint", text = icons.diagnostics.BoldHint },
+  --     { name = "DiagnosticSignInfo", text = icons.diagnostics.BoldInformation },
+  --   -- },
+  -- }
+
   local signs = {
-    active = true,
-    -- values = {
-      { name = "DiagnosticSignError", text = icons.diagnostics.BoldError },
-      { name = "DiagnosticSignWarn", text = icons.diagnostics.BoldWarning },
-      { name = "DiagnosticSignHint", text = icons.diagnostics.BoldHint },
-      { name = "DiagnosticSignInfo", text = icons.diagnostics.BoldInformation },
-    -- },
+    text = {
+      [vim.diagnostic.severity.ERROR] = icons.diagnostics.BoldError,
+      [vim.diagnostic.severity.WARN] = icons.diagnostics.BoldWarning,
+      [vim.diagnostic.severity.HINT] = icons.diagnostics.BoldHint,
+      [vim.diagnostic.severity.INFO] = icons.diagnostics.BoldInformation,
+    }
   }
 
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-  end
+  -- for _, sign in ipairs(signs) do
+  --   vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+    -- https://neovim.io/doc/user/diagnostic.html#diagnostic-signs
+    -- vim.diagnostic.config({
+    --   signs = {
+    --     text = {
+    --         [vim.diagnostic.severity.ERROR] = '',
+    --         [vim.diagnostic.severity.WARN] = '',
+    --     },
+    --     linehl = {
+    --         [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+    --     },
+    --     numhl =  sign.name {
+    --         [vim.diagnostic.severity.WARN] = 'WarningMsg',
+    --     },
+    --   },
+    -- })
+  -- end
 
   local config = {
     float = {
+      -- h: vim.lsp.handlers.hover()
       focusable = true,
+      -- h: nvim_open_win()
       style = "minimal",
-      border = "rounded",
+      -- border = "rounded",
     },
 
     diagnostic = {
-      -- virtual_text = false,
-      virtual_text = {
-        spacing = 4,
-        -- source = "if_many",
-        prefix = "●", -- " ", -- ■
-        severity = {
-            min = vim.diagnostic.severity.ERROR,
-        },
-        -- prefix = vim.fn.has('nvim-0.10') > 0 and
-        --   function(diagnostic, i, total) ---@param diagnostic Diagnostic
-        --     for d, icon in pairs(icons) do
-        --       if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-        --         return icon
-        --       end
-        --     end
-        --   end
-      },
+      virtual_text = false,
+      -- virtual_text = {
+      --   spacing = 4,
+      --   -- source = "if_many",
+      --   prefix = "●", -- " ", -- ■
+      --   severity = {
+      --       min = vim.diagnostic.severity.ERROR,
+      --   },
+      --   -- prefix = vim.fn.has('nvim-0.10') > 0 and
+      --   --   function(diagnostic, i, total) ---@param diagnostic Diagnostic
+      --   --     for d, icon in pairs(icons) do
+      --   --       if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+      --   --         return icon
+      --   --       end
+      --   --     end
+      --   --   end
+      -- },
       -- NOTE: With the default settings, you will not see updated diagnostics until you leave insert mode.
       -- Set update_in_insert = true if you want diagnostics to update while in insert mode.
       update_in_insert = false,
@@ -53,6 +79,7 @@ local function lsp_init()
       -- Your terminal needs to support such type of line.
       underline = true,
       severity_sort = true,
+      signs = signs,
       float = {
         focusable = true,
         style = "minimal",
@@ -68,7 +95,7 @@ local function lsp_init()
   vim.diagnostic.config(config.diagnostic)
 
   -- Hover configuration
-  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.float)
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.float)
 
   -- Signature help configuration
   -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
@@ -87,11 +114,11 @@ function M.setup(_, opts)
     -- provide the inlay hints.
     -- For instance, hints for LUA shoud be enabled into the LSP configuration file (/lspsettings/lua_ls.lua) in hint section.
     -- hint = { enable = true }
-    if require("user.config").inlayHint then
-      if client.supports_method "textDocument/inlayHint" then
-        vim.lsp.inlay_hint.enable(bufnr, true)
-      end
-    end
+    -- if require("user.config").inlayHint then
+    --   if client.supports_method "textDocument/inlayHint" then
+    --     vim.lsp.inlay_hint.enable(true)
+    --   end
+    -- end
 
   end)
 

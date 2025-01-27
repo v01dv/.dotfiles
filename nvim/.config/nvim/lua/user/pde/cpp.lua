@@ -33,7 +33,17 @@ return {
           server = {
             root_dir = function(...)
               -- using a root .clang-format or .clang-tidy file messes up projects, so remove them
-              return require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt", "configure.ac", ".git")(...)
+              return require("lspconfig.util").root_pattern(
+                "Makefile",
+                "compile_commands.json",
+                "compile_flags.txt",
+                "configure.ac",
+                "configure.in",
+                "config.h.in",
+                "meson.build",
+                "meson_options.txt",
+                "build.ninja",
+                ".git")(...)
             end,
             capabilities = {
               offsetEncoding = { "utf-16" },
@@ -54,9 +64,6 @@ return {
             },
           },
           extensions = {
-            inlay_hints = {
-              inline = false,
-            },
             ast = {
               --These require codicons (https://github.com/microsoft/vscode-codicons)
               role_icons = {
@@ -86,7 +93,10 @@ return {
             server = opts.server,
             extensions = opts.extensions,
           }
-          return true
+          -- TODO: I don't investigate deeply why it must be false.
+          -- But with true the LSP for C dosn't work.
+          -- Find solution in the LazyVim config: https://www.lazyvim.org/extras/lang/clangd
+          return false
         end,
       },
     },

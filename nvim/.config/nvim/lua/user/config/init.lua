@@ -7,7 +7,7 @@ return {
     ai = true,
     angular = false,
     bash = true,
-    cpp = false,
+    cpp = true,
     csharp = false,
     docker = false,
     elixir = false,
