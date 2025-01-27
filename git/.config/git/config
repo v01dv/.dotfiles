@@ -39,7 +39,7 @@
   sync = push -u origin
   pullm = pull origin master
   hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-  tree = log --all --decorate --oneline --graph
+  dog = log --all --decorate --oneline --graph
   # log = log --graph --decorate --pretty=oneline --abbrev-commit
 [core]
     editor = nvim
@@ -48,7 +48,7 @@
 [pager]
 #   branch = false
 [include]
-	path = ./local/delta/themes/frappe.gitconfig
+	path = ~/.config/delta/themes/frappe.gitconfig
 [delta]
 	features = line-numbers decorations
 	line-numbers = true
