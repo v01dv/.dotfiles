@@ -5,7 +5,7 @@
 
 # load="$(cut -d ' ' -f1-3 --output-delimiter=', ' /proc/loadavg)"
 load="$(cut -d ' ' -f1-3 /proc/loadavg)"
-cpus="$(nproc)"
+# cpus="$(nproc)"
 
 # full text
 echo "⣾⣄ $load"

@@ -6,7 +6,23 @@
 xset r rate 300 50
 # Map the caps lock key to super, and map the menu key to right super.
 # setxkbmap -option caps:super,altwin:menu_win
+
 # Keyboard layout
+#   grp:sclk_toggle   Switching to another layout by Scroll Lock
+#   compose:ralt      Compose key is keying combination Shift+AltGr (in that order).
+#                     Releasing these keys, then entering two other keys will
+#                     produce a special character. Extremely useful for entering
+#                     common Unicode characters.
+#                     Details:
+#                     https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
+#                     https://help.ubuntu.com/community/ComposeKey
+#   grp_led:scroll    Use keyboard Scroll Lock LED to show alternative layout.
+#   caps:super        Make Caps Lock an additional Super.
+#   altwin:menu_win   Menu is the key used to activate a context menu. The same
+#                     as right-mouse button
+#
+# When this disables Scroll Lock it actually assigns new keysym ISO_Next_Group,
+# so I put XK_ISO_Next_Group as shortcut in DWM config.def.h to update dwmbloks.
 setxkbmap -layout "us,ua" -option 'grp:sclk_toggle,compose:ralt,grp_led:scroll,caps:super,altwin:menu_win'
 
 # When caps lock is pressed only once, treat it as escape.

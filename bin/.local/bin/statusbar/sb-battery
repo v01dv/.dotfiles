@@ -23,7 +23,7 @@ for battery in /sys/class/power_supply/BAT?*; do
 	# Sets up the status and capacity
 	case "$(cat "$battery/status" 2>&1)" in
 		"Full") status="" ;;
-		"Discharging") 
+		"Discharging")
       if [ "$capacity" -gt "75" ]; then
 	      status=""
       elif [ "$capacity" -gt "50" ]; then
@@ -41,6 +41,7 @@ for battery in /sys/class/power_supply/BAT?*; do
 		*) exit 1 ;;
 	esac
 	capacity="$(cat "$battery/capacity" 2>&1)"
+  remaining="$(acpi -b | awk -F',' 'NR==1{split($3,a," ");print a[1]}')"
 
 # Loop through all attached batteries and format the info
 # for battery in /sys/class/power_supply/BAT?*; do
@@ -49,7 +50,7 @@ for battery in /sys/class/power_supply/BAT?*; do
 # 	# Sets up the status and capacity
 # 	case "$(cat "$battery/status" 2>&1)" in
 # 		"Full") status="" ;;
-# 		"Discharging") 
+# 		"Discharging")
 #       if [ "$capacity" -gt "75" ]; then
 # 	      status=""
 #       elif [ "$capacity" -gt "50" ]; then
@@ -71,5 +72,5 @@ for battery in /sys/class/power_supply/BAT?*; do
 #	[ "$status" = "" ] && [ "$capacity" -le 25 ] && warn=""
 	# Prints the info
 	# printf "%s%s% d%%" "$status" "$warn" "$capacity"; unset warn
-	printf "%s% d%%" "$status" "$capacity"; unset warn
+  printf "%s% d%% (%s)" "$status" "$capacity" "$remaining"; unset warn
 done && printf "\\n"

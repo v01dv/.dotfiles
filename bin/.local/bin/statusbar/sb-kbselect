@@ -1,6 +1,6 @@
 #!/bin/sh
-# works on any init system
-# requirements: dmenu, xorg-setxkbmap
+works on any init system
+requirements: dmenu, xorg-setxkbmap
 kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
 
 case $BUTTON in
@@ -14,3 +14,22 @@ case $BUTTON in
 esac
 
 echo "$kb"
+
+
+# kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
+#
+# case "$kb" in
+#
+# 	ua) setxkbmap us && echo "US" && kill -64 "$(pidof dwmblocks)" ;;
+# 	us) setxkbmap ua && echo "UA" && kill -64 "$(pidof dwmblocks)" ;;
+# 	*) exit 1 ;;
+# esac
+#
+# echo "${flag}"
+#
+#
+#
+# if [ `setxkbmap -print | grep xkb_symbols | awk '{print $4}' | awk -F"+" '{print $2}'` = us ] ;then
+#   echo "EN"; echo "changing to RU..."; setxkbmap ru ;
+# else echo "RU"; echo "Changing to US..."; setxkbmap us ; fi
+#

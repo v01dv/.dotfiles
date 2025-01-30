@@ -6,7 +6,9 @@
 # last run.
 
 # Cache in tmpfs to improve speed and reduce SSD load
-cache=/tmp/cpubarscache
+# cache=/tmp/cpubarscache
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/cpubarscache"
+
 
 case $BUTTON in
 	2) setsid -f "$TERMINAL" -e btop ;;
@@ -30,16 +32,15 @@ echo "$stats" | while read -r row; do
 		printf "%d\n", (1 - (idle - $3)  / (total - $2))*100 /12.5}' \
 		id="$id" total="$total" idle="$idle")" in
 
-		"0") printf "▁ ";; 
-		"1") printf "▂ ";;
-		"2") printf "▃ ";;
-		"3") printf "▄ ";;
-		"4") printf "▅ ";;
-		"5") printf "▆ ";; 
-		"6") printf "▇ ";;  
-		"7") printf "█ ";; 
-
-		"8") printf "█ ";;
+		"0") printf "▁";;
+		"1") printf "▂";;
+		"2") printf "▃";;
+		"3") printf "▄";;
+		"4") printf "▅";;
+		"5") printf "▆";;
+		"6") printf "▇";;
+		"7") printf "█";;
+		"8") printf "█";;
 	esac
 done; printf "\\n"
 echo "$stats" > "$cache"
