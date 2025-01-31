@@ -4,11 +4,4 @@
 # kb_layout="$(setxkbmap -query | grep layout | awk '{ print $2 }')" || exit 1
 kb_layout="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
 
-case "$kb_layout" in
-	us) flag="US" ;;
-	ua) flag="UA" ;;
-esac
-
-echo "${flag}"
-
-
+echo "${kb_layout}" | tr '[:lower:]' '[:upper:]'
