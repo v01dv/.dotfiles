@@ -16,7 +16,7 @@ export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
 # Default programs
 export EDITOR="nvim" 	# $EDITOR use nvim in terminal
 export VISUAL="nvim"   	# $VISUAL use nvim in GUI mode
-export TERMINAL="st"
+export TERMINAL="ghostty"
 export BROWSER="librewolf"
 
 # TODO: Remove aftre some period of time

@@ -19,14 +19,12 @@ xrandr --output DP-0 --auto --output DP-1 --auto --right-of DP-0 --auto --output
 #xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources & xrdbpid=$!	# Uncomment to use Xresources colors/settings on startup
 #xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources &		# Uncomment to use Xresources colors/settings on startup
 
-# picom -f &      # Compositor
-picom -b &
-
-setbg &
+# xrandr --dpi 96		# Set DPI. User may want to use a larger number for larger screens.
+setbg &           # Set the background with the `setbg` script
 
 # NOTE: Luke Smith runs his dwmblocks within his dwm build:
 # https://github.com/LukeSmithxyz/dwm/commit/02bda162f7e8561462bb4765a36214a2249a7761
-autostart="mpd dunst lxsession unclutter redshift clipmenud remapd dwmblocks"
+autostart="mpd picom dunst lxsession unclutter redshift clipmenud remapd"
 
 for program in $autostart; do
 	pidof -sx "$program" || "$program" &
