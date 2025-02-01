@@ -1,3 +1,6 @@
+-- Usefull source:
+--  [nvim-cmp + LuaSnips = c-y - YouTube](https://www.youtube.com/watch?v=22mrSjknDHI)
+
 return {
   {
     "hrsh7th/nvim-cmp",
@@ -13,6 +16,7 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
+      -- "onsails/lspkind.nvim",
       -- "petertriho/cmp-git",
 
       -- { "jcdickinson/codeium.nvim", config = true, enabled = false },
@@ -22,11 +26,13 @@ return {
       local icons = require "user.config.icons"
       local luasnip = require "luasnip"
       local neogen = require "neogen"
+      local defaults = require("cmp.config.default")()
 
       return {
         completion = {
           completeopt = "menu,menuone,noinsert,noselect",
         },
+         -- Enable luasnip to handle snippet expansion for nvim-cmp
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -168,6 +174,7 @@ return {
         experimental = {
           ghost_text = false,
         },
+        sorting = defaults.sorting,
       }
     end,
     config = function(_, opts)
