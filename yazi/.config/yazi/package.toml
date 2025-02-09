@@ -1,5 +1,29 @@
-[plugin]
-deps = [{ use = "yazi-rs/plugins:smart-enter", rev = "600614a" }, { use = "lpnh/fg", rev = "9bba743" }, { use = "yazi-rs/plugins:mime-ext", rev = "600614a" }, { use = "yazi-rs/plugins:chmod", rev = "600614a" }, { use = "ndtoan96/ouch", rev = "083d564" },]
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "600614a"
+hash = "c1a2739e9ef2d837030ccb4267be3ed1"
 
-[flavor]
-deps = [{ use = "yazi-rs/flavors:catppuccin-frappe", rev = "fc8eeaa" }]
+[[plugin.deps]]
+use = "lpnh/fg"
+rev = "9bba743"
+hash = "5c395bf9b8ef3d4701ac9bdbc963c4c1"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mime-ext"
+rev = "600614a"
+hash = "d81b64a39432fcd6224cd75d296e7510"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "600614a"
+hash = "4c7e8fd0266eedee7b619d966bd2d025"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "083d564"
+hash = "1e4c0ac1fca31a23412324710193358a"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-frappe"
+rev = "fc8eeaa"
+hash = "a62ee6c878ad1a451560da2f22c0fb35"
