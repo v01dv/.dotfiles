@@ -27,5 +27,5 @@ case $BUTTON in
 esac
 
 #date "+%Y %b %d (%a) $icon%I:%M%p"
-printf " $(date '+%d.%m.%y @ %R')"
+printf " $(date '+%A %d.%m.%y @ %R')"
 
