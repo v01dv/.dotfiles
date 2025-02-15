@@ -30,6 +30,10 @@ prepend_keymap = [
     "C",
     # The --args=zip part tells the plugin that default format is zip. You can change that to whatever format you want.
   ], run = "plugin ouch --args=zip", desc = "Compress with ouch" },
+  { on = [
+    "T",
+    # Switch the preview pane between hidden and shown.
+  ], run = "plugin hide-preview", desc = "Hide or show preview" },
 
 # map gd cd ~/Documents
 # map gD cd ~/Downloads

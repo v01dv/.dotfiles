@@ -23,6 +23,11 @@ use = "ndtoan96/ouch"
 rev = "083d564"
 hash = "1e4c0ac1fca31a23412324710193358a"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:hide-preview"
+rev = "beb586a"
+hash = "55904f17e1053cfb91dacd9015a99f9d"
+
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-frappe"
 rev = "fc8eeaa"
