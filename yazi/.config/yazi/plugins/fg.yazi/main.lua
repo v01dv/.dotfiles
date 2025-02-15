@@ -1,81 +1,109 @@
+--- @since 25.2.7
+
 local shell = os.getenv("SHELL"):match(".*/(.*)")
+local get_cwd = ya.sync(function() return cx.active.current.cwd end)
+local fail = function(s, ...) ya.notify { title = "fr", content = string.format(s, ...), timeout = 5, level = "error" } end
 
-local preview_opts = {
-	default = [===[line={2} && begin=$( if [[ $line -lt 7 ]]; then echo $((line-1)); else echo 6; fi ) && bat --highlight-line={2} --color=always --line-range $((line-begin)):$((line+10)) {1}]===],
-	fish = [[set line {2} && set begin ( test $line -lt 7  &&  echo (math "$line-1") || echo  6 ) && bat --highlight-line={2} --color=always --line-range (math "$line-$begin"):(math "$line+10") {1}]],
-	nu = [[let line = ({2} | into int); let begin = if $line < 7 { $line - 1 } else { 6 }; bat --highlight-line={2} --color=always --line-range $'($line - $begin):($line + 10)' {1}]],
-}
-local preview_cmd = preview_opts[shell] or preview_opts.default
-
-local rg_prefix = "rg --column --line-number --no-heading --color=always --smart-case "
-local rga_prefix =
-	"rga --files-with-matches --color ansi --smart-case --max-count=1 --no-messages --hidden --follow --no-ignore --glob '!.git' --glob !'.venv' --glob '!node_modules' --glob '!.history' --glob '!.Rproj.user' --glob '!.ipynb_checkpoints' "
-
-local fzf_args = [[fzf --preview='bat --color=always {1}']]
-local rg_args = {
-	default = [[fzf --ansi --disabled --bind "start:reload:]]
-		.. rg_prefix
-		.. [[{q}" --bind "change:reload:sleep 0.1; ]]
-		.. rg_prefix
-		.. [[{q} || true" --delimiter : --preview ']]
-		.. preview_cmd
-		.. [[' --preview-window 'up,60%' --nth '3..']],
-	nu = [[fzf --ansi --disabled --bind "start:reload:]]
-		.. rg_prefix
-		.. [[{q}" --bind "change:reload:sleep 100ms; try { ]]
-		.. rg_prefix
-		.. [[{q} }" --delimiter : --preview ']]
-		.. preview_cmd
-		.. [[' --preview-window 'up,60%' --nth '3..']],
-}
-local rga_args = {
-	default = [[fzf --ansi --disabled --layout=reverse --sort --header-first --header '---- Search inside files ----' --bind "start:reload:]]
-		.. rga_prefix
-		.. [[{q}" --bind "change:reload:sleep 0.1; ]]
-		.. rga_prefix
-		.. [[{q} || true" --delimiter : --preview 'rga --smart-case --pretty --context 5 {q} {}' --preview-window 'up,60%' --nth '3..']],
-	nu = [[fzf --ansi --disabled --layout=reverse --sort --header-first --header '---- Search inside files ----' --bind "start:reload:]]
-		.. rga_prefix
-		.. [[{q}" --bind "change:reload:sleep 100ms; try { ]]
-		.. rga_prefix
-		.. [[{q} }" --delimiter : --preview 'rga --smart-case --pretty --context 5 {q} {}' --preview-window 'up,60%' --nth '3..']],
-}
-local fg_args = [[rg --color=always --line-number --no-heading --smart-case '' | fzf --ansi --preview=']]
-	.. preview_cmd
-	.. [[' --delimiter=':' --preview-window='up:60%' --nth='3..']]
-
-local function split_and_get_first(input, sep)
-	if sep == nil then
-		sep = "%s"
+local fmt_opts = function(opt)
+	if type(opt) == "string" then
+		return " " .. opt
+	elseif type(opt) == "table" then
+		return " " .. table.concat(opt, " ")
 	end
-	local start, _ = string.find(input, sep)
-	if start then
-		return string.sub(input, 1, start - 1)
-	end
-	return input
+	return ""
 end
 
-local state = ya.sync(function() return cx.active.current.cwd end)
+local get_custom_opts = ya.sync(function(self)
+	local opts = self.custom_opts or {}
 
-local function fail(s, ...) ya.notify { title = "fg", content = string.format(s, ...), timeout = 5, level = "error" } end
+	return {
+		fzf = fmt_opts(opts.fzf),
+		rg = fmt_opts(opts.rg),
+		bat = fmt_opts(opts.bat),
+		rga = fmt_opts(opts.rga),
+		rga_preview = fmt_opts(opts.rga_preview),
+	}
+end)
+
+local fzf_from = function(job_args, opts_tbl)
+	local cmd_tbl = {
+		rg = {
+			grep = "rg --color=always --line-number --smart-case" .. opts_tbl.rg,
+			prev = "--preview='bat --color=always "
+				.. opts_tbl.bat
+				.. " --highlight-line={2} {1}' --preview-window=~3,+{2}+3/2,up,66%",
+			prompt = "--prompt='rg> '",
+			extra = function(cmd_grep)
+				local logic = {
+					default = { cond = "[[ ! $FZF_PROMPT =~ rg ]] &&", op = "||" },
+					fish = { cond = 'not string match -q "*rg*" $FZF_PROMPT; and', op = "; or" },
+				}
+				local lgc = logic[shell] or logic.default
+				local extra_bind = "--bind='ctrl-s:transform:%s "
+					.. [[echo "rebind(change)+change-prompt(rg> )+disable-search+clear-query+reload(%s {q} || true)" %s ]]
+					.. [[echo "unbind(change)+change-prompt(fzf> )+enable-search+clear-query"']]
+				return string.format(extra_bind, lgc.cond, cmd_grep, lgc.op)
+			end,
+		},
+		rga = {
+			grep = "rga --color=always --files-with-matches --smart-case" .. opts_tbl.rga,
+			prev = "--preview='rga --context 5 --no-messages --pretty "
+				.. opts_tbl.rga_preview
+				.. " {q} {}' --preview-window=up,66%",
+			prompt = "--prompt='rga> '",
+		},
+	}
+
+	local cmd = cmd_tbl[job_args]
+	if not cmd then
+		return fail("`%s` is not a valid argument. Use `rg` or `rga` instead", job_args)
+	end
+
+	local fzf_tbl = {
+		"fzf",
+		"--ansi",
+		"--delimiter=:",
+		"--disabled",
+		"--layout=reverse",
+		"--no-multi",
+		"--nth=3..",
+		cmd.prev,
+		cmd.prompt,
+		"--bind='start:reload:" .. cmd.grep .. " {q}'",
+		"--bind='change:reload:sleep 0.1; " .. cmd.grep .. " {q} || true'",
+		"--bind='ctrl-]:change-preview-window(80%|66%)'",
+		"--bind='ctrl-\\:change-preview-window(right|up)'",
+		"--bind='ctrl-r:clear-query+reload:" .. cmd.grep .. " {q} || true'",
+		opts_tbl.fzf,
+	}
+
+	if cmd.extra then
+		table.insert(fzf_tbl, cmd.extra(cmd.grep))
+	end
+
+	return table.concat(fzf_tbl, " ")
+end
+
+local function setup(self, opts)
+	opts = opts or {}
+
+	self.custom_opts = {
+		fzf = opts.fzf,
+		rg = opts.rg,
+		bat = opts.bat,
+		rga = opts.rga,
+		rga_preview = opts.rga_preview,
+	}
+end
 
 local function entry(_, job)
 	local _permit = ya.hide()
-	local cwd = tostring(state())
-	local cmd_args = ""
-
-	if job.args[1] == "fzf" then
-		cmd_args = fzf_args
-	elseif job.args[1] == "rg" then
-		cmd_args = rg_args[shell] or rg_args.default
-	elseif job.args[1] == "rga" then
-		cmd_args = rga_args[shell] or rga_args.default
-	else
-		cmd_args = fg_args
-	end
+	local custom_opts = get_custom_opts()
+	local args = fzf_from(job.args[1], custom_opts)
+	local cwd = tostring(get_cwd())
 
 	local child, err = Command(shell)
-		:args({ "-c", cmd_args })
+		:args({ "-c", args })
 		:cwd(cwd)
 		:stdin(Command.INHERIT)
 		:stdout(Command.PIPED)
@@ -83,23 +111,27 @@ local function entry(_, job)
 		:spawn()
 
 	if not child then
-		return fail("Spawn command failed with error code %s.", err)
+		return fail("Command failed with error code %s", err)
 	end
 
 	local output, err = child:wait_with_output()
-	if not output then
-		return fail("Cannot read `fzf` output, error code %s", err)
-	elseif not output.status.success and output.status.code ~= 130 then
+	if not output then -- unreachable?
+		return fail("Cannot read command output, error code %s", err)
+	elseif output.status.code == 130 then -- interrupted with <ctrl-c> or <esc>
+		return
+	elseif output.status.code == 1 then -- no match
+		return ya.notify { title = "fr", content = "No file selected", timeout = 5 }
+	elseif output.status.code ~= 0 then -- anything other than normal exit
 		return fail("`fzf` exited with error code %s", output.status.code)
 	end
 
 	local target = output.stdout:gsub("\n$", "")
+	if target ~= "" then
+		local colon_pos = string.find(target, ":")
+		local file_url = colon_pos and string.sub(target, 1, colon_pos - 1) or target
 
-	local file_url = split_and_get_first(target, ":")
-
-	if file_url ~= "" then
-		ya.manager_emit(file_url:match("[/\\]$") and "cd" or "reveal", { file_url })
+		ya.manager_emit("reveal", { file_url })
 	end
 end
 
-return { entry = entry }
+return { entry = entry, setup = setup }
