@@ -1,0 +1,56 @@
+#!/bin/sh
+# Based on:
+#   [Is there an open source program to reduce the size of a PDF file?? : r/opensource](https://www.reddit.com/r/opensource/comments/ou4y5h/is_there_an_open_source_program_to_reduce_the/)
+#
+# If you are interested in more ways to treat a scan, ScanTailor is definitely
+# an option. I am using a fork called ScanTailor Advanced which is available on
+# https://github.com/4lex4/scantailor-advanced
+# With this tool you can also crop your images and apply options like threshold
+# or posterization to improve readability while further reducing the file size.
+
+INPUT=$1;
+OUTPUT=$2;
+
+for f in *.pdf
+do
+  # gs -sDEVICE=pdfwrite -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile="_${f}" "${f}"
+
+  # Use the following line to compress the images in your pdf.
+  # If the quality of the output is not sufficent you could try to replace ebook with printer.
+  # This uses a higher resolution and therefore looks better while needing more disk space.
+  # ! Select proper option depends on type of PDF: text, scans (lot of large images), etc.
+  #
+  # https://ghostscript.readthedocs.io/en/latest/VectorDevices.html#controls-and-features-specific-to-postscript-and-pdf-input
+  #
+  # -dPDFSETTINGS=configuration
+  # The ‘best’ quality (where best means closest to the original input) is obtained
+  # by not setting this parameter at all (or by using /default).
+  # The PDFSETTINGS presets should only be used if you are sure you understand
+  # that the output will be altered in a variety of ways from the input.
+  #
+  # Presets the "distiller parameters" to one of four predefined settings:
+  #  /screen (72 dpi) selects low-resolution output similar to the Acrobat Distiller (up to version X) "Screen Optimized" setting.
+  #  /ebook (150 dpi) selects medium-resolution output similar to the Acrobat Distiller (up to version X) "eBook" setting.
+  #  /printer (300 dpi) selects output similar to the Acrobat Distiller "Print Optimized" (up to version X) setting.
+  #  /prepress (300 dpi) selects output similar to Acrobat Distiller "Prepress Optimized" (up to version X) setting.
+  #  /default (72 dpi) selects output intended to be useful across a wide variety of uses, possibly at the expense of a larger output file.
+
+  # -dNOPAUSE
+  # Disables the prompt and pause at the end of each page.
+  # Normally one should use this (along with -dBATCH) when producing output on
+  # a printer or to a file; it also may be desirable for applications where
+  # another program is "driving" Ghostscript.
+
+  # -dBATCH
+  # Causes Ghostscript to exit after processing all files named on the command
+  # line, rather than going into an interactive loop reading PostScript commands.
+  # Equivalent to putting -c quit at the end of the command line.
+
+  # -dQUIET
+  # Suppresses routine information comments on standard output. This is currently
+  # necessary when redirecting device output to standard output.
+
+  gs -sDEVICE=pdfwrite -dPDFSETTINGS=/printer -dNOPAUSE  -dBATCH -sOutputFile="_${f}" "${f}"
+  # gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -dNOPAUSE -dBATCH -sOutputFile="_${f}" "${f}"
+done
+

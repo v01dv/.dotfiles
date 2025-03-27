@@ -1,0 +1,31 @@
+#!/bin/bash
+# set -e
+
+# DIR=`mktemp -d`
+# CUR=$PWD
+# cd $DIR
+
+#scanner=$(sane-find-scanner | grep CanoScan)
+#scanneraddr="genesys:libusb:"${scanner:(-7)}
+scanneraddr="airscan:w1:Brother MFC-L2720DW series"
+
+# scanimage -b --format png  -d 'fujitsu:ScanSnap S1500:2314' --source 'ADF Front' --resolution 150
+# convert *.png $CUR/$1
+
+#scanimage -d "$scanneraddr" --contrast 27 -x 210 -y 297 --mode Color --resolution 300 --format=jpeg --batch-prompt --batch='scanned.page-%d.jpg'
+scanimage -d "$scanneraddr" -x 210 -y 297 --mode Color --progress --resolution 300 --format=png --batch-prompt --batch='scanned.page-%d.png'
+
+# The convert command is deprecated in IMv7, use "magick" instead of "convert" or "m
+# convert scanned.page-*.png scan.pdf
+#magick scanned.page-*.png scan.pdf
+
+# Adjust the parameters to your needs
+#  - density: the pixel density in dpi (e.g. 100x100).
+#   Higher pixel densities increase quality and size
+#  - quality: the compression ratio.
+#   For jpg it is between 1 to 100 with 100 the best quality, but lowest compression
+#  - compress: the compression algorithm. jpeg compression might not be the best choice due to compression artifacts.
+#   You have the choice between BZip, Fax, Group4, JPEG, JPEG2000, Lossless, LZW, RLE or Zip as alternate compression methods (some only allow b/w images).
+magick -density 300 -quality 75 -compress JPEG scanned.page-*.png scan.pdf
+
+rm scanned.page-*.png
