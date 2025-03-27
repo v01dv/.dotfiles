@@ -29,11 +29,11 @@ do
   # that the output will be altered in a variety of ways from the input.
   #
   # Presets the "distiller parameters" to one of four predefined settings:
-  #  /screen (72 dpi) selects low-resolution output similar to the Acrobat Distiller (up to version X) "Screen Optimized" setting.
-  #  /ebook (150 dpi) selects medium-resolution output similar to the Acrobat Distiller (up to version X) "eBook" setting.
-  #  /printer (300 dpi) selects output similar to the Acrobat Distiller "Print Optimized" (up to version X) setting.
-  #  /prepress (300 dpi) selects output similar to Acrobat Distiller "Prepress Optimized" (up to version X) setting.
-  #  /default (72 dpi) selects output intended to be useful across a wide variety of uses, possibly at the expense of a larger output file.
+  #  /screen (72 dpi)     Has a lower quality and smaller size.
+  #  /ebook (150 dpi)     Has a better quality, but has a slightly larger size.
+  #  /printer (300 dpi)   Output is of a printer type quality.
+  #  /prepress (300 dpi)  Output is of a higher size and quality.
+  #  /default (72 dpi)    Selects the output which is useful for multiple purposes. Can cause large PDFS.
 
   # -dNOPAUSE
   # Disables the prompt and pause at the end of each page.
