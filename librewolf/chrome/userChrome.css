@@ -1,0 +1,13 @@
+/* Catppuccin Frappe Blue userChrome.css*/
+
+@media (prefers-color-scheme: dark) {
+
+  .tab-background:is([selected], [multiselected]) {
+      background-color: #414559 !important;
+      /* background-image: none !important; */
+      border-bottom: 2px solid #8caaee !important;
+      outline-style: none !important;
+  }
+
+
+}
