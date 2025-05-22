@@ -1,3 +1,5 @@
+// Based on:
+//    [the dream music player, finally. - YouTube](https://www.youtube.com/watch?v=oTOu7VfXnl8)
 #![enable(implicit_some)]
 #![enable(unwrap_newtypes)]
 #![enable(unwrap_variant_newtypes)]
