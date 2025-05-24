@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# dependency:
+#  - pandoc
+#  - xelatex (texlive-meta package)
+#  - watchman (>= 4.8)
+
+#  TODO: Need to check:
+#
+#   1. Maybe instead of about 2Gb texlive-meta will be enought only next packages:
+#      texlive-latex-base
+#      texlive-fonts-recommended
+#      texlive-extra-utils
+#      texlive-latex-extra
+#      texlive-xetex
+#   2. Or just texlive-xetex and fonts-cmu as described https://gist.github.com/vhsw/c696384392080f00ed2e416a331d705f
+#   3. Or next packeges as described https://github.com/alexeygumirov/pandoc-for-pdf-how-to. Need to read this doc again.
+#      texlive-latex-recommended
+#      texlive-fonts-recommended
+#      texlive-latex-extra
+#      texlive-fonts-extra
+#      texlive-xetex
+#   4. Packages which are present into texlive-most from AUR (Mentioned here https://youtu.be/lMIlNsi3eAY?si=Q8mTMt1IlIir_0zB&t=283)
+#   5. There is also group texlive-lang if you need chinese, cyrillic, etc (https://forum.manjaro.org/t/how-to-achieve-texlive-texlive-full-installation/34510)
+#   5. Use docker image of the texlive as described https://www.baeldung.com/linux/pdf-markdown-conversion#3-latex
+
+# Based on:
+#   https://github.com/ryought/md2pdf/blob/master/md2pdf.sh
+#   https://learnbyexample.github.io/customizing-pandoc/
+#
+# -   `mainfont` is for normal text
+# -   `monofont` is for code snippets
+# -   `geometry` is for page size and margins
+# -   `linkcolor` will set the color for internal links
+#     -   this will also colorize other types of links
+#     -   set `urlcolor` if you want to distinguish URLs and so on for other types
+# -   to increase the default **font size**, use `-V fontsize=12pt`
+#     -   See [stackoverflow: change font size](https://stackoverflow.com/q/23811002/4082052) if you need even bigger size options
+
+# markdown -> pdf
+process() {
+  echo "Processing $1 ..."
+  pandoc "$1" \
+    -V linkcolor=blue \
+    -V urlcolor=teal \
+    -V geometry:a4paper \
+    -V geometry:margin=2cm \
+    -V mainfont="DejaVu Serif" \
+    -V monofont="DejaVu Sans Mono" \
+    -V sansfont="DejaVu Sans" \
+    --pdf-engine=xelatex \
+    -o "$1".pdf
+  # -o "$2"
+  # -V fontsize=10pt
+  # -V filecolor=magenta
+  # --highlight-style=zenburn --table-of-content
+}
+
+# show usage
+usage() {
+  echo "Usage: $0 [-w] markdown.md" 1>&2
+  exit 1
+}
+
+# option parse
+while getopts wh OPT
+do
+  case $OPT in
+    w) WATCH=true  # -w: enable watch mode
+      ;;
+    h) usage  # -h: show help
+      ;;
+    \?) usage
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+# check if given source filename
+if [ $# -ne 1 ]; then
+  echo "Error: not enough arguments"
+  exit 1
+fi
+
+if [ "$WATCH" ]; then
+  echo 'Watch mode'
+  # run itself each time when file is updated
+  # https://facebook.github.io/watchman/docs/watchman-make.html
+  watchman-make -p "$1" --run "md2pdf $1"
+else
+  # single mode
+  process "$1"
+fi
+
