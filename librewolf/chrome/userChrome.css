@@ -9,5 +9,8 @@
       outline-style: none !important;
   }
 
-
+  /* Rounded address bar */
+  #urlbar-background,#urlbar {
+    border-radius: 10px !important;
+  }
 }
