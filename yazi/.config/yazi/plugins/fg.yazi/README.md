@@ -1,8 +1,5 @@
 # fr.yazi
 
-> [!NOTE]
-> this plugin is only guaranteed to be compatible with Yazi nightly
-
 a Yazi plugin that integrates `fzf` with `bat` preview for `rg` search and
 `rga` preview for `rga` search
 
@@ -18,7 +15,7 @@ a Yazi plugin that integrates `fzf` with `bat` preview for `rg` search and
 ## installation
 
 ```sh
-ya pack -a lpnh/fr
+ya pkg add lpnh/fr
 ```
 
 ## usage
@@ -42,12 +39,12 @@ below is an example of how to configure both in the
 `~/.config/yazi/keymap.toml` file:
 
 ```toml
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = ["f", "r"]
 run = "plugin fr rg"
 desc = "Search file by content (rg)"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = ["f", "a"]
 run = "plugin fr rga"
 desc = "Search file by content (rga)"
@@ -97,32 +94,32 @@ example:
 
 ```lua
 require("fr"):setup {
-	fzf = [[--info-command='echo -e "$FZF_INFO 💛"'  --no-scrollbar --pointer '󰼛']],
-	rg = "--colors 'line:fg:red' --colors 'match:style:nobold'",
-	bat = "--style 'header,grid'",
-	rga = {
-		"--hidden",
-		"--follow",
-		"--no-ignore",
-		"--glob",
-		"'!.git'",
-		"--glob",
-		"!'.venv'",
-		"--glob",
-		"'!node_modules'",
-		"--glob",
-		"'!.history'",
-		"--glob",
-		"'!.Rproj.user'",
-		"--glob",
-		"'!.ipynb_checkpoints'",
-	},
-	rga_preview = {
-		"--colors 'line:fg:red'"
-			.. " --colors 'match:fg:blue'"
-			.. " --colors 'match:bg:black'"
-			.. " --colors 'match:style:nobold'",
-	},
+    fzf = [[--info-command='echo -e "$FZF_INFO 💛"' --no-scrollbar]],
+    rg = "--colors 'line:fg:red' --colors 'match:style:nobold'",
+    bat = "--style 'header,grid'",
+    rga = {
+        "--follow",
+        "--hidden",
+        "--no-ignore",
+        "--glob",
+        "'!.git'",
+        "--glob",
+        "!'.venv'",
+        "--glob",
+        "'!node_modules'",
+        "--glob",
+        "'!.history'",
+        "--glob",
+        "'!.Rproj.user'",
+        "--glob",
+        "'!.ipynb_checkpoints'",
+    },
+    rga_preview = {
+        "--colors 'line:fg:red'"
+            .. " --colors 'match:fg:blue'"
+            .. " --colors 'match:bg:black'"
+            .. " --colors 'match:style:nobold'",
+    },
 }
 ```
 

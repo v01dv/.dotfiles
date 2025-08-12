@@ -2,7 +2,7 @@
 dark = "catppuccin-frappe"
 
 # Override certain styles of the "catppuccin-frappe" flavor.
-[manager]
+[mgr]
 syntect_theme = "~/.config/bat/themes/Catppuccin Frappe.tmTheme"
 
 border_symbol = "│"

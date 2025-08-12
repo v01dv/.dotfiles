@@ -1,34 +1,34 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
-rev = "beb586a"
-hash = "aef2b1a805b80cce573bb766f1459d88"
+rev = "de53d90"
+hash = "56fdabc96fc1f4d53c96eb884b02a5be"
 
 [[plugin.deps]]
 use = "lpnh/fg"
-rev = "f6b3264"
-hash = "cf0eacdc13d9151f37e0276f080e5470"
+rev = "3d32e55"
+hash = "f7ab219b58675582ef855a9414dbc659"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "beb586a"
-hash = "b03f3d80d26b6d7bb490b1380e9cb754"
+rev = "de53d90"
+hash = "4c49c446328c4553a4ccab7facc10b21"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "beb586a"
-hash = "f28138c2e11e87962b66d583fef724c3"
+rev = "de53d90"
+hash = "1adc12c2b2b025411ab61eb8f0879574"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "ce6fb75"
-hash = "ed6c185514109d7c5463f609282b220c"
+rev = "0742fff"
+hash = "2bd799b42b8e42b8ef100310be71f8d1"
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:hide-preview"
-rev = "beb586a"
-hash = "55904f17e1053cfb91dacd9015a99f9d"
+use = "yazi-rs/plugins:toggle-pane"
+rev = "de53d90"
+hash = "d6f60c24d8c0cf57a855bf46115b2502"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-frappe"
-rev = "1a419b2"
-hash = "e88895e8f8b7926f20946f273ecc7348"
+rev = "68326b4"
+hash = "7780fbbc8965da5a31a76a0dcd4d1216"

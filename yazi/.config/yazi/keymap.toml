@@ -4,7 +4,7 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[manager]
+[mgr]
 
 # Find here: https://github.com/maotseantonio/home/blob/main/.config/yazi/keymap.toml
 prepend_keymap = [
@@ -33,7 +33,7 @@ prepend_keymap = [
   { on = [
     "T",
     # Switch the preview pane between hidden and shown.
-  ], run = "plugin hide-preview", desc = "Hide or show preview" },
+  ], run = "plugin toggle-pane min-preview", desc = "Show or hide the preview pane" },
 
 # map gd cd ~/Documents
 # map gD cd ~/Downloads
