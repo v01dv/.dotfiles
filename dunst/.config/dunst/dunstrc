@@ -326,6 +326,7 @@
     background = "#303446"
     foreground = "#C6D0F5"
     timeout = 5
+    script = ~/.config/dunst/sound/sound-normal.sh
     # Icon for notifications with normal urgency, uncomment to enable
     # default_icon = bell
     default_icon = /home/oh/.local/share/icons/catppucin_circle.png
@@ -335,6 +336,7 @@
     foreground = "#C6D0F5"
     frame_color = "#EF9F76"
     timeout = 0
+    script = ~/.config/dunst/sound/sound-critical.sh
     # Icon for notifications with critical urgency, uncomment to enable
     #default_icon = /path/to/icon
 
