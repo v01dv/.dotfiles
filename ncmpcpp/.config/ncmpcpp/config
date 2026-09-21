@@ -17,6 +17,8 @@ allow_for_physical_item_deletion = "no"
 ### Integration with external programs ###
 # execute_on_song_change = "~/.config/ncmpcpp/art.sh"
 # execute_on_song_change = "bash ~/.config/ncmpcpp/music-notify.sh"
+execute_on_song_change="~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
+
 external_editor = "nvim"
 use_console_editor = yes
 mouse_support = "yes"
