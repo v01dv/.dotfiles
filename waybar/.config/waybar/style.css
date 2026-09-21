@@ -1,0 +1,144 @@
+@import "colors/frappe.css";
+
+* {
+  /* all: unset; */
+
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+  /* font-family: CaskadiaCove Nerd Font; */
+  font-size: 13px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  box-shadow: none;
+  text-shadow: none;
+  /* color: @text; */
+}
+
+window#waybar {
+  background: transparent;
+  background-color: @crust;
+  color: @subtext0;
+  transition-property: background-color;
+  transition-duration: 0.1s;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+#workspaces button {
+  /* padding: 3px; */
+  /* margin: 7px 0px 7px 7px; */
+  background-color: transparent;
+  color: @subtext0;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  background-color: @blue;
+  color: @base;
+  font-weight: bold;
+}
+
+#workspaces button.urgent {
+  background-color: @red;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+/*
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+*/
+
+button {
+  /* Use box-shadow instead of border so the text isn't offset */
+  box-shadow: inset 0 -3px transparent;
+  /* Avoid rounded borders under each button name */
+  border: none;
+  border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+  background: inherit;
+  box-shadow: inset 0 -3px #ffffff;
+}
+
+#workspaces button:hover {
+  background: @mantle;
+}
+
+#network,
+#temperature,
+#load,
+#cpu,
+#memory,
+#battery,
+#bluetooth,
+#pulseaudio,
+#clock,
+#language,
+#submap {
+  background: transparent;
+  padding: 0 6px;
+  margin: 0px 1px;
+  color: @text;
+}
+
+#window,
+#workspaces {
+  margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
+}
+
+#battery.charging {
+  color: @green;
+}
+
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+  background-color: @red;
+  color: @text;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Status Alert Overrides */
+#temperature.critical,
+#network.disconnected,
+#battery.critical:not(.charging),
+#custom-power {
+  color: @red;
+}
+
+#pulseaudio.muted,
+#bluetooth.disabled {
+  color: @red;
+}
