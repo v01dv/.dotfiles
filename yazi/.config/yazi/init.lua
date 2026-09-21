@@ -1,10 +1,10 @@
 -- https://github.com/sxyazi/yazi/issues/2161
 if os.getenv("YAZI_LEVEL") > "1" then
-  ya.notify {
-    title = "Nested Yazi",
-    content = "You are in a nested Yazi session",
-    timeout = 3,
-  }
+	ya.notify({
+		title = "Nested Yazi",
+		content = "You are in a nested Yazi session",
+		timeout = 3,
+	})
 end
 
 -- ~/.config/yazi/init.lua
@@ -29,12 +29,12 @@ Status:children_add(function()
 		return ""
 	end
 
-	return ui.Line {
+	return ui.Line({
 		ui.Span(ya.user_name(h.cha.uid) or tostring(h.cha.uid)):fg("magenta"),
 		":",
 		ui.Span(ya.group_name(h.cha.gid) or tostring(h.cha.gid)):fg("magenta"),
 		" ",
-	}
+	})
 end, 500, Status.RIGHT)
 
 function Status:name()
@@ -43,9 +43,9 @@ function Status:name()
 		return ""
 	end
 
-  -- Show symlink in status bar
-  -- https://yazi-rs.github.io/docs/tips#symlink-in-status
-  local linked = ""
+	-- Show symlink in status bar
+	-- https://yazi-rs.github.io/docs/tips#symlink-in-status
+	local linked = ""
 	if h.link_to ~= nil then
 		linked = " -> " .. tostring(h.link_to)
 	end
@@ -53,7 +53,7 @@ function Status:name()
 end
 
 -- https://github.com/yazi-rs/plugins/tree/main/mime-ext.yazi
-require("mime-ext"):setup {
+require("mime-ext.local"):setup({
 	-- Expand the existing filename database (lowercase), for example:
 	with_files = {
 		makefile = "text/makefile",
@@ -67,4 +67,4 @@ require("mime-ext"):setup {
 	-- If the mime-type is not in both filename and extension databases,
 	-- then fallback to Yazi's preset `mime` plugin, which uses `file(1)`
 	fallback_file1 = true,
-}
+})

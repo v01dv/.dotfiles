@@ -6,45 +6,49 @@ dark = "catppuccin-frappe"
 syntect_theme = "~/.config/bat/themes/Catppuccin Frappe.tmTheme"
 
 border_symbol = "│"
-border_style  = { fg = "#303446" }
+border_style = { fg = "#303446" }
 
 [status]
-separator_open  = ""
-separator_close = ""
+overall = {}
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+# separator_open = ""
+# separator_close = ""
 
 [filetype]
 
 rules = [
 
-	# Images
-	{ mime = "image/*", fg = "#f4b8e4" },
+  # Images
+  { mime = "image/*", fg = "#f4b8e4" },
 
-	# Media
-	{ mime = "{audio,video}/*", fg = "#81c8be" },
+  # Media
+  { mime = "{audio,video}/*", fg = "#81c8be" },
 
-	# Archives
-	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#e5c890" },
+  # Archives
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#e5c890" },
 
-	# Documents
-	{ mime = "application/{pdf,doc,rtf}", fg = "#a6d189" },
+  # Documents
+  { mime = "application/{pdf,doc,rtf}", fg = "#a6d189" },
 
-	{ mime = "application/object", fg = "#838ba7" },
-	{ mime = "text/markdown", fg = "#626880" },
-	{ mime = "text/makefile", fg = "#626880" },
+  { mime = "application/object", fg = "#838ba7" },
+  { mime = "text/markdown", fg = "#626880" },
+  { mime = "text/makefile", fg = "#626880" },
 
   # Special files
-	{ name = "*", is = "orphan", bg = "#e78284" },
-	{ name = "*", is = "exec", fg = "#a6d189", bold = true },
+  { url = "*", is = "orphan", bg = "#e78284" },
+  { url = "*", is = "exec", fg = "#a6d189", bold = true },
 
-  { name = "*/", is = "link", fg = "#99d1db", bold = true },
+  { url = "*/", is = "link", fg = "#99d1db", bold = true },
 
   # Dummy files
-  { name = "*", is = "dummy", bg = "#e78284" },
-  { name = "*/", is = "dummy", bg = "#e78284" },
+  { url = "*", is = "dummy", bg = "#e78284" },
+  { url = "*/", is = "dummy", bg = "#e78284" },
 
-	# Fallback
-	{ name = "*", fg = "#c6d0f5" },
-	{ name = "*/", fg = "#8caaee", bold = true },
+  # Fallback
+  { url = "*", fg = "#c6d0f5" },
+  { url = "*/", fg = "#8caaee", bold = true },
 ]
 
 [icon]
@@ -95,20 +99,20 @@ prepend_conds = [
   # { if = "!(dir | link)", text = "📄" },  # Normal files (not directories or symlinks)
 
   # Special files
-	# { if = "orphan", text = "" },
-	# { if = "link", text = "" },
-	# { if = "block", text = "" },
-	# { if = "char", text = "" },
-	# { if = "fifo", text = "" },
-	# { if = "sock", text = "" },
-	# { if = "sticky", text = "" },
-	# { if = "dummy", text = "" },
+  # { if = "orphan", text = "" },
+  # { if = "link", text = "" },
+  # { if = "block", text = "" },
+  # { if = "char", text = "" },
+  # { if = "fifo", text = "" },
+  # { if = "sock", text = "" },
+  # { if = "sticky", text = "" },
+  # { if = "dummy", text = "" },
 
-	# Fallback
-	# { if = "dir", text = "󰉋" },
-	# { if = "exec", text = "" },
-	{ if = "!dir & exec", text = " "},
-	# { if = "!dir", text = "󰈔" },
+  # Fallback
+  # { if = "dir", text = "󰉋" },
+  # { if = "exec", text = "" },
+  { if = "!dir & exec", text = " " },
+  # { if = "!dir", text = "󰈔" },
 ]
 
 # [icon]

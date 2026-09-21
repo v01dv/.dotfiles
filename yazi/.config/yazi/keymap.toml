@@ -2,14 +2,18 @@
 #
 # A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
-"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+#:schema https://yazi-rs.github.io/schemas/keymap.json
 
 [mgr]
 
 # Find here: https://github.com/maotseantonio/home/blob/main/.config/yazi/keymap.toml
 prepend_keymap = [
-  {on = ["l",], run = "plugin smart-enter", desc = "Enter the child directory, or open the file"},
-  {on = ["w"], run = 'shell "$SHELL" --block --confirm', desc = "Open shell here" },
+  { on = [
+    "l",
+  ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+  { on = [
+    "w",
+  ], run = 'shell "$SHELL" --block --confirm', desc = "Open shell here" },
   { on = [
     "f",
     "g",
@@ -35,52 +39,94 @@ prepend_keymap = [
     # Switch the preview pane between hidden and shown.
   ], run = "plugin toggle-pane min-preview", desc = "Show or hide the preview pane" },
 
-# map gd cd ~/Documents
-# map gD cd ~/Downloads
-#
-# map ge cd ~/Desktop
-#
-# map gp. cd ~/PictureS
-# map gps cd ~/Pictures/screenshots
-# # map gpw cd ~/Pictures/wallpapers
-#
-# map gv. cd ~/Videos
-# map gvr cd ~/Videos/recordings
-# map gvp cd ~/Videos/podcast
-# map gvy cd ~/Videos/youtube
-#
-# map gm. cd ~/Music
-#
-# map gr. cd ~/repos
-# map grs cd ~/repos/soft4sport/core
-# map grw cd ~/repos/website
-#
-# map gc cd ~/.config
-#
-# map gl. cd ~/.local
-# map gls cd ~/.local/bin
-# map glh cd ~/.local/share
-# map glr cd ~/.local/src
-# map glt cd ~/.local/share/Trash/files
-#
-# map gM. cd /mnt
-# map gMv cd /mnt/nas/video
+  # map gd cd ~/Documents
+  # map gD cd ~/Downloads
+  #
+  # map ge cd ~/Desktop
+  #
+  # map gp. cd ~/PictureS
+  # map gps cd ~/Pictures/screenshots
+  # # map gpw cd ~/Pictures/wallpapers
+  #
+  # map gv. cd ~/Videos
+  # map gvr cd ~/Videos/recordings
+  # map gvp cd ~/Videos/podcast
+  # map gvy cd ~/Videos/youtube
+  #
+  # map gm. cd ~/Music
+  #
+  # map gr. cd ~/repos
+  # map grs cd ~/repos/soft4sport/core
+  # map grw cd ~/repos/website
+  #
+  # map gc cd ~/.config
+  #
+  # map gl. cd ~/.local
+  # map gls cd ~/.local/bin
+  # map glh cd ~/.local/share
+  # map glr cd ~/.local/src
+  # map glt cd ~/.local/share/Trash/files
+  #
+  # map gM. cd /mnt
+  # map gMv cd /mnt/nas/video
 
-	# Goto
-  { on = [ "g", "<Space>" ],  run = "cd --interactive", desc = "Go to a directory interactively" },
-	{ on = [ "g", "h" ],        run = "cd ~",             desc = "Go to the home directory" },
-	{ on = [ "g", "c" ],        run = "cd ~/.config",     desc = "Go to the .config directory" },
-  { on = [ "g", "n" ],        run = "cd ~/.config/nvim/", desc = "Go to the nvim directory" },
-  { on = [ "g", "d" ],        run = "cd ~/Documents/", desc = "Go to the docs directory" },
-  { on = [ "g", "D" ],        run = "cd ~/Downloads",   desc = "Go to the downloads directory" },
-  { on = [ "g", "o" ],        run = "cd ~/Documents/myVault", desc = "Go to the obsidian directory" },
-  { on = [ "g", "v" ],        run = "cd ~/Videos/", desc = "Go to the videos directory" },
-  { on = [ "g", "p" ],        run = "cd ~/Pictures/", desc = "Go to the pictures directory" },
-  { on = [ "g", "s", ],       run = "cd ~/Pictures/screenshots/", desc = "Go to the screenshots directory" },
-  { on = [ "g", "r" ],        run = "cd ~/repos/", desc = "Go to the dev directory" },
-  { on = [ "g", "m" ],        run = "cd /mnt/", desc = "Go to the /mnt directory" },
-  { on = [ "g", "V" ],        run = "cd /mnt/nas/video/", desc = "Go to the /mnt/nas/video directory" },
-	{ on = [ "g", "l" ],        run = "cd ~/.local",     desc = "Go to the .local directory" },
+  # Goto
+  { on = [
+    "g",
+    "<Space>",
+  ], run = "cd --interactive", desc = "Go to a directory interactively" },
+  { on = [
+    "g",
+    "h",
+  ], run = "cd ~", desc = "Go to the home directory" },
+  { on = [
+    "g",
+    "c",
+  ], run = "cd ~/.config", desc = "Go to the .config directory" },
+  { on = [
+    "g",
+    "n",
+  ], run = "cd ~/.config/nvim/", desc = "Go to the nvim directory" },
+  { on = [
+    "g",
+    "d",
+  ], run = "cd ~/Documents/", desc = "Go to the docs directory" },
+  { on = [
+    "g",
+    "D",
+  ], run = "cd ~/Downloads", desc = "Go to the downloads directory" },
+  { on = [
+    "g",
+    "o",
+  ], run = "cd ~/Documents/myVault", desc = "Go to the obsidian directory" },
+  { on = [
+    "g",
+    "v",
+  ], run = "cd ~/Videos/", desc = "Go to the videos directory" },
+  { on = [
+    "g",
+    "p",
+  ], run = "cd ~/Pictures/", desc = "Go to the pictures directory" },
+  { on = [
+    "g",
+    "s",
+  ], run = "cd ~/Pictures/screenshots/", desc = "Go to the screenshots directory" },
+  { on = [
+    "g",
+    "r",
+  ], run = "cd ~/repos/", desc = "Go to the dev directory" },
+  { on = [
+    "g",
+    "m",
+  ], run = "cd /mnt/", desc = "Go to the /mnt directory" },
+  { on = [
+    "g",
+    "V",
+  ], run = "cd /mnt/nas/video/", desc = "Go to the /mnt/nas/video directory" },
+  { on = [
+    "g",
+    "l",
+  ], run = "cd ~/.local", desc = "Go to the .local directory" },
 ]
 
 
@@ -226,178 +272,200 @@ prepend_keymap = [
 # ]
 #
 append_keymap = [
-	{ on = "o",         run = "open",                        desc = "Open selected files" },
-	{ on = "O",         run = "open --interactive",          desc = "Open selected files interactively" },
+  { on = "o", run = "open", desc = "Open selected files" },
+  { on = "O", run = "open --interactive", desc = "Open selected files interactively" },
 ]
 
 [tasks]
 
 keymap = [
-	{ on = "<Esc>", run = "close", desc = "Close task manager" },
-	{ on = "<C-[>", run = "close", desc = "Close task manager" },
-	{ on = "<C-c>", run = "close", desc = "Close task manager" },
-	{ on = "w",     run = "close", desc = "Close task manager" },
+  { on = "<Esc>", run = "close", desc = "Close task manager" },
+  { on = "<C-[>", run = "close", desc = "Close task manager" },
+  { on = "<C-c>", run = "close", desc = "Close task manager" },
+  { on = "w", run = "close", desc = "Close task manager" },
 
-	{ on = "k", run = "arrow -1", desc = "Move cursor up" },
-	{ on = "j", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "k", run = "arrow -1", desc = "Move cursor up" },
+  { on = "j", run = "arrow 1", desc = "Move cursor down" },
 
-	{ on = "<Up>",   run = "arrow -1", desc = "Move cursor up" },
-	{ on = "<Down>", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "<Up>", run = "arrow -1", desc = "Move cursor up" },
+  { on = "<Down>", run = "arrow 1", desc = "Move cursor down" },
 
-	{ on = "<Enter>", run = "inspect", desc = "Inspect the task" },
-	{ on = "x",       run = "cancel",  desc = "Cancel the task" },
+  { on = "<Enter>", run = "inspect", desc = "Inspect the task" },
+  { on = "x", run = "cancel", desc = "Cancel the task" },
 
-	# Help
-	{ on = "~",    run = "help", desc = "Open help" },
-	{ on = "<F1>", run = "help", desc = "Open help" },
+  # Help
+  { on = "~", run = "help", desc = "Open help" },
+  { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [select]
 
 keymap = [
-	{ on = "<Esc>",   run = "close",          desc = "Cancel selection" },
-	{ on = "<C-[>",   run = "close",          desc = "Cancel selection" },
-	{ on = "<C-c>",   run = "close",          desc = "Cancel selection" },
-	{ on = "<Enter>", run = "close --submit", desc = "Submit the selection" },
+  { on = "<Esc>", run = "close", desc = "Cancel selection" },
+  { on = "<C-[>", run = "close", desc = "Cancel selection" },
+  { on = "<C-c>", run = "close", desc = "Cancel selection" },
+  { on = "<Enter>", run = "close --submit", desc = "Submit the selection" },
 
-	{ on = "k", run = "arrow -1", desc = "Move cursor up" },
-	{ on = "j", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "k", run = "arrow -1", desc = "Move cursor up" },
+  { on = "j", run = "arrow 1", desc = "Move cursor down" },
 
-	{ on = "<Up>",   run = "arrow -1", desc = "Move cursor up" },
-	{ on = "<Down>", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "<Up>", run = "arrow -1", desc = "Move cursor up" },
+  { on = "<Down>", run = "arrow 1", desc = "Move cursor down" },
 
-	# Help
-	{ on = "~",    run = "help", desc = "Open help" },
-	{ on = "<F1>", run = "help", desc = "Open help" },
+  # Help
+  { on = "~", run = "help", desc = "Open help" },
+  { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [input]
 
 keymap = [
-	{ on = "<C-c>",   run = "close",          desc = "Cancel input" },
-	{ on = "<Enter>", run = "close --submit", desc = "Submit input" },
-	{ on = "<Esc>",   run = "escape",         desc = "Go back the normal mode, or cancel input" },
-	{ on = "<C-[>",   run = "escape",         desc = "Go back the normal mode, or cancel input" },
+  { on = "<C-c>", run = "close", desc = "Cancel input" },
+  { on = "<Enter>", run = "close --submit", desc = "Submit input" },
+  { on = "<Esc>", run = "escape", desc = "Go back the normal mode, or cancel input" },
+  { on = "<C-[>", run = "escape", desc = "Go back the normal mode, or cancel input" },
 
-	# Mode
-	{ on = "i", run = "insert",                              desc = "Enter insert mode" },
-	{ on = "a", run = "insert --append",                     desc = "Enter append mode" },
-	{ on = "I", run = [ "move -999", "insert" ],             desc = "Move to the BOL, and enter insert mode" },
-	{ on = "A", run = [ "move 999", "insert --append" ],     desc = "Move to the EOL, and enter append mode" },
-	{ on = "v", run = "visual",                              desc = "Enter visual mode" },
-	{ on = "V", run = [ "move -999", "visual", "move 999" ], desc = "Enter visual mode and select all" },
+  # Mode
+  { on = "i", run = "insert", desc = "Enter insert mode" },
+  { on = "a", run = "insert --append", desc = "Enter append mode" },
+  { on = "I", run = [
+    "move -999",
+    "insert",
+  ], desc = "Move to the BOL, and enter insert mode" },
+  { on = "A", run = [
+    "move 999",
+    "insert --append",
+  ], desc = "Move to the EOL, and enter append mode" },
+  { on = "v", run = "visual", desc = "Enter visual mode" },
+  { on = "V", run = [
+    "move -999",
+    "visual",
+    "move 999",
+  ], desc = "Enter visual mode and select all" },
 
-	# Character-wise movement
-	{ on = "h",       run = "move -1", desc = "Move back a character" },
-	{ on = "l",       run = "move 1",  desc = "Move forward a character" },
-	{ on = "<Left>",  run = "move -1", desc = "Move back a character" },
-	{ on = "<Right>", run = "move 1",  desc = "Move forward a character" },
-	{ on = "<C-b>",   run = "move -1", desc = "Move back a character" },
-	{ on = "<C-f>",   run = "move 1",  desc = "Move forward a character" },
+  # Character-wise movement
+  { on = "h", run = "move -1", desc = "Move back a character" },
+  { on = "l", run = "move 1", desc = "Move forward a character" },
+  { on = "<Left>", run = "move -1", desc = "Move back a character" },
+  { on = "<Right>", run = "move 1", desc = "Move forward a character" },
+  { on = "<C-b>", run = "move -1", desc = "Move back a character" },
+  { on = "<C-f>", run = "move 1", desc = "Move forward a character" },
 
-	# Word-wise movement
-	{ on = "b",     run = "backward",              desc = "Move back to the start of the current or previous word" },
-	{ on = "w",     run = "forward",               desc = "Move forward to the start of the next word" },
-	{ on = "e",     run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
-	{ on = "<A-b>", run = "backward",              desc = "Move back to the start of the current or previous word" },
-	{ on = "<A-f>", run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
+  # Word-wise movement
+  { on = "b", run = "backward", desc = "Move back to the start of the current or previous word" },
+  { on = "w", run = "forward", desc = "Move forward to the start of the next word" },
+  { on = "e", run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
+  { on = "<A-b>", run = "backward", desc = "Move back to the start of the current or previous word" },
+  { on = "<A-f>", run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
 
-	# Line-wise movement
-	{ on = "0",      run = "move -999", desc = "Move to the BOL" },
-	{ on = "$",      run = "move 999",  desc = "Move to the EOL" },
-	{ on = "<C-a>",  run = "move -999", desc = "Move to the BOL" },
-	{ on = "<C-e>",  run = "move 999",  desc = "Move to the EOL" },
-	{ on = "<Home>", run = "move -999", desc = "Move to the BOL" },
-	{ on = "<End>",  run = "move 999",  desc = "Move to the EOL" },
+  # Line-wise movement
+  { on = "0", run = "move -999", desc = "Move to the BOL" },
+  { on = "$", run = "move 999", desc = "Move to the EOL" },
+  { on = "<C-a>", run = "move -999", desc = "Move to the BOL" },
+  { on = "<C-e>", run = "move 999", desc = "Move to the EOL" },
+  { on = "<Home>", run = "move -999", desc = "Move to the BOL" },
+  { on = "<End>", run = "move 999", desc = "Move to the EOL" },
 
-	# Delete
-	{ on = "<Backspace>", run = "backspace",	       desc = "Delete the character before the cursor" },
-	{ on = "<Delete>",    run = "backspace --under", desc = "Delete the character under the cursor" },
-	{ on = "<C-h>",       run = "backspace",         desc = "Delete the character before the cursor" },
-	{ on = "<C-d>",       run = "backspace --under", desc = "Delete the character under the cursor" },
+  # Delete
+  { on = "<Backspace>", run = "backspace", desc = "Delete the character before the cursor" },
+  { on = "<Delete>", run = "backspace --under", desc = "Delete the character under the cursor" },
+  { on = "<C-h>", run = "backspace", desc = "Delete the character before the cursor" },
+  { on = "<C-d>", run = "backspace --under", desc = "Delete the character under the cursor" },
 
-	# Kill
-	{ on = "<C-u>", run = "kill bol",      desc = "Kill backwards to the BOL" },
-	{ on = "<C-k>", run = "kill eol",      desc = "Kill forwards to the EOL" },
-	{ on = "<C-w>", run = "kill backward", desc = "Kill backwards to the start of the current word" },
-	{ on = "<A-d>", run = "kill forward",  desc = "Kill forwards to the end of the current word" },
+  # Kill
+  { on = "<C-u>", run = "kill bol", desc = "Kill backwards to the BOL" },
+  { on = "<C-k>", run = "kill eol", desc = "Kill forwards to the EOL" },
+  { on = "<C-w>", run = "kill backward", desc = "Kill backwards to the start of the current word" },
+  { on = "<A-d>", run = "kill forward", desc = "Kill forwards to the end of the current word" },
 
-	# Cut/Yank/Paste
-	{ on = "d", run = "delete --cut",                              desc = "Cut the selected characters" },
-	{ on = "D", run = [ "delete --cut", "move 999" ],              desc = "Cut until the EOL" },
-	{ on = "c", run = "delete --cut --insert",                     desc = "Cut the selected characters, and enter insert mode" },
-	{ on = "C", run = [ "delete --cut --insert", "move 999" ],     desc = "Cut until the EOL, and enter insert mode" },
-	{ on = "x", run = [ "delete --cut", "move 1 --in-operating" ], desc = "Cut the current character" },
-	{ on = "y", run = "yank",           desc = "Copy the selected characters" },
-	{ on = "p", run = "paste",          desc = "Paste the copied characters after the cursor" },
-	{ on = "P", run = "paste --before", desc = "Paste the copied characters before the cursor" },
+  # Cut/Yank/Paste
+  { on = "d", run = "delete --cut", desc = "Cut the selected characters" },
+  { on = "D", run = [
+    "delete --cut",
+    "move 999",
+  ], desc = "Cut until the EOL" },
+  { on = "c", run = "delete --cut --insert", desc = "Cut the selected characters, and enter insert mode" },
+  { on = "C", run = [
+    "delete --cut --insert",
+    "move 999",
+  ], desc = "Cut until the EOL, and enter insert mode" },
+  { on = "x", run = [
+    "delete --cut",
+    "move 1 --in-operating",
+  ], desc = "Cut the current character" },
+  { on = "y", run = "yank", desc = "Copy the selected characters" },
+  { on = "p", run = "paste", desc = "Paste the copied characters after the cursor" },
+  { on = "P", run = "paste --before", desc = "Paste the copied characters before the cursor" },
 
-	# Undo/Redo
-	{ on = "u",     run = "undo", desc = "Undo the last operation" },
-	{ on = "<C-r>", run = "redo", desc = "Redo the last operation" },
+  # Undo/Redo
+  { on = "u", run = "undo", desc = "Undo the last operation" },
+  { on = "<C-r>", run = "redo", desc = "Redo the last operation" },
 
-	# Help
-	{ on = "~",    run = "help", desc = "Open help" },
-	{ on = "<F1>", run = "help", desc = "Open help" },
+  # Help
+  { on = "~", run = "help", desc = "Open help" },
+  { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [confirm]
 keymap = [
-	{ on = "<Esc>",   run = "close",          desc = "Cancel the confirm" },
-	{ on = "<C-[>",   run = "close",          desc = "Cancel the confirm" },
-	{ on = "<C-c>",   run = "close",          desc = "Cancel the confirm" },
-	{ on = "<Enter>", run = "close --submit", desc = "Submit the confirm" },
+  { on = "<Esc>", run = "close", desc = "Cancel the confirm" },
+  { on = "<C-[>", run = "close", desc = "Cancel the confirm" },
+  { on = "<C-c>", run = "close", desc = "Cancel the confirm" },
+  { on = "<Enter>", run = "close --submit", desc = "Submit the confirm" },
 
-	{ on = "n", run = "close",          desc = "Cancel the confirm" },
-	{ on = "y", run = "close --submit", desc = "Submit the confirm" },
+  { on = "n", run = "close", desc = "Cancel the confirm" },
+  { on = "y", run = "close --submit", desc = "Submit the confirm" },
 
-	{ on = "k", run = "arrow -1", desc = "Move cursor up" },
-	{ on = "j", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "k", run = "arrow -1", desc = "Move cursor up" },
+  { on = "j", run = "arrow 1", desc = "Move cursor down" },
 
-	{ on = "<Up>",   run = "arrow -1", desc = "Move cursor up" },
-	{ on = "<Down>", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "<Up>", run = "arrow -1", desc = "Move cursor up" },
+  { on = "<Down>", run = "arrow 1", desc = "Move cursor down" },
 
-	# Help
-	{ on = "~",    run = "help", desc = "Open help" },
-	{ on = "<F1>", run = "help", desc = "Open help" },
+  # Help
+  { on = "~", run = "help", desc = "Open help" },
+  { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [completion]
 
 keymap = [
-	{ on = "<C-c>",   run = "close",                                      desc = "Cancel completion" },
-	{ on = "<Tab>",   run = "close --submit",                             desc = "Submit the completion" },
-	{ on = "<Enter>", run = [ "close --submit", "close_input --submit" ], desc = "Submit the completion and input" },
+  { on = "<C-c>", run = "close", desc = "Cancel completion" },
+  { on = "<Tab>", run = "close --submit", desc = "Submit the completion" },
+  { on = "<Enter>", run = [
+    "close --submit",
+    "close_input --submit",
+  ], desc = "Submit the completion and input" },
 
-	{ on = "<A-k>", run = "arrow -1", desc = "Move cursor up" },
-	{ on = "<A-j>", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "<A-k>", run = "arrow -1", desc = "Move cursor up" },
+  { on = "<A-j>", run = "arrow 1", desc = "Move cursor down" },
 
-	{ on = "<Up>",   run = "arrow -1", desc = "Move cursor up" },
-	{ on = "<Down>", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "<Up>", run = "arrow -1", desc = "Move cursor up" },
+  { on = "<Down>", run = "arrow 1", desc = "Move cursor down" },
 
-	{ on = "<C-p>", run = "arrow -1", desc = "Move cursor up" },
-	{ on = "<C-n>", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "<C-p>", run = "arrow -1", desc = "Move cursor up" },
+  { on = "<C-n>", run = "arrow 1", desc = "Move cursor down" },
 
-	# Help
-	{ on = "~",    run = "help", desc = "Open help" },
-	{ on = "<F1>", run = "help", desc = "Open help" },
+  # Help
+  { on = "~", run = "help", desc = "Open help" },
+  { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [help]
 
 keymap = [
-	{ on = "<Esc>", run = "escape", desc = "Clear the filter, or hide the help" },
-	{ on = "<C-[>", run = "escape", desc = "Clear the filter, or hide the help" },
-	{ on = "q",     run = "close",  desc = "Exit the process" },
-	{ on = "<C-c>", run = "close",  desc = "Hide the help" },
+  { on = "<Esc>", run = "escape", desc = "Clear the filter, or hide the help" },
+  { on = "<C-[>", run = "escape", desc = "Clear the filter, or hide the help" },
+  { on = "q", run = "close", desc = "Exit the process" },
+  { on = "<C-c>", run = "close", desc = "Hide the help" },
 
-	# Navigation
-	{ on = "k", run = "arrow -1", desc = "Move cursor up" },
-	{ on = "j", run = "arrow 1",  desc = "Move cursor down" },
+  # Navigation
+  { on = "k", run = "arrow -1", desc = "Move cursor up" },
+  { on = "j", run = "arrow 1", desc = "Move cursor down" },
 
-	{ on = "<Up>",   run = "arrow -1", desc = "Move cursor up" },
-	{ on = "<Down>", run = "arrow 1",  desc = "Move cursor down" },
+  { on = "<Up>", run = "arrow -1", desc = "Move cursor up" },
+  { on = "<Down>", run = "arrow 1", desc = "Move cursor down" },
 
-	# Filtering
-	{ on = "f", run = "filter", desc = "Apply a filter for the help items" },
+  # Filtering
+  { on = "f", run = "filter", desc = "Apply a filter for the help items" },
 ]
