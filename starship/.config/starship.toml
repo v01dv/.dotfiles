@@ -25,8 +25,11 @@ add_newline = false
 # """
 
 # [➜ ](green)\
-# [|-🞔 ](red)\  ⎯
+# [|-🞔 ](red)\
+# [󰄛 ](red)\
+
 format = """
+[➜ ](green)\
 $username\
 $hostname\
 $directory\
@@ -34,9 +37,11 @@ $git_branch\
 $git_state\
 $git_status\
 $jobs\
-[|-🞔  ](bold mauve)
+${env_var.yazi_level}\
+$character\
 """
-# $character\
+
+# [|-🞔  ](bold mauve)
 
 [character]
 # https://symbl.cc/en/276D/
@@ -67,7 +72,7 @@ style_user = 'green'
 
 [hostname]
 ssh_symbol = ''
-trim_at =	''
+trim_at = ''
 format = '[$ssh_symbol$hostname]($style): '
 style = 'green'
 # ssh_only = false
@@ -144,3 +149,12 @@ base = "#303446"
 mantle = "#292c3c"
 crust = "#232634"
 #
+
+# https://github.com/Sonico98/yazi-prompt.sh?tab=readme-ov-file
+[env_var.yazi_level]
+description = "Indicate the shell was launched by `yazi`"
+variable = "YAZI_LEVEL"
+# 🦆: U+1f986 Duck
+# Alternatively: " ": U+E795 <Private Use>
+symbol = "🦆"
+format = '[$symbol]($style)'
