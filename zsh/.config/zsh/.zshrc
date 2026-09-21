@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# main zsh settings. env in ~/.zprofile
+# read second
+
 fpath=("${ZDOTDIR}/plugins" $fpath)
 
 # echo -e '\033[1;37mWHITE'
@@ -15,7 +18,7 @@ fpath=("${ZDOTDIR}/plugins" $fpath)
 
 # Prevent fastfetch from being printing in Nvim terminal
 if [ "$TERM" != "xterm-256color" ]; then
-    # fastfetch
+    fastfetch
     # fortune my-quotes
 fi
 
@@ -272,7 +275,7 @@ eval "$(zoxide init zsh)"
 # +------+
 
 # Added by n-install (see http://git.io/n-install-repo).
-export N_PREFIX="$HOME/.local/share/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+# export N_PREFIX="$HOME/.local/share/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
 
 # +--------+

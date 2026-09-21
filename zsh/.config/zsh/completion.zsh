@@ -16,6 +16,7 @@ fpath=(${ZDOTDIR}/plugins/zsh-completions/src $fpath)
 
 # Path to custom completions
 fpath=("${ZDOTDIR}"/completions/ $fpath)
+fpath=(${ASDF_DATA_DIR:-$HOME/asdf}/completions $fpath)
 
 # Should be called before compinit
 zmodload zsh/complist

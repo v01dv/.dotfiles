@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+# Inside parentheses, and therefore a subshell:
+# These subshells let the script do parallel processing, in effect executing
+# multiple subtasks simultaneously.
+#   https://tldp.org/LDP/abs/html/subshells.html#SUBSHELLSREF
+# Script will run forever, or at least until terminated by a Ctl-c (but not in this case)
+# And, while the script is running, from a different xterm:
+#   ps -ef | grep subshell-test.sh
+(
+  # Compile the completion dump to increase startup speed.
+  # zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  zcompdump="${ZSH_COMPDUMP}"
+  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    zcompile "$zcompdump"
+    notify-send "Recompiled ${zcompdump}"
+  fi
+  #TODO: Do I need this?
+  unset zcompdump
+
+# Execute code in the background to not affect the current session
+) &!
+
+# Print a random, hopefully interesting, adage.
+# if (( $+commands[fortune] )); then
+#   if [[ -t 0 || -t 1 ]]; then
+#     fortune -s
+#     print
+#   fi
+# fi
+
+export TEST_ZLOGIN="Test passed!"
+

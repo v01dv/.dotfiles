@@ -1,7 +1,7 @@
 cursor() {
     # See https://ttssh2.osdn.jp/manual/4/en/usage/tips/vim.html for cursors
-    cursor_block='\e[2 q'
-    cursor_beam='\e[6 q'
+    cursor_block='\e[1 q'
+    cursor_beam='\e[5 q'
 
     function zle-keymap-select {
         if [[ ${KEYMAP} == vicmd ]] ||
@@ -68,20 +68,6 @@ cursor() {
 
 # # Use beam shape cursor for each new prompt.
 # preexec() { echo -ne '\e[5 q' ;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

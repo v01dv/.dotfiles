@@ -1,12 +1,18 @@
 #!/bin/sh
-# Profile file. Runs on login.
+# Profile file. Runs first on login.
 # Environmental variables are set here.
 
 # If you don't plan on reverting to bash, you can remove the link in ~/.profile
 # to clean up.
 
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
+export PATH="$PATH:$(find ~/.local/bin -type d | paste -sd ':' -)"
+
+# https://stackoverflow.com/questions/15054388/global-node-modules-not-installing-correctly-command-not-found
+export PATH="$PATH:$(npm get prefix)/bin"
+
+# export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
+
 # export PATH="$PATH:/opt/cuda/bin"
 # export LD_LIBRARY_PATH=/opt/cuda/lib64\
 #                         ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
@@ -14,10 +20,12 @@ export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
 # export CUDA_HOME="/opt/cuda"
 
 # Default programs
-export EDITOR="nvim" 	# $EDITOR use nvim in terminal
-export VISUAL="nvim"   	# $VISUAL use nvim in GUI mode
+export EDITOR="nvim"  # $EDITOR use nvim in terminal
+export VISUAL="nvim"    # $VISUAL use nvim in GUI mode
 export TERMINAL="ghostty"
 export BROWSER="librewolf"
+# export MUSPLAYER="termusic"
+# export DISPLAY=:0 # useful for some scripts
 
 # TODO: Remove aftre some period of time
 # export READER="zathura"
@@ -54,17 +62,18 @@ export PAGER="less"
 #     export PAGER="page -q 90000 -z 90000"
 
 # export LESSHISTFILE="-" # Disable less history.
+# export LESSHISTFILE="$XDG_CACHE_HOME/less_history"
 export LESS=-R
 # Man page bold
-export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"	# begin bold
-export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"	# begin blink
-export LESS_TERMCAP_me="$(printf '%b' '[0m')"		# reset bold/blink
+export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"  # begin bold
+export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"  # begin blink
+export LESS_TERMCAP_me="$(printf '%b' '[0m')"   # reset bold/blink
 # Status bar and search hits
-export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"	# begin reverse video
-export LESS_TERMCAP_se="$(printf '%b' '[0m')"		# reset reverse video
+export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"  # begin reverse video
+export LESS_TERMCAP_se="$(printf '%b' '[0m')"   # reset reverse video
 # Man page underline
-export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"	# begin underline
-export LESS_TERMCAP_ue="$(printf '%b' '[0m')"		# reset underline
+export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"  # begin underline
+export LESS_TERMCAP_ue="$(printf '%b' '[0m')"   # reset underline
 
 # sudo pacman -S highlight
 # TODO: Moved to bat, so maybe just delete this ?
@@ -83,6 +92,13 @@ export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
 export CURL_HOME="${XDG_CONFIG_HOME}/curlrc"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 # export GIT_CONFIG="${XDG_CONFIG_HOME}/git/.gitconfig"
+
+# From here https://github.com/BreadOnPenguins/dots/blob/master/.zprofile
+export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
+export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
+# export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
+# export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
+export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
@@ -128,27 +144,57 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -n 10'"
 
 
 # Frappe https://github.com/catppuccin/fzf
-FZF_COLORS="bg+:#414559,\
-bg:#303446,\
-spinner:#f2d5cf,\
-hl:#e78284,\
-fg:#c6d0f5,\
-header:#e78284,\
-info:#ca9ee6,\
-pointer:#f2d5cf,\
-marker:#f2d5cf,\
-fg+:#c6d0f5,\
-prompt:#ca9ee6,\
-hl+:#e78284"
+# FZF_COLORS="bg+:#414559,\
+# bg:#303446,\
+# spinner:#f2d5cf,\
+# hl:#e78284,\
+# fg:#c6d0f5,\
+# header:#e78284,\
+# info:#ca9ee6,\
+# pointer:#f2d5cf,\
+# marker:#f2d5cf,\
+# fg+:#c6d0f5,\
+# prompt:#ca9ee6,\
+# hl+:#e78284"
 
-export FZF_DEFAULT_OPTS="--height 60% \
+# Color configuration
+# https://github.com/junegunn/fzf/wiki/Color-schemes#color-configuration
+#
+# fg          Text
+# bg          Background
+# preview-fg  Preview window text
+# preview-bg  Preview window background
+# hl          Highlighted substrings
+# fg+         Text (current line)
+# bg+         Background (current line)
+# gutter      Gutter on the left (defaults to bg+)
+# hl+         Highlighted substrings (current line)
+# info        Info
+# border      Border of the preview window and horizontal separators (--border)
+# prompt      Prompt
+# pointer     Pointer to the current line
+# marker      Multi-select marker
+# spinner     Streaming input indicator
+# header      Header
+FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+--color=bg+:#414559,bg:#303446,spinner:#F2D5CF,hl:#E78284 \
+--color=fg:#C6D0F5,header:#E78284,info:#CA9EE6,pointer:#F2D5CF \
+--color=marker:#BABBF1,fg+:#C6D0F5,prompt:#CA9EE6,hl+:#E78284 \
+--color=selected-bg:#51576D \
+--color=border:#737994,label:#C6D0F5"
+
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+--height 60% \
 --border rounded \
---layout reverse \
---color '$FZF_COLORS' \
---prompt='> ' \
---pointer ▶ \
---marker ⇒"
+--prompt=' ' \
+--pointer   \
+--layout reverse "
 
+# --color '$FZF_COLORS' \
+# --prompt='> ' \
+#   --pointer ▍ \
+#   --marker ⇒"
+# --pointer ▶ \
 # --prompt '∷ ' \
 # --pointer='→' \
 # --marker='♡' \
@@ -167,10 +213,22 @@ export CARGO_HOME="$XDG_DATA_HOME/cargo"
 
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-export N_PREFIX="$XDG_DATA_HOME/n"
+# Switched to the asdf
+# export N_PREFIX="$XDG_DATA_HOME/n"
+
+# Details:
+#   https://github.com/asdf-vm/asdf/issues/687
+export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
+export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
+export ASDF_PYTHON_DEFAULT_PACKAGES_FILE=${XDG_CONFIG_HOME}/pip/default-python-packages
+export ASDF_NPM_DEFAULT_PACKAGES_FILE=${XDG_CONFIG_HOME}/npm/default-npm-packages
+export ASDF_GEM_DEFAULT_PACKAGES_FILE=${XDG_CONFIG_HOME}/gem/default-gems
+# ADSF_DEFAULT_TOOL_VERSIONS_FILENAME .config/asdf/tool-versions
+
+export PATH="${ASDF_DATA_DIR:-$HOME/asdf}/shims:$PATH"
 
 export NOTMUCH_CONFIG="$XDG_CONFIG_HOME/notmuch-config"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"  # gtk 3 & 4 are XDG compliant
 export ANSIBLE_CONFIG="$XDG_CONFIG_HOME/ansible/ansible.cfg"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 
@@ -180,10 +238,17 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 
 export QT_QPA_PLATFORMTHEME="gtk2" # Have QT use gtk2 theme.
 export MOZ_USE_XINPUT2="1" # Mozilla smooth scrolling/touchpads.
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export _JAVA_AWT_WM_NONREPARENTING=1 # Fix for Java applications in dwm
 
 # Golang
 export GOPATH="$XDG_DATA_HOME/go"
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
+
+# Python
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
+export PYTHON_HISTORY="$XDG_DATA_HOME/python/history"
+
 
 export DOTFILES="$HOME/.dotfiles"
 export STOW_FOLDERS="x11,shell"
