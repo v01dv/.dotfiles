@@ -56,3 +56,11 @@ hl.window_rule({
 	-- move = "20 monitor_h-120",
 	-- float = true,
 })
+
+-- To check namespaces, use `sleep 1; hyprctl layers`
+hl.window_rule({
+	name = "rofi-popup",
+	match = { namespace = "rofi" },
+	animation = "slide bottom",
+	dim_around = true,
+})
