@@ -31,5 +31,8 @@ return {
     typescript = true,
     vuejs = false,
     yaml = true,
+    typst = true,
+    cmake = true,
+    -- sql = true,
   },
 }

@@ -9,12 +9,22 @@ return {
   -- { "AckslD/nvim-FeMaco.lua", ft = { "markdown" }, opts = {} },
   {
     "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     ft = { "markdown" },
-    build = "cd app && npm install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-    end,
+    -- If you observe error: Vim:E117: Unknown function: mkdp#util#install
+    -- :Lazy build markdown-preview.nvim
+    -- or
+    -- build = ":call mkdp#util#install()",
+    -- Details: https://github.com/iamcco/markdown-preview.nvim/issues/690
+    build = function() vim.fn["mkdp#util#install"]() end,
   },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = { "markdown" },
+    -- name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons', 'aklt/plantuml-syntax' }, -- if you prefer nvim-web-devicons
+    opts = {},
+  }
   -- { "mzlogin/vim-markdown-toc", ft = { "markdown" } },
   -- {
   --   "renerocksai/telekasten.nvim",

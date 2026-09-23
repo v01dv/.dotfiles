@@ -1,8 +1,7 @@
 local M = {}
 
 function M.dap_keymaps()
-
-  local dap, dapui = require "dap", require "dapui"
+  local dap, dapui = require 'dap', require 'dapui'
 
   -- stylua: ignore start
   local function dap_start_debugging()
@@ -11,7 +10,6 @@ function M.dap_keymaps()
     -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-o>", false, true, true), "n", false)
     require("dapui").toggle({})
   end
-
 
     local function dap_clear_breakpoints()
       dap.clear_breakpoints()

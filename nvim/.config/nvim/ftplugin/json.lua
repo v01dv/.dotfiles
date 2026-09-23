@@ -1,0 +1,5 @@
+-- local opt = vim.opt_local
+--
+-- opt.formatexpr = ''
+-- opt.formatprg = 'jq'
+-- vim.bo.formatprg = 'jq'

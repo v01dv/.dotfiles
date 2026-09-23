@@ -52,6 +52,17 @@ sudo make install
 * DB
     - nvim-databasehelper is a Lua-based plugin that complementsvim-dadbod.
 
+* REST
+    - [The Best Way To Send HTTP Requests - YouTube](https://www.youtube.com/watch?v=Ounk4W_ttiE)
+    - https://www.reddit.com/r/neovim/comments/12dwf88/nvimhttp_a_simple_yet_modern_http_client_for/
+    - [Replace Postman with a native Neovim REST client to SUPERCHARGE your workflow - YouTube](https://www.youtube.com/watch?v=TLOl8h0jSyk)
+        - https://github.com/bcampolo/nvim-starter-kit/blob/main/.config/nvim/lua/plugins/vim-rest-console.lua
+        - [diepm/vim-rest-console: A REST console for Vim.](https://github.com/diepm/vim-rest-console)
+        - [rest-nvim/rest.nvim: A fast Neovim http client written in Lua](https://github.com/rest-nvim/rest.nvim)
+        - https://amartin.codeberg.page/posts/first-look-at-thunder-rest/#third-party-clients
+
+
+
 ## Watched:
     - [How To Use lazy.nvim For A Simple And Amazing Neovim Config - YouTube](https://www.youtube.com/watch?v=6mxWayq-s9I)
         - [josean-dev/dev-environment-files](https://github.com/josean-dev/dev-environment-files)

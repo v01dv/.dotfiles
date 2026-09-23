@@ -1,109 +1,158 @@
 -- [Understanding Neovim #4 - Treesitter - YouTube](https://www.youtube.com/watch?v=kYXcxJxJVxQ)
 
 return {
-    {
-    "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
-    build = ":TSUpdate",
-    dependencies = {
-       "LiadOz/nvim-dap-repl-highlights",
-       "JoosepAlviste/nvim-ts-context-commentstring",
-    },
+  {
+    'mason-org/mason.nvim',
     opts = {
-      sync_install = false,
-      -- auto_install = true,
       ensure_installed = {
-        "lua",
-        "luadoc",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        -- "bash",
-        "python",
-        "css",
-        "yaml",
-        "c",
-        "cpp",
-        "css",
-        "javascript",
-        "typescript",
-        "tsx",
-        "jsdoc",
-        "json",
-        "json5",
-        "jsonc",
-        "ninja",
-        "scss",
-        "ssh_config",
-        "xml",
-        "html",
-        "vim",
-        "vimdoc",
-        "rust",
-        "go",
-        "dockerfile",
-        "rst",
-        "toml",
-        "ron",
-        "dap_repl",
-        -- "comment", -- comments are slowing down TS bigtime, so disable for now
-      },
-      highlight = {
-        enable = true, -- false will disable the whole extension
-        additional_vim_regex_highlighting = { "org", "markdown" }
-      },
-      matchup = {
-        enable = true,
-      },
-      indent = { enable = true },
-      -- incremental_selection = { enable = false },
-      -- Incremental selection: Included with nvim-treesitter, see :help nvim-treesitter-incremental-selection-mod
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          -- init_selection = "<c-space>",
-          node_incremental = "v",
-          node_decremental = "V",
-          -- scope_incremental = "<c-s>",
-        },
+        -- With the new version, the tree-sitter cli is required to install parsers
+        'tree-sitter-cli',
       },
     },
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    build = ':TSUpdate',
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    event = { 'LazyFile', 'VeryLazy' },
+    cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
+    opts_extend = { 'ensure_installed' },
+    opts = {
+      ensure_installed = {
+        'lua',
+        'lua',
+        'luadoc',
+        'luap',
+        'markdown',
+        'markdown_inline',
+        'bash',
+        'python',
+        'css',
+        'yaml',
+        'c',
+        'cpp',
+        'css',
+        'javascript',
+        'typescript',
+        'tsx',
+        'jsdoc',
+        'json',
+        'json5',
+        'jsonc',
+        'ninja',
+        'scss',
+        'ssh_config',
+        'xml',
+        'html',
+        'vim',
+        'vimdoc',
+        'rust',
+        'go',
+        'dockerfile',
+        'rst',
+        'toml',
+        'ron',
+        'xml',
+        'http',
+        'graphql',
+        'hurl',
+        'printf',
+        'regex',
+        'diff',
+        'query',
+      },
+    },
+    ---@param opts lazyvim.TSConfig
     config = function(_, opts)
-      -- NOTE: If you use the ensure_installed option you must first setup nvim-dap-repl-highlights
-      -- or else the dap_repl parser won't be found, for example
-      -- require('nvim-dap-repl-highlights').setup()
+      local TS = require 'nvim-treesitter'
 
-      if type(opts.ensure_installed) == "table" then
-        ---@type table<string, boolean>
-        local added = {}
-        opts.ensure_installed = vim.tbl_filter(function(lang)
-          if added[lang] then
-            return false
+      -- Manual cache reset
+      local _installed = nil ---@type table<string,boolean>?
+
+      ---@param update boolean?
+      local function get_installed(update)
+        if update then
+          _installed = {}
+          for _, lang in ipairs(require('nvim-treesitter').get_installed 'parsers') do
+            _installed[lang] = true
           end
-          added[lang] = true
-          return true
-        end, opts.ensure_installed)
+        end
+        return _installed or {}
       end
-      require("nvim-treesitter.configs").setup(opts)
+
+      ---@param what string|number|nil
+      ---@overload fun(buf?:number):boolean
+      ---@overload fun(ft:string):boolean
+      ---@return boolean
+      local function have(what)
+        what = what or vim.api.nvim_get_current_buf()
+        what = type(what) == 'number' and vim.bo[what].filetype or what --[[@as string]]
+        local lang = vim.treesitter.language.get_lang(what)
+        if lang == nil or get_installed()[lang] == nil then
+          return false
+        end
+        return true
+      end
+
+      -- FIX: Need better way to do this
+      if OhVim.has 'nvim-dap-repl-highlights' then
+        -- You must call nvim-dap-repl-highlights.setup() before
+        -- nvim-treesitter.install { 'dap_repl' }, or the dap_repl parser
+        -- won't be found.
+        require('nvim-dap-repl-highlights').setup()
+      else
+        OhVim.warn 'You have to install `LiadOz/nvim-dap-repl-highlights` plugin for syntax highlighting in the nvim-dap REPL'
+      end
+
+      -- Some quick sanity checks
+      if not TS.get_installed then
+        return OhVim.error 'Please use `:Lazy` and update `nvim-treesitter`'
+      elseif type(opts.ensure_installed) ~= 'table' then
+        return OhVim.error '`nvim-treesitter` opts.ensure_installed must be a table'
+      end
+
+      -- Setup treesitter
+      TS.setup(opts)
+
+      -- initialize the installed langs
+      get_installed(true)
+
+      -- Install missing parsers
+      local install = vim.tbl_filter(function(lang)
+        return not have(lang)
+      end, opts.ensure_installed or {})
+
+      if #install > 0 then
+        TS.install(install, { summary = true }):await(function()
+          get_installed(true) -- refresh the installed langs
+        end)
+      end
+
+      -- Enable highlighting for a filetype
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('lazyvim_treesitter', { clear = true }),
+        callback = function(ev)
+          local ft, lang = ev.match, vim.treesitter.language.get_lang(ev.match)
+
+          if lang == nil or not have(ft) then
+            return
+          end
+
+          -- syntax highlighting, provided by Neovim
+          vim.treesitter.start()
+          -- folds, provided by Neovim
+          vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          -- indentation, provided by nvim-treesitter
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
     end,
   },
+  -- Automatically add closing tags for HTML and JSX
   {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    enabled = true,
-    config = function()
-      local npairs = require "nvim-autopairs"
-      npairs.setup {
-        check_ts = true,
-      }
-    end,
-  },
-  {
-    "altermo/ultimate-autopair.nvim",
-    enabled = false,
-    event = { "InsertEnter", "CmdlineEnter" },
-    branch = "v0.6",
+    'windwp/nvim-ts-autotag',
+    event = 'LazyFile',
     opts = {},
   },
-
 }
