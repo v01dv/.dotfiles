@@ -8,10 +8,10 @@ brightness_transition=50
 brightness_night=30
 #
 # Set fps for smoooooth transition
-fps=1000
+# fps=1000
 #
 # Adjust this grep to filter only the backlights you want to adjust
-backlights=($(xbacklight -list | grep ddcci*))
+# backlights=($(xbacklight -list | grep ddcci*))
 
 # set_brightness() {
 # 	for backlight in "${backlights[@]}"
@@ -26,30 +26,29 @@ backlights=($(xbacklight -list | grep ddcci*))
 
 # Run 'ddcutil detect' to find monitor I2C bus number.
 # For example: I2C bus:  /dev/i2c-10
-BUSES="10 11"
+BUSES="7"
 
 set_brightness() {
-    brightness="$1"
+  brightness="$1"
 
-    for bus in $BUSES; do
-        ddcutil --bus "$bus" setvcp 10 "$brightness" &
-    done
+  for bus in $BUSES; do
+    ddcutil --bus "$bus" setvcp 10 "$brightness" --terse 2>&1
+    sleep 1
+  done
 
-    wait
-
-    notify-send "Brightness" "Brightness changed to $brightness"
+  notify-send "Brightness" "Brightness changed to $brightness"
 }
 
 if [ "$1" = period-changed ]; then
-	case $3 in
-		night)
-			set_brightness $brightness_night
-			;;
-		transition)
-			set_brightness $brightness_transition
-			;;
-		daytime)
-			set_brightness $brightness_day
-			;;
-	esac
+  case $3 in
+  night)
+    set_brightness $brightness_night
+    ;;
+  transition)
+    set_brightness $brightness_transition
+    ;;
+  daytime)
+    set_brightness $brightness_day
+    ;;
+  esac
 fi
