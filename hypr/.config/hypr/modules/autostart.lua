@@ -9,7 +9,7 @@
 --
 hl.on("hyprland.start", function()
 	-- Waybar
-	-- hl.exec_cmd("/home/user/.config/waybar/scripts/launch.sh")
+	hl.exec_cmd("/home/oh/.config/waybar/scripts/launch.sh")
 
 	-- Auto-mount devices
 	-- hl.exec_cmd("udiskie")
@@ -35,10 +35,10 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-clip-persist --clipboaed both")
 
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
-	hl.exec_cmd("systemctl setcursor Bibata-Modern-Ice")
+	--hl.exec_cmd("systemctl setcursor Bibata-Modern-Ice")
 
 	-- mpris-proxy
 	-- hl.exec_cmd("mpris-proxy")
 
-	hl.exec_cmd("gammastep")
+	-- hl.exec_cmd("gammastep")
 end)

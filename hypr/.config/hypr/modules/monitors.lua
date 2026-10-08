@@ -4,25 +4,19 @@
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
-	output = "LVDS-1",
-	mode = "preferred",
+	output = "eDP-1",
+	-- mode = "preferred",
+	mode = "1920x1200@60",
 	position = "auto",
-	scale = "1",
+	scale = "1.2",
 })
 
 hl.monitor({
-	output = "VGA-1",
-	mode = "1680x1050",
+	output = "DP-1",
+	mode = "1680x1050@60",
 	position = "auto",
 	scale = "auto",
 })
---
--- hl.monitor({
--- 	output = "DP-2",
--- 	mode = "preferred",
--- 	position = "auto",
--- 	scale = "1",
--- })
 
 -- Workspaces 1-5 on main monitor
 -- hl.workspace_rule({ workspace = "1", monitor = "LVDS-1", persistent = true })
