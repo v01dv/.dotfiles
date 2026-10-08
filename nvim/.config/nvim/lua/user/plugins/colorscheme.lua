@@ -10,7 +10,7 @@ return {
     -- lazy = true -> Do not load plugin at startup; load only when triggered
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
-    -- enabled = false,
+    enabled = false,
     config = function()
       require('catppuccin').setup {
         flavour = 'frappe', -- latte, frappe, macchiato, mocha
@@ -144,7 +144,7 @@ return {
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
-    enabled = false,
+    -- enabled = false,
     opts = {
       style = 'moon',
       transparent = false,
@@ -158,7 +158,7 @@ return {
       tokyonight.setup(opts)
       tokyonight.load()
       -- vim.cmd 'colorscheme tokyonight-night'
-      -- vim.cmd 'colorscheme tokyonight-storm'
+      vim.cmd 'colorscheme tokyonight-storm'
       -- vim.cmd 'colorscheme tokyonight-moon'
     end,
   },
@@ -177,4 +177,42 @@ return {
       -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
     end,
   },
+  {
+    'eldritch-theme/eldritch.nvim',
+    lazy = false,
+    priority = 1000,
+    enabled = false,
+    opts = {},
+    -- config = function(_, opts)
+    --   vim.cmd 'colorscheme eldritch'
+    -- end,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    priority = 1000,
+    enabled = false,
+    opts = {},
+    config = function(_, opts)
+      vim.cmd 'colorscheme kanagawa-wave'
+      -- vim.cmd("colorscheme kanagawa-dragon")
+      -- vim.cmd("colorscheme kanagawa-lotus")
+    end,
+  },
+  {
+    'webhooked/kanso.nvim',
+    lazy = false,
+    priority = 1000,
+    enabled = false,
+  },
+  {
+    'bjarneo/ash.nvim',
+    lazy = false,
+    enabled = false,
+    priority = 1000,
+    config = function()
+      vim.cmd [[colorscheme ash]]
+    end,
+  },
+  { 'ellisonleao/gruvbox.nvim', lazy = false, priority = 1000 },
 }
